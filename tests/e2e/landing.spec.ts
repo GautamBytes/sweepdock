@@ -16,10 +16,14 @@ for (const width of [360, 390, 768, 1010, 1440]) {
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     await expect(
-      page.getByRole('heading', { name: 'Make room for clarity.' }),
+      page.getByRole('heading', {
+        name: 'See which tokens are worth swapping.',
+      }),
     ).toBeVisible();
     await expect(
-      page.getByText('Signing disabled', { exact: false }),
+      page.getByText('No wallet needed for the demo. No real transactions.', {
+        exact: true,
+      }),
     ).toBeVisible();
     expect(
       await page.evaluate(
@@ -32,6 +36,19 @@ for (const width of [360, 390, 768, 1010, 1440]) {
     expect(results.violations).toEqual([]);
     expect(errors).toEqual([]);
     expect(external).toEqual([]);
+    const nav = page.getByRole('navigation', { name: 'Main navigation' });
+    await nav.getByRole('link', { name: 'How it works' }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Check the cost before you swap.' }),
+    ).toBeInViewport();
+    await page.reload();
+    await expect(
+      page.getByRole('heading', { name: 'Check the cost before you swap.' }),
+    ).toBeInViewport();
+    await nav.getByRole('link', { name: 'Tools', exact: true }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Start with what you need.' }),
+    ).toBeInViewport();
   });
 }
 
@@ -39,7 +56,10 @@ test('landing links open all tools and returning home preserves a paused simulat
   page,
 }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Explore demo', exact: true }).click();
+  await page
+    .getByRole('main')
+    .getByRole('link', { name: 'Try the demo', exact: true })
+    .click();
   await expect(
     page.getByRole('heading', { name: 'A little less clutter.' }),
   ).toBeVisible();
@@ -47,21 +67,21 @@ test('landing links open all tools and returning home preserves a paused simulat
   await page.getByRole('button', { name: 'Review selection' }).click();
   await page.getByRole('button', { name: 'Approve simulation' }).click();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
-  await page
-    .getByRole('navigation', { name: 'Main navigation' })
-    .getByRole('link', { name: 'Swap Doctor' })
-    .click();
+  await page.getByRole('link', { name: /^Swap Doctor/ }).click();
   await expect(page.getByText('status_unknown', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
   await page
     .getByRole('navigation', { name: 'Main navigation' })
-    .getByRole('link', { name: 'Developer Kit' })
+    .getByRole('link', { name: 'For developers' })
     .click();
   await expect(
     page.getByRole('heading', { name: 'Useful beyond this screen.' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
-  await page.getByRole('link', { name: 'Explore demo', exact: true }).click();
+  await page
+    .getByRole('main')
+    .getByRole('link', { name: 'Try the demo', exact: true })
+    .click();
   await expect(
     page.getByText('Status not confirmed. Do not send again.'),
   ).toBeVisible();
@@ -69,7 +89,7 @@ test('landing links open all tools and returning home preserves a paused simulat
     page.getByRole('button', { name: 'Approve simulation' }),
   ).toHaveCount(0);
   await page.getByRole('link', { name: 'SweepDock home' }).click();
-  await page.getByRole('link', { name: 'Read live quotes' }).click();
+  await page.getByRole('link', { name: 'Compare live quotes' }).click();
   await expect(page).toHaveURL(/\/app$/);
   await expect(
     page.getByText('Mainnet · read only', { exact: true }),

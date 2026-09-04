@@ -22,20 +22,21 @@ const tools = [
   {
     title: 'Wallet Cleanup',
     description:
-      'Explore small balances and estimate cleanup costs before you act.',
+      'Try a cleanup with sample tokens. Compare fees and skip swaps that cost too much.',
     to: '/demo',
     Icon: Layers2,
   },
   {
     title: 'Swap Doctor',
     description:
-      'Understand simulated swaps and outcomes with a clear timeline.',
+      'See what happened in a simulated swap and why an uncertain result stays paused.',
     to: '/doctor',
     Icon: Stethoscope,
   },
   {
     title: 'Developer Kit',
-    description: 'Build with SweepDock tools. Toolkit in development.',
+    description:
+      'Explore the source code for fee checks, swap states, and reports. Still in development.',
     to: '/developers',
     Icon: Code2,
   },
@@ -55,48 +56,87 @@ export function Landing() {
           SweepDock
         </Link>
         <nav aria-label="Main navigation">
-          {tools.map((tool) => (
-            <Link key={tool.to} to={tool.to}>
-              {tool.title}
-            </Link>
-          ))}
+          <Link to="/#how-it-works">How it works</Link>
+          <Link to="/#tools">Tools</Link>
           <Link to="/docs">Docs</Link>
+          <Link to="/developers">For developers</Link>
         </nav>
-        <a
-          className="landing-github"
-          href="https://github.com/GautamBytes/sweepdock"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Globe2 size={20} aria-hidden="true" />
-          <span>GitHub</span>
-          <ArrowUpRight size={14} aria-hidden="true" />
-        </a>
+        <Link className="landing-nav-cta" to="/demo">
+          Try the demo <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
       </header>
       <main id="main" className="landing-main">
         <section className="landing-hero" aria-labelledby="landing-title">
+          <span className="landing-eyebrow">Wallet cleanup for TON</span>
           <h1 id="landing-title">
-            Make room
-            <br />
-            for <em>clarity.</em>
+            <span>See which tokens</span>
+            <em>are worth swapping.</em>
           </h1>
           <p>
-            A considered way to explore small balances
-            <br className="desktop-break" /> and understand every swap.
+            SweepDock helps you review small token balances in your TON wallet,
+            compare fees with what you’d receive, and decide what to keep or
+            swap.
           </p>
           <div className="landing-actions">
             <Link className="landing-primary" to="/demo">
-              Explore demo <ArrowRight size={23} aria-hidden="true" />
+              Try the demo <ArrowRight size={23} aria-hidden="true" />
             </Link>
             <Link className="landing-secondary" to="/app">
-              Read live quotes <ArrowUpRight size={17} aria-hidden="true" />
+              Compare live quotes <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
           </div>
           <div className="landing-status">
-            <span className="status-dot" />
-            Read-only prototype <span aria-hidden="true">·</span> Signing
-            disabled
+            <ShieldCheck size={17} aria-hidden="true" />
+            <span>No wallet needed for the demo. No real transactions.</span>
           </div>
+        </section>
+        <section
+          className="landing-how"
+          id="how-it-works"
+          aria-labelledby="how-title"
+        >
+          <div className="landing-section-heading">
+            <span className="landing-eyebrow">How it works</span>
+            <h2 id="how-title">Check the cost before you swap.</h2>
+          </div>
+          <ol>
+            <li>
+              <span className="landing-step" aria-hidden="true">
+                01
+              </span>
+              <div>
+                <h3>Review your tokens</h3>
+                <p>
+                  Start with sample balances, or read the balances in a public
+                  TON wallet.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="landing-step" aria-hidden="true">
+                02
+              </span>
+              <div>
+                <h3>Compare the fees</h3>
+                <p>
+                  See what you could receive and how much TON you’d need for
+                  network fees.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="landing-step" aria-hidden="true">
+                03
+              </span>
+              <div>
+                <h3>Decide what’s worth it</h3>
+                <p>
+                  Keep tokens when the costs are too high. For now, explore
+                  quotes and practise in the demo.
+                </p>
+              </div>
+            </li>
+          </ol>
         </section>
         <section className="ledger-preview" aria-label="Sample cleanup preview">
           <span className="preview-label">Sample data</span>
@@ -233,28 +273,36 @@ export function Landing() {
             </section>
           </div>
         </section>
-        <section className="landing-tools" aria-label="Explore SweepDock tools">
-          {tools.map(({ title, description, to, Icon }) => (
-            <Link key={to} className="landing-tool" to={to}>
-              <Icon size={65} strokeWidth={1.25} aria-hidden="true" />
-              <h2>{title}</h2>
-              <p>{description}</p>
-              <ArrowRight size={29} aria-hidden="true" />
-            </Link>
-          ))}
+        <section
+          id="tools"
+          className="landing-tools-section"
+          aria-labelledby="tools-title"
+        >
+          <div className="landing-section-heading">
+            <span className="landing-eyebrow">Explore the tools</span>
+            <h2 id="tools-title">Start with what you need.</h2>
+          </div>
+          <div className="landing-tools">
+            {tools.map(({ title, description, to, Icon }) => (
+              <Link key={to} className="landing-tool" to={to}>
+                <Icon size={65} strokeWidth={1.25} aria-hidden="true" />
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <ArrowRight size={29} aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
         </section>
         <section className="landing-docs" aria-labelledby="landing-docs-title">
           <div>
-            <h2 id="landing-docs-title">
-              Understand the why. Find your next step.
-            </h2>
+            <h2 id="landing-docs-title">New to SweepDock? Start here.</h2>
             <p>
-              Read the thinking behind SweepDock, explore its current limits,
-              and follow a guide for wallet users or developers.
+              Learn why we’re building it, what it can do today, and how to use
+              it. Guides for wallet owners and developers.
             </p>
           </div>
           <Link className="landing-secondary" to="/docs">
-            Explore the docs <ArrowRight size={18} aria-hidden="true" />
+            Read the guides <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </section>
       </main>
@@ -264,7 +312,15 @@ export function Landing() {
           <em>Your wallet stays yours.</em>
         </p>
         <span>
-          No custody <span aria-hidden="true">·</span> Open source
+          <a
+            className="landing-github"
+            href="https://github.com/GautamBytes/sweepdock"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Globe2 size={17} aria-hidden="true" /> Source on GitHub
+            <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
         </span>
       </footer>
     </div>

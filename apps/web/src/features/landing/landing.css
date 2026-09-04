@@ -19,20 +19,42 @@
 }
 .landing-header nav {
   display: flex;
-  gap: 22px;
+  gap: 4px;
   margin: 0;
   width: auto;
+  padding: 5px;
+  border: 1px solid #443c53;
+  border-radius: 999px;
+  background: #272231;
 }
 .landing-header nav a {
-  padding: 10px 0;
-  font-size: 15px;
+  padding: 11px 15px;
+  min-height: 44px;
+  align-items: center;
+  font-size: 14px;
   font-weight: 400;
   color: #d4cdda;
-  border-radius: 0;
+  border-radius: 999px;
 }
 .landing-header nav a:hover {
   color: var(--text);
-  background: none;
+  background: #3a3248;
+}
+.landing-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid #b8a7cf;
+  border-radius: 999px;
+  color: #eee5f8;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.landing-nav-cta:hover {
+  background: #3a3248;
 }
 .landing-github {
   display: inline-flex;
@@ -50,27 +72,34 @@
   margin: auto;
 }
 .landing-hero {
-  padding: 16px 20px 32px;
+  padding: 42px 20px 44px;
   text-align: center;
 }
 .landing-hero h1 {
-  font-size: clamp(76px, 12vw, 156px);
-  line-height: 0.87;
-  letter-spacing: -0.065em;
+  font-size: clamp(60px, 8.4vw, 104px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
   font-weight: 400;
-  margin: 8px 0 15px;
+  margin: 20px 0 24px;
+}
+.landing-hero h1 span,
+.landing-hero h1 em {
+  display: block;
 }
 .landing-hero h1 em {
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 1.06em;
+  font-size: 1.03em;
   font-weight: 400;
   color: #c5b6dd;
   letter-spacing: -0.065em;
 }
 .landing-hero > p {
-  font-size: clamp(19px, 2.3vw, 28px);
-  line-height: 1.4;
-  letter-spacing: -0.65px;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+  max-width: 690px;
+  text-wrap: balance;
+  margin: auto;
   color: #c7c0cf;
 }
 .landing-actions {
@@ -82,7 +111,7 @@
 }
 .landing-primary {
   padding: 17px 30px;
-  min-width: 240px;
+  min-width: 214px;
   border-radius: 8px;
   background: #f0ece8;
   color: #242030;
@@ -118,10 +147,71 @@
   color: #b7adbf;
   font-size: 14px;
 }
-.landing-status .status-dot {
-  background: #efaa9f;
-  width: 11px;
-  height: 11px;
+.landing-status > svg {
+  flex-shrink: 0;
+  color: #c5b6dd;
+}
+.landing-eyebrow {
+  display: block;
+  color: #c5b6dd;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.landing-how,
+.landing-tools-section {
+  scroll-margin-top: 24px;
+}
+.landing-how {
+  padding: 34px 20px 42px;
+  border-top: 1px solid #443c53;
+}
+.landing-section-heading h2 {
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+.landing-how ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  gap: 28px;
+}
+.landing-how li {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+.landing-step {
+  color: #c5b6dd;
+  border: 1px solid #554a66;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.landing-how h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 5px 0 9px;
+}
+.landing-how p {
+  color: #c7c0cf;
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 31ch;
+}
+.landing-tools-section > .landing-section-heading {
+  padding: 48px 20px 0;
 }
 .ledger-preview {
   background-color: #666078;
@@ -411,7 +501,7 @@
 .landing-tool:first-child > svg {
   color: #efa99b;
 }
-.landing-tool h2 {
+.landing-tool h3 {
   font-size: clamp(24px, 3.5vw, 39px);
   font-weight: 400;
   letter-spacing: -1.6px;
@@ -434,7 +524,7 @@
 .landing-tool:hover > svg:first-child {
   transform: translateY(-4px);
 }
-.landing-tool:hover h2 {
+.landing-tool:hover h3 {
   color: #d9c8f2;
 }
 .landing-footer {
@@ -485,14 +575,17 @@
 }
 @media (max-width: 900px) {
   .landing-header {
-    padding: 25px 26px;
-    gap: 20px;
+    padding: 22px 26px;
+    gap: 16px;
+    flex-wrap: wrap;
   }
   .landing-header nav {
-    gap: 16px;
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
   }
-  .landing-header nav a {
-    font-size: 12px;
+  .landing-nav-cta {
+    margin-left: auto;
   }
   .landing-github {
     font-size: 12px;
@@ -550,13 +643,12 @@
     order: 3;
     width: 100%;
     justify-content: space-between;
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
-    gap: 8px;
+    padding: 4px;
+    gap: 0;
   }
   .landing-header nav a {
     font-size: 12px;
-    padding: 10px 0;
+    padding: 10px 9px;
   }
   .landing-github {
     margin-left: auto;
@@ -568,23 +660,21 @@
     padding: 29px 0 32px;
   }
   .landing-hero h1 {
-    font-size: clamp(60px, 13.7vw, 87px);
-    letter-spacing: -0.06em;
-    margin: 7px 0 23px;
+    font-size: clamp(36px, 9.9vw, 62px);
+    letter-spacing: -0.05em;
+    margin: 18px 0 22px;
   }
   .landing-hero > p {
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 17px;
+    line-height: 1.6;
     letter-spacing: -0.35px;
     max-width: 340px;
     margin: auto;
   }
-  .desktop-break {
-    display: none;
-  }
   .landing-actions {
-    gap: 21px;
-    margin: 26px 0 25px;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 26px 0 22px;
   }
   .landing-primary {
     min-width: 0;
@@ -603,12 +693,29 @@
     width: 15px;
   }
   .landing-status {
-    font-size: 11px;
+    font-size: 12px;
+    line-height: 1.5;
     gap: 6px;
+    max-width: 280px;
+    margin: auto;
+    align-items: flex-start;
   }
-  .landing-status .status-dot {
-    width: 8px;
-    height: 8px;
+  .landing-status > svg {
+    margin-top: 2px;
+  }
+  .landing-how {
+    padding: 28px 6px 32px;
+  }
+  .landing-how ol {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 24px;
+  }
+  .landing-how p {
+    max-width: none;
+  }
+  .landing-tools-section > .landing-section-heading {
+    padding: 36px 10px 0;
   }
   .ledger-preview {
     padding: 14px;
@@ -698,7 +805,7 @@
     height: 48px;
     margin-bottom: 15px;
   }
-  .landing-tool h2 {
+  .landing-tool h3 {
     font-size: 30px;
     letter-spacing: -1px;
   }
