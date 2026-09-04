@@ -1,4 +1,5 @@
-import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck, Layers2 } from 'lucide-react';
+import { SectionHeading } from '../../app/SectionHeading';
 import { formatUnits } from '@sweepdock/core';
 import { assets, type DemoItem, type DemoOutcome } from '../demo/model';
 
@@ -35,11 +36,13 @@ export function Cleanup({
     .reduce((sum, asset) => sum + asset.output, 0n);
   return (
     <>
-      <div className="page-heading">
-        <span className="eyebrow">WALLET CLEANUP</span>
-        <h1>A little less clutter.</h1>
-        <p>Review small token balances. Keep the swaps that make sense.</p>
-      </div>
+      <SectionHeading
+        icon={Layers2}
+        eyebrow="WALLET CLEANUP"
+        title="A little less clutter."
+      >
+        Review small token balances. Keep the swaps that make sense.
+      </SectionHeading>
       <div className="simulation-note">
         <span className="status-dot" />
         <strong>Simulation — no real funds</strong>
