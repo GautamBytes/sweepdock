@@ -78,3 +78,11 @@ In-app browser captures: `output/playwright/docs/sweepdock-docs-desktop.png` at 
 Validation: 180 unit tests; typecheck/build/API artifact/lint; 44 browser tests including eight new docs checks. The documentation navigation loads without external requests or page errors. Direct section URLs survive refresh, and unknown guide routes offer a return to the docs.
 
 final result: passed
+
+## Clearer navigation and hero — 2026-09-05
+
+The landing page now states the product's purpose: “See which tokens are worth swapping.” The supporting paragraph explains TON balances, fees and the keep-or-swap decision. A visible note explains that the demo needs no wallet and makes no real transactions.
+
+The header groups How it works, Tools, Docs and For developers in a compact navigation bar, with a separate Try the demo action. The first two links target explanatory sections; GitHub moves to the footer. Three ordered steps introduce balances, fee comparison and the decision. The three existing tools remain available, with clearer descriptions.
+
+Validation: `pnpm check` passed with 181 tests, typecheck, build, standalone API checks and lint/format. All 44 browser tests passed, including accessibility and overflow checks at 360, 390, 768, 1010 and 1440px, both new section links, refresh at an anchor, Docs navigation and retention of paused simulation state. Desktop 1440px and mobile 390px visual review confirmed readable copy and navigation. A final paragraph-balancing adjustment avoids a one-word last line on desktop; targeted landing checks cover that final CSS.
