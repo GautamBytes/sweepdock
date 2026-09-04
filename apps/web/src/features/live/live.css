@@ -1,0 +1,229 @@
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 30px;
+  background: #eaf0e8;
+  padding: 4px;
+  border-radius: 8px;
+  width: fit-content;
+}
+.mode-tabs a {
+  font-size: 11px;
+  padding: 9px 13px;
+  border-radius: 5px;
+}
+.mode-tabs a.active {
+  background: #fff;
+  box-shadow: 0 1px 3px #20332f12;
+}
+.live-note {
+  background: #eef3f8;
+  border-color: #d6e2eb;
+  color: #345269;
+}
+.live-note > span:last-child {
+  color: #4c6475;
+}
+.live-grid {
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+.wallet-form {
+  padding: 0 23px 24px;
+}
+.wallet-form label,
+.live-quote label {
+  display: block;
+  font-size: 12px;
+  margin: 0 0 9px;
+  font-weight: 500;
+}
+.wallet-form input,
+.live-quote input,
+.live-quote select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #fcfdfb;
+  color: #20332f;
+  padding: 12px;
+  font-size: 12px;
+  min-width: 0;
+}
+.wallet-form input {
+  font-family: ui-monospace, monospace;
+}
+.wallet-form .primary {
+  margin-top: 18px;
+  width: fit-content;
+  padding-inline: 20px;
+}
+.live-empty {
+  padding: 30px 23px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+.live-empty svg {
+  color: var(--green);
+  margin-bottom: 14px;
+}
+.live-empty h3 {
+  font-size: 16px;
+  color: #344a3d;
+  margin: 0 0 9px;
+  font-weight: 550;
+}
+.live-empty p {
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 360px;
+}
+.inset-notice {
+  margin-inline: 23px;
+}
+.quote-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 23px 0 18px;
+}
+.live-quote form .primary {
+  margin-top: 18px;
+}
+.live-quote-result {
+  border-top: 1px solid var(--border);
+  padding-top: 23px;
+  margin-top: 25px;
+}
+.live-quote-result h3 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  margin: 14px 0 10px;
+  overflow-wrap: anywhere;
+}
+.live-quote-result h3 span {
+  font-size: 15px;
+  color: var(--muted);
+}
+.live-quote-result .summary {
+  margin-top: 24px;
+  gap: 14px;
+}
+.live-quote-result dd {
+  white-space: normal;
+  text-align: right;
+  overflow-wrap: anywhere;
+  max-width: 50%;
+}
+.live-quote-result dt {
+  max-width: 55%;
+  line-height: 1.5;
+}
+.wallet-timestamp {
+  font-size: 10px;
+  color: var(--muted);
+  padding: 0 23px 16px;
+  line-height: 1.6;
+}
+.real-asset-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.real-asset-list li {
+  padding: 20px 23px;
+  border-top: 1px solid var(--border);
+}
+.real-asset-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 12px;
+}
+.real-asset-title > span {
+  font-family: ui-monospace, monospace;
+  overflow-wrap: anywhere;
+  text-align: right;
+  max-width: 65%;
+}
+.real-asset-title strong {
+  overflow-wrap: anywhere;
+}
+.real-asset-list small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+.real-asset-list code {
+  display: block;
+  color: #536b60;
+  font-size: 9px;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+.real-asset-action {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+.real-asset-action > span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.text-button {
+  border: 1px solid var(--border);
+  background: #f6f9f3;
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: var(--green);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.text-button:disabled {
+  color: #707b73;
+  background: #f7f8f6;
+}
+.live-wallet-data .balance-strip strong {
+  overflow-wrap: anywhere;
+}
+.live-balances {
+  min-width: 0;
+}
+@media (max-width: 1150px) {
+  .live-grid {
+    grid-template-columns: minmax(0, 1fr) 310px;
+  }
+  .wallet-form {
+    padding-inline: 16px;
+  }
+  .inset-notice {
+    margin-inline: 16px;
+  }
+}
+@media (max-width: 800px) {
+  .live-grid {
+    grid-template-columns: 1fr;
+  }
+  .mode-tabs {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .mode-tabs a {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+  }
+  .live-quote {
+    padding: 24px;
+  }
+  .wallet-form .primary {
+    width: 100%;
+  }
+  .live-quote-result .summary {
+    font-size: 11px;
+  }
+}

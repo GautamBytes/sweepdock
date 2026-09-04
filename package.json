@@ -8,8 +8,8 @@
     "node": ">=24.19.0 <25"
   },
   "scripts": {
-    "dev": "vite --config apps/web/vite.config.ts --host 127.0.0.1",
-    "build": "tsc -p packages/core/tsconfig.build.json && vite build --config apps/web/vite.config.ts",
+    "dev": "vite --configLoader runner --config apps/web/vite.config.ts --host 127.0.0.1",
+    "build": "tsc -p packages/core/tsconfig.build.json && vite build --configLoader runner --config apps/web/vite.config.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",

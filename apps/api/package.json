@@ -1,0 +1,17 @@
+{
+  "name": "@sweepdock/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./vite": "./src/vite.ts"
+  },
+  "dependencies": {
+    "@sweepdock/core": "workspace:*",
+    "@sweepdock/omniston-adapter": "workspace:*",
+    "hono": "4.13.5",
+    "zod": "4.5.4",
+    "@hono/node-server": "2.1.1"
+  }
+}

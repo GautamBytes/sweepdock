@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  NavLink,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
 import {
   Layers2,
   Stethoscope,
@@ -9,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Cleanup } from '../features/cleanup/Cleanup';
 import { Doctor } from '../features/doctor/Doctor';
+import { Live } from '../features/live/Live';
 import {
   reviewAssets,
   simulateApproval,
@@ -17,6 +24,8 @@ import {
 } from '../features/demo/model';
 
 export function App() {
+  const location = useLocation();
+  const live = location.pathname === '/app';
   const [selected, setSelected] = useState<string[]>(['STON']);
   const [items, setItems] = useState<DemoItem[]>([]);
   const [outcome, setOutcome] = useState<DemoOutcome>('completed');
@@ -26,8 +35,10 @@ export function App() {
   ) {
     return (
       <main>
-        <h1>Live mode is not available.</h1>
-        <p>This build supports offline simulation only.</p>
+        <h1>Signing mode is not available.</h1>
+        <p>
+          This build supports the demo and explicit read-only previews only.
+        </p>
       </main>
     );
   }
@@ -92,11 +103,18 @@ export function App() {
           <span>Less clutter. More clarity.</span>
           <span className="local-badge">
             <span className="status-dot" />
-            Offline simulation
+            {live ? 'Mainnet · read only' : 'Offline simulation'}
           </span>
         </header>
         <main id="main">
+          {(live || location.pathname === '/demo') && (
+            <nav className="mode-tabs" aria-label="Data mode">
+              <NavLink to="/demo">Practice with sample data</NavLink>
+              <NavLink to="/app">Read live data</NavLink>
+            </nav>
+          )}
           <Routes>
+            <Route path="/app" element={<Live />} />
             <Route
               path="/demo"
               element={
@@ -149,6 +167,10 @@ export function App() {
                       <li>Exact integer token parsing and formatting.</li>
                       <li>Fee and TON reserve checks.</li>
                       <li>
+                        Read-only TonAPI balances and validated Omniston quote
+                        snapshots.
+                      </li>
+                      <li>
                         A guarded swap lifecycle with uncertain-state handling.
                       </li>
                       <li>
@@ -158,10 +180,10 @@ export function App() {
                     </ul>
                     <h2>Before live use</h2>
                     <p>
-                      Omniston quotes and transaction tracking, TON Connect,
-                      verified settlement evidence, persistent sessions and
-                      independent security review still need to be built and
-                      checked. No SDK package has been published.
+                      Transaction tracking, TON Connect, verified settlement
+                      evidence, persistent sessions and independent security
+                      review still need to be built and checked. No SDK package
+                      has been published.
                     </p>
                     <a
                       className="text-link"
