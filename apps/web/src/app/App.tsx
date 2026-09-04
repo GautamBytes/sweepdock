@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Landing } from '../features/landing/Landing';
 import {
   NavLink,
   Navigate,
@@ -28,6 +29,10 @@ import {
 export function App() {
   const location = useLocation();
   const live = location.pathname === '/app';
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location.pathname]);
   const safety = location.pathname.startsWith('/safety');
   const [selected, setSelected] = useState<string[]>(['STON']);
   const [items, setItems] = useState<DemoItem[]>([]);
@@ -61,17 +66,18 @@ export function App() {
       );
     });
   }
+  if (location.pathname === '/') return <Landing />;
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <aside className="sidebar">
-        <NavLink className="brand" to="/demo">
+        <NavLink className="brand" to="/" aria-label="SweepDock home">
           <span className="brand-mark">
             <Layers2 size={23} />
           </span>
-          SweepDock<span className="brand-dot">.</span>
+          SweepDock
         </NavLink>
         <span className="nav-label">WORKSPACE</span>
         <nav aria-label="Main navigation">
@@ -106,7 +112,11 @@ export function App() {
           <span>Less clutter. More clarity.</span>
           <span className="local-badge">
             <span className="status-dot" />
-            {live ? 'Mainnet · read only' : 'Offline simulation'}
+            {live
+              ? 'Mainnet · read only'
+              : location.pathname === '/developers'
+                ? 'Toolkit · in development'
+                : 'Offline simulation'}
           </span>
         </header>
         <main id="main">
