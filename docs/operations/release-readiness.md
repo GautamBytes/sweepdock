@@ -4,8 +4,8 @@ Updated 2026-09-05. This checklist separates local engineering evidence from wor
 
 ## Repository
 
-- Remote `main`: `894dd7c`; GitHub Actions passed.
-- Readiness fixes: isolated branch `fix/grant-readiness`.
+- Application release: `0cc0e05`, merged to `main` through PR #2 after both GitHub Actions checks passed.
+- Readiness fixes are merged; this checklist records the deployed application revision.
 - Fresh pinned dependency installation and baseline: 23 test files / 178 tests passed.
 - README refreshed; contribution and security guidance added.
 - License: MIT, selected by the owner on 2026-09-05; root license and package metadata added.
@@ -18,9 +18,9 @@ Updated 2026-09-05. This checklist separates local engineering evidence from wor
 
 ## Hosting
 
-The current public deployment is older than `main`, `/api/health` returns 500 and `/safety` returns 404. Logs identify an ESM packaging failure. Vercel has no GitHub link.
+The repaired read-only build is live at [sweepdock.vercel.app](https://sweepdock.vercel.app). All page routes, health/config, real provider reads, canonical manifest, icon and configured security headers passed hosted checks. Production safety-lab reload recovery also passed. See [release evidence](release-verification-2026-09-05.json). Vercel releases remain manual.
 
-After reviewing the fixed branch and obtaining deployment approval:
+For future releases, repeat this procedure with the new revision:
 
 1. Deploy a preview to the existing SweepDock Vercel project. Do not deploy a local build containing synthetic verification hostnames.
 2. Verify `/`, `/demo`, `/app`, `/doctor`, `/developers`, `/safety` and `/safety/doctor`, including direct navigation and reload.
@@ -41,10 +41,10 @@ The owner operates their own wallet. Connecting shares a public account; it does
 5. Disconnect, reconnect and test returning after briefly switching apps. Record any browser/Telegram difference without generalizing to untested devices.
 6. Record pass/fail and a redacted screenshot. Do not publish a wallet address or account history without consent.
 
-The automated TON Connect fixture is complementary evidence, not a physical-device result.
+The automated TON Connect fixture is complementary evidence, not a physical-device result. The preview picker rendered, with third-party directory/bridge errors recorded in the deployment notes. The owner has been asked to perform the real-phone test; no result is recorded yet.
 
 ## Remaining integration evidence
 
-A [read-only quote sample](../testing/quote-economics-2026-09-05.md) records both accepted quotes and rejected/unavailable requests. This is local runtime evidence; repeat from the deployed app before calling the public quote flow verified.
+A [read-only quote sample](../testing/quote-economics-2026-09-05.md) records both accepted quotes and rejected/unavailable requests. Additional production balance and quote requests succeeded; their results are recorded in the release evidence. Neither sample proves reliable availability across every asset or amount.
 
 The supported testnet/sandbox path remains unresolved. The existing support draft is unsent. Production signing, settlement verification, a reusable published kit, external review and physical-device results remain future work.
