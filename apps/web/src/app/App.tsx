@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Landing } from '../features/landing/Landing';
 import { Docs } from '../features/docs/Docs';
+import { Developers } from '../features/developers/Developers';
 import {
   NavLink,
   Navigate,
@@ -13,7 +14,7 @@ import {
   Layers2,
   Stethoscope,
   Code2,
-  ArrowUpRight,
+  ChevronRight,
   ShieldCheck,
   BookOpen,
 } from 'lucide-react';
@@ -44,6 +45,38 @@ export function App() {
     }
   }, [location.pathname, location.hash]);
   const safety = location.pathname.startsWith('/safety');
+  const workspaceSections = [
+    {
+      to: '/demo',
+      label: 'Wallet Cleanup',
+      detail: 'Review tokens & costs',
+      Icon: Layers2,
+      active: live || location.pathname === '/demo',
+    },
+    {
+      to: '/doctor',
+      label: 'Swap Doctor',
+      detail: 'Understand the outcome',
+      Icon: Stethoscope,
+      active: location.pathname === '/doctor' || safety,
+    },
+    {
+      to: '/developers',
+      label: 'Developer Kit',
+      detail: 'Explore the building blocks',
+      Icon: Code2,
+      active: location.pathname === '/developers',
+    },
+    {
+      to: '/docs',
+      label: 'Docs',
+      detail: 'Learn & get started',
+      Icon: BookOpen,
+      active: docs,
+    },
+  ];
+  const currentSection = workspaceSections.find((section) => section.active);
+
   const [selected, setSelected] = useState<string[]>(['STON']);
   const [items, setItems] = useState<DemoItem[]>([]);
   const [outcome, setOutcome] = useState<DemoOutcome>('completed');
@@ -78,7 +111,7 @@ export function App() {
   }
   if (location.pathname === '/') return <Landing />;
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-workspace={currentSection?.to.slice(1)}>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -91,22 +124,28 @@ export function App() {
         </NavLink>
         <span className="nav-label">WORKSPACE</span>
         <nav aria-label="Main navigation">
-          <NavLink to="/demo">
-            <Layers2 size={18} />
-            Wallet Cleanup
-          </NavLink>
-          <NavLink to="/doctor">
-            <Stethoscope size={18} />
-            Swap Doctor
-          </NavLink>
-          <NavLink to="/developers">
-            <Code2 size={18} />
-            Developer Kit
-          </NavLink>
-          <NavLink to="/docs">
-            <BookOpen size={18} />
-            Docs
-          </NavLink>
+          {workspaceSections.map(({ to, label, detail, Icon, active }) => (
+            <Link
+              key={to}
+              to={to}
+              aria-label={label}
+              aria-current={active ? 'page' : undefined}
+              className={`workspace-nav-link${active ? ' active' : ''}`}
+            >
+              <span className="workspace-nav-icon">
+                <Icon size={20} aria-hidden="true" />
+              </span>
+              <span className="workspace-nav-copy">
+                <strong>{label}</strong>
+                <small>{detail}</small>
+              </span>
+              <ChevronRight
+                className="workspace-nav-arrow"
+                size={15}
+                aria-hidden="true"
+              />
+            </Link>
+          ))}
         </nav>
         <div className="sidebar-note">
           <ShieldCheck size={22} />
@@ -118,12 +157,16 @@ export function App() {
           </p>
         </div>
         <span className="sidebar-version">
-          LOCAL PROTOTYPE <span>v0.1</span>
+          READ-ONLY PROTOTYPE <span>v0.1</span>
         </span>
       </aside>
       <div className="main-shell">
         <header className="topbar">
-          <span>Less clutter. More clarity.</span>
+          <div className="workspace-breadcrumb">
+            <Link to="/">SweepDock</Link>
+            <ChevronRight size={13} aria-hidden="true" />
+            <span>{safety ? 'Safety lab' : currentSection?.label}</span>
+          </div>
           <span className="local-badge">
             <span className="status-dot" />
             {docs
@@ -179,60 +222,7 @@ export function App() {
                 />
               }
             />
-            <Route
-              path="/developers"
-              element={
-                <>
-                  <div className="page-heading">
-                    <span className="eyebrow">
-                      SWEEPDOCK KIT · IN DEVELOPMENT
-                    </span>
-                    <h1>Useful beyond this screen.</h1>
-                    <p>
-                      The same tested core powers cleanup and its diagnostics.
-                    </p>
-                  </div>
-                  <section className="asset-panel developer-panel">
-                    <Link className="text-link" to="/safety">
-                      Open offline safety lab
-                    </Link>
-                    <h2>Available in this local repository</h2>
-                    <ul>
-                      <li>Exact integer token parsing and formatting.</li>
-                      <li>Fee and TON reserve checks.</li>
-                      <li>
-                        Read-only TonAPI balances and validated Omniston quote
-                        snapshots.
-                      </li>
-                      <li>
-                        A guarded swap lifecycle with uncertain-state handling.
-                      </li>
-                      <li>
-                        Allowlisted simulation reports without wallet addresses
-                        or payloads.
-                      </li>
-                    </ul>
-                    <h2>Before live use</h2>
-                    <p>
-                      Transaction tracking, wallet signing, verified settlement
-                      evidence, persistent sessions and independent security
-                      review still need to be built and checked. No SDK package
-                      has been published. TON Connect read-only connection is
-                      implemented but requires this app’s hosted manifest and a
-                      real-device connection check.
-                    </p>
-                    <a
-                      className="text-link"
-                      href="https://docs.ston.fi/developer-section/omniston/sdk"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Omniston documentation <ArrowUpRight size={16} />
-                    </a>
-                  </section>
-                </>
-              }
-            />
+            <Route path="/developers" element={<Developers />} />
             <Route path="*" element={<Navigate replace to="/demo" />} />
           </Routes>
         </main>

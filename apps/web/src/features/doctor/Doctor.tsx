@@ -1,5 +1,14 @@
 import { makeShareableReport, type LifecycleEvent } from '@sweepdock/core';
 import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Download,
+  FileJson,
+  ListChecks,
+  Play,
+  Stethoscope,
+} from 'lucide-react';
+import { SectionHeading } from '../../app/SectionHeading';
 
 const explanations: Partial<Record<LifecycleEvent['kind'], string>> = {
   signature_requested: 'Waiting for the simulated wallet response.',
@@ -25,14 +34,14 @@ export function Doctor({
   const json = JSON.stringify(report, null, 2);
   return (
     <>
-      <div className="page-heading">
-        <span className="eyebrow">SWAP DOCTOR</span>
-        <h1>Every step, explained.</h1>
-        <p>
-          See what happened in your latest{' '}
-          {source === 'safety' ? 'safety lab' : 'cleanup'} simulation.
-        </p>
-      </div>
+      <SectionHeading
+        icon={Stethoscope}
+        eyebrow="SWAP DOCTOR"
+        title="Every step, explained."
+      >
+        See what happened in your latest{' '}
+        {source === 'safety' ? 'safety lab' : 'cleanup'} simulation.
+      </SectionHeading>
       <div className="simulation-note">
         <strong>
           {source === 'safety'
@@ -46,10 +55,16 @@ export function Doctor({
       {events.length ? (
         <div className="workspace-grid">
           <section className="asset-panel trace-panel">
-            <h2>Event timeline</h2>
+            <div className="trace-heading">
+              <div>
+                <span className="eyebrow">SIMULATION RECORD</span>
+                <h2>Event timeline</h2>
+              </div>
+              <span className="trace-count">{report.events.length} events</span>
+            </div>
             <ol className="timeline">
               {report.events.map((event, index) => (
-                <li key={index}>
+                <li key={index} className={`event-${event.stage}`}>
                   <span className="event-marker">{index + 1}</span>
                   <div>
                     <code>{event.stage}</code>
@@ -65,6 +80,9 @@ export function Doctor({
             </ol>
           </section>
           <section className="review-panel">
+            <span className="report-icon">
+              <FileJson size={24} aria-hidden="true" />
+            </span>
             <span className="eyebrow">LOCAL DIAGNOSTICS</span>
             <h2>A report you can inspect.</h2>
             <p className="muted-copy">
@@ -76,7 +94,7 @@ export function Doctor({
               href={`data:application/json;charset=utf-8,${encodeURIComponent(json)}`}
               download="sweepdock-simulation-report.json"
             >
-              Download report
+              Download report <Download size={16} aria-hidden="true" />
             </a>
             <details>
               <summary>Preview report contents</summary>
@@ -85,15 +103,60 @@ export function Doctor({
           </section>
         </div>
       ) : (
-        <div className="empty-state">
-          <h2>No events yet.</h2>
-          <p>Run a simulation to see its lifecycle here.</p>
-          <Link
-            className="primary"
-            to={source === 'safety' ? '/safety' : '/demo'}
+        <div className="doctor-empty-layout">
+          <section className="empty-state doctor-empty">
+            <span className="empty-orbit" aria-hidden="true">
+              <Stethoscope size={39} strokeWidth={1.4} />
+            </span>
+            <span className="eyebrow">SIMULATION TIMELINE</span>
+            <h2>No events yet.</h2>
+            <p>Run a simulation to see its lifecycle here.</p>
+            <Link
+              className="primary"
+              to={source === 'safety' ? '/safety' : '/demo'}
+            >
+              {source === 'safety'
+                ? 'Try the safety lab'
+                : 'Try wallet cleanup'}{' '}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </section>
+          <section
+            className="doctor-guide"
+            aria-labelledby="doctor-guide-title"
           >
-            {source === 'safety' ? 'Try the safety lab' : 'Try wallet cleanup'}
-          </Link>
+            <span className="eyebrow">HOW TO USE SWAP DOCTOR</span>
+            <h2 id="doctor-guide-title">From a demo to an explanation.</h2>
+            <ol>
+              <li>
+                <Play size={19} aria-hidden="true" />
+                <div>
+                  <h3>Run a simulation</h3>
+                  <p>Choose a demo outcome and review each simulated swap.</p>
+                </div>
+              </li>
+              <li>
+                <ListChecks size={19} aria-hidden="true" />
+                <div>
+                  <h3>Read the timeline</h3>
+                  <p>
+                    Return here to follow the events and understand a paused
+                    result.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <FileJson size={19} aria-hidden="true" />
+                <div>
+                  <h3>Inspect your report</h3>
+                  <p>
+                    Preview and download anonymous event data. Nothing is
+                    uploaded.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </section>
         </div>
       )}
     </>

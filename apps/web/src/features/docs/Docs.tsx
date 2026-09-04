@@ -1,7 +1,19 @@
-import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Code2,
+  Compass,
+  Route,
+  Wallet,
+  ShieldCheck,
+  CircleCheck,
+} from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { docPages } from './content';
 import './docs.css';
+
+const guideIcons = [Compass, Route, Wallet, Code2, ShieldCheck, CircleCheck];
 
 export function Docs() {
   const { pathname } = useLocation();
@@ -14,23 +26,52 @@ export function Docs() {
         <span className="docs-nav-title">
           <BookOpen size={17} aria-hidden="true" /> SWEEPDOCK DOCS
         </span>
-        {docPages.map((item) => (
-          <NavLink
-            key={item.slug}
-            end
-            to={item.slug ? `/docs/${item.slug}` : '/docs'}
-          >
-            {item.label}
-          </NavLink>
-        ))}
+        {docPages.map((item, index) => {
+          const Icon = guideIcons[index] ?? BookOpen;
+          return (
+            <NavLink
+              key={item.slug}
+              end
+              to={item.slug ? `/docs/${item.slug}` : '/docs'}
+            >
+              <Icon size={16} aria-hidden="true" />
+              <span>{item.label}</span>
+            </NavLink>
+          );
+        })}
       </nav>
       {page ? (
         <article className="docs-article">
           <header className="docs-heading">
-            <span className="eyebrow">{page.audience}</span>
+            <div className="section-heading-label">
+              <span className="section-icon">
+                <BookOpen size={22} aria-hidden="true" />
+              </span>
+              <span className="eyebrow">{page.audience}</span>
+            </div>
             <h1>{page.title}</h1>
             <p>{page.summary}</p>
           </header>
+          {page.slug === '' && (
+            <div className="docs-start-cards">
+              <Link to="/docs/wallet-users">
+                <Wallet size={23} aria-hidden="true" />
+                <span>
+                  <strong>For wallet owners</strong>
+                  <small>Try your first cleanup demo</small>
+                </span>
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <Link to="/docs/developers">
+                <Code2 size={23} aria-hidden="true" />
+                <span>
+                  <strong>For developers</strong>
+                  <small>Explore the source and setup</small>
+                </span>
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+          )}
           <nav className="docs-toc" aria-label="On this page">
             <span>On this page</span>
             {page.sections.map((section) => (
