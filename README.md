@@ -10,6 +10,10 @@ SweepDock has a [public repository](https://github.com/GautamBytes/sweepdock). T
 
 Wallet connection requires a public HTTPS manifest. Local builds leave Connect disabled unless explicitly configured. The safety lab is a simulation, not a testnet swap or proof of settlement.
 
+## Website documentation
+
+The current UI branch adds a Docs section at `/docs`, with the product intention, approach and trade-offs, wallet-user instructions, developer setup, safety/privacy boundaries and implementation status. Documentation links appear on the landing page and in the workspace navigation. These pages describe implemented behaviour and label future work; they do not establish grant approval or live execution readiness.
+
 ## Run locally
 
 Use Node 24.19.0 and pnpm 11.24.0 (pinned in the repository).

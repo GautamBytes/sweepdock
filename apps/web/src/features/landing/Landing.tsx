@@ -60,6 +60,7 @@ export function Landing() {
               {tool.title}
             </Link>
           ))}
+          <Link to="/docs">Docs</Link>
         </nav>
         <a
           className="landing-github"
@@ -241,6 +242,20 @@ export function Landing() {
               <ArrowRight size={29} aria-hidden="true" />
             </Link>
           ))}
+        </section>
+        <section className="landing-docs" aria-labelledby="landing-docs-title">
+          <div>
+            <h2 id="landing-docs-title">
+              Understand the why. Find your next step.
+            </h2>
+            <p>
+              Read the thinking behind SweepDock, explore its current limits,
+              and follow a guide for wallet users or developers.
+            </p>
+          </div>
+          <Link className="landing-secondary" to="/docs">
+            Explore the docs <ArrowRight size={18} aria-hidden="true" />
+          </Link>
         </section>
       </main>
       <footer className="landing-footer">

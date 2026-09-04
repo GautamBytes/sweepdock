@@ -66,3 +66,15 @@ Evidence: `sweepdock-desktop-final.png` paired with `reference-normalized.png`. 
 - [x] Preview kept running for user review.
 
 final result: passed
+
+## Website documentation extension (2026-09-05)
+
+The user requested on-site product reasoning and audience-specific instructions. Added six guides using the approved Night Ledger typography, color tokens and existing workspace navigation. The landing page now has a Docs link and a dedicated introduction to the guides. No new visual direction or decorative asset was needed.
+
+Content was checked against the original product specification, current README, cleanup/live controls, safety-lab controls and core amount/policy functions. Planned execution, SDK publication, Telegram integration, user research and independent review are distinguished from working features. The project intention is expressed in product voice without an invented founder story or adoption claims.
+
+In-app browser captures: `output/playwright/docs/sweepdock-docs-desktop.png` at a 1440 × 1000 CSS viewport; `sweepdock-docs-mobile.png` and `sweepdock-docs-mobile-instructions.png` at 390 × 844. Checked guide hierarchy, active navigation, mobile wrapping, section jumps and step-by-step instructions. No clipping or unreadable content found.
+
+Validation: 180 unit tests; typecheck/build/API artifact/lint; 44 browser tests including eight new docs checks. The documentation navigation loads without external requests or page errors. Direct section URLs survive refresh, and unknown guide routes offer a return to the docs.
+
+final result: passed
