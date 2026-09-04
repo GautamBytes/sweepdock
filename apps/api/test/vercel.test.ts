@@ -1,5 +1,7 @@
 // @vitest-environment node
 import { expect, it } from 'vitest';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import handler from '../src/handler';
 import deployment from '../../../vercel.json';
 
@@ -41,4 +43,31 @@ it('retains same-origin protections after deployment', async () => {
     }),
   );
   expect(response.status).toBe(403);
+});
+
+it('uploads website Docs while excluding repository docs and secrets', () => {
+  const root = fileURLToPath(new URL('../../../', import.meta.url));
+  const paths = [
+    'apps/web/src/features/docs/Docs.tsx',
+    'apps/web/src/features/docs/content.tsx',
+    'apps/web/src/features/docs/docs.css',
+    'docs/operations/vercel.md',
+    '.env.local',
+  ];
+  const result = spawnSync(
+    'git',
+    [
+      '-c',
+      'core.excludesFile=.vercelignore',
+      'check-ignore',
+      '--no-index',
+      '--stdin',
+    ],
+    { cwd: root, input: paths.join('\n'), encoding: 'utf8' },
+  );
+  expect(result.status).toBe(0);
+  expect(result.stdout.trim().split('\n')).toEqual([
+    'docs/operations/vercel.md',
+    '.env.local',
+  ]);
 });

@@ -6,7 +6,7 @@ output
 test-results
 playwright-report
 coverage
-docs
+/docs
 tests
 **/*.test.ts
 **/*.test.tsx
