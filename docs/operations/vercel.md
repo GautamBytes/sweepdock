@@ -1,6 +1,23 @@
 # SweepDock on Vercel
 
-## Current audit — 2026-09-05
+## Current verified release — 2026-09-05
+
+- Application revision: `0cc0e054b8596af9ebb26fcfe17f27400f8a1a48`, merged via [PR #2](https://github.com/GautamBytes/sweepdock/pull/2) after both GitHub CI checks passed.
+- Verified preview: `dpl_9VHwNehCHJQRydVX1tHBEZEPar8P`.
+- Production: `dpl_4GLJZThPzATatZ3yd3FprzLh7vUU`, served at [sweepdock.vercel.app](https://sweepdock.vercel.app).
+- The seven documented page routes return 200. Health/config return read-only JSON; `/api/sign` is absent (404). Same-origin and invalid-input checks pass, and API responses use `no-store`.
+- The production manifest and 180×180 PNG are public and CORS-readable. Manifest identity is exactly `https://sweepdock.vercel.app`. Preview identity was checked separately.
+- Real balance reads of the public STON master contract and a real 10 STON→TON quote succeeded on both deployments. This used no personal wallet and sent no transaction.
+- Production browser testing confirmed a simulated attempt survives reload as unknown and blocks starting another attempt.
+- MIT licensing is recognized by GitHub; private vulnerability reporting is enabled.
+
+[Projected verification evidence](release-verification-2026-09-05.json) contains no wallet-session IDs, credentials or personal wallet data. The first production verification pass timed out; a complete repeat passed, and subsequent provider reads succeeded. The timeout's cause was not established.
+
+The official wallet picker rendered on preview, but some third-party directory/bridge requests failed in that browser session. A separate directory HTTP request returned 200 with CORS headers. This does not verify a physical-wallet connect/return/disconnect cycle. Keep that test pending and record failures honestly.
+
+Releases remain manual: Vercel is not linked to GitHub. CI validates repository changes; merging alone does not deploy. The production build came from the merged application revision above; later documentation-only commits record its results without changing the deployed application.
+
+## Historical pre-release audit — 2026-09-05
 
 Remote `main` is `894dd7c`; GitHub Actions passed. The public alias still points at the first deployment below. The Vercel project has no Git repository link (`link: null`), so merging a PR currently does not deploy it.
 

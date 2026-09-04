@@ -1,0 +1,201 @@
+{
+  "applicationCommit": "0cc0e054b8596af9ebb26fcfe17f27400f8a1a48",
+  "pullRequest": "https://github.com/GautamBytes/sweepdock/pull/2",
+  "previewDeployment": "dpl_9VHwNehCHJQRydVX1tHBEZEPar8P",
+  "productionDeployment": "dpl_4GLJZThPzATatZ3yd3FprzLh7vUU",
+  "preview": {
+    "origin": "https://sweepdock-ozh1r52c1-manchandanigautam-gmailcoms-projects.vercel.app",
+    "checkedAt": "2026-09-04T20:57:21.897Z",
+    "results": [
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/demo",
+        "status": 200
+      },
+      {
+        "path": "/app",
+        "status": 200
+      },
+      {
+        "path": "/doctor",
+        "status": 200
+      },
+      {
+        "path": "/developers",
+        "status": 200
+      },
+      {
+        "path": "/safety",
+        "status": 200
+      },
+      {
+        "path": "/safety/doctor",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200,
+        "signingEnabled": false
+      },
+      {
+        "path": "/api/config",
+        "status": 200,
+        "assets": ["STON", "NOT", "USDT"]
+      },
+      {
+        "path": "/tonconnect-manifest.json",
+        "status": 200,
+        "url": "https://sweepdock-ozh1r52c1-manchandanigautam-gmailcoms-projects.vercel.app"
+      },
+      {
+        "path": "/wallet-icon.png",
+        "status": 200,
+        "size": "180x180"
+      },
+      {
+        "path": "/api/balances",
+        "case": "cross-origin rejected",
+        "status": 403
+      },
+      {
+        "path": "/api/balances",
+        "case": "invalid input rejected",
+        "status": 400
+      },
+      {
+        "path": "/api/sign",
+        "status": 404
+      }
+    ]
+  },
+  "production": {
+    "origin": "https://sweepdock.vercel.app",
+    "checkedAt": "2026-09-04T21:00:30.170Z",
+    "results": [
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/demo",
+        "status": 200
+      },
+      {
+        "path": "/app",
+        "status": 200
+      },
+      {
+        "path": "/doctor",
+        "status": 200
+      },
+      {
+        "path": "/developers",
+        "status": 200
+      },
+      {
+        "path": "/safety",
+        "status": 200
+      },
+      {
+        "path": "/safety/doctor",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200,
+        "signingEnabled": false
+      },
+      {
+        "path": "/api/config",
+        "status": 200,
+        "assets": ["STON", "NOT", "USDT"]
+      },
+      {
+        "path": "/tonconnect-manifest.json",
+        "status": 200,
+        "url": "https://sweepdock.vercel.app"
+      },
+      {
+        "path": "/wallet-icon.png",
+        "status": 200,
+        "size": "180x180"
+      },
+      {
+        "path": "/api/balances",
+        "case": "cross-origin rejected",
+        "status": 403
+      },
+      {
+        "path": "/api/balances",
+        "case": "invalid input rejected",
+        "status": 400
+      },
+      {
+        "path": "/api/sign",
+        "status": 404
+      }
+    ]
+  },
+  "previewProviders": {
+    "origin": "https://sweepdock-ozh1r52c1-manchandanigautam-gmailcoms-projects.vercel.app",
+    "results": [
+      {
+        "path": "/api/balances",
+        "status": 200,
+        "checkedAt": "2026-09-04T20:57:45.553Z",
+        "account": "public STON master contract (not a user wallet)",
+        "complete": true,
+        "assetCount": 61,
+        "readOnly": true
+      },
+      {
+        "path": "/api/quote",
+        "status": 200,
+        "checkedAt": "2026-09-04T20:57:46.388Z",
+        "readOnly": true,
+        "expectedOutputUnits": "3149271672",
+        "minimumOutputUnits": "3117778956",
+        "gasConsumedUnits": "35000000",
+        "gasBudgetUnits": "185000000",
+        "routes": ["StonFiV1"]
+      }
+    ]
+  },
+  "productionProviders": {
+    "origin": "https://sweepdock.vercel.app",
+    "results": [
+      {
+        "path": "/api/balances",
+        "status": 200,
+        "checkedAt": "2026-09-04T21:01:03.611Z",
+        "account": "public STON master contract (not a user wallet)",
+        "complete": true,
+        "assetCount": 61,
+        "readOnly": true
+      },
+      {
+        "path": "/api/quote",
+        "status": 200,
+        "checkedAt": "2026-09-04T21:01:04.457Z",
+        "readOnly": true,
+        "expectedOutputUnits": "3146656973",
+        "minimumOutputUnits": "3115190404",
+        "gasConsumedUnits": "35000000",
+        "gasBudgetUnits": "185000000",
+        "routes": ["StonFiV1"]
+      }
+    ]
+  },
+  "productionSafetyReload": "simulated attempt recovered as unknown; start button disabled",
+  "physicalPhoneTest": "pending",
+  "signingEnabled": false,
+  "transactionsSent": 0,
+  "notes": [
+    "First production check timed out; complete rerun and provider reads passed. Cause not established.",
+    "Wallet picker rendered on preview; third-party directory/bridge requests showed browser errors. Separate directory HTTP check succeeded.",
+    "No personal wallet used. Provider balance check used the public STON master contract."
+  ]
+}

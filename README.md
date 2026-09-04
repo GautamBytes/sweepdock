@@ -6,7 +6,7 @@ Local-first TON wallet cleanup and reusable swap diagnostics.
 
 SweepDock has a [public repository](https://github.com/GautamBytes/sweepdock). The offline cleanup simulation, real read-only mainnet quotes, fee checks, read-only TON Connect adapter and offline safety/recovery lab are merged into `main`. Signing and transaction construction remain disabled.
 
-**Hosted status checked 2026-09-05:** the [public alias](https://sweepdock.vercel.app) still serves an older build: `/api/health` fails and `/safety` returns 404. Deployment repair is in progress; do not treat the hosted alias as a complete live demo. See [deployment notes](docs/operations/vercel.md) for the diagnosis and verification gates.
+**Hosted status verified 2026-09-05:** the [public demo](https://sweepdock.vercel.app/demo), [read-only app](https://sweepdock.vercel.app/app) and [safety lab](https://sweepdock.vercel.app/safety) are deployed. All documented routes, API health/config, real balance and quote reads, and the canonical wallet manifest were checked. The application release is merged in [PR #2](https://github.com/GautamBytes/sweepdock/pull/2). See [deployment evidence](docs/operations/release-verification-2026-09-05.json) and [limitations](docs/operations/release-readiness.md); a physical-phone wallet-return test remains pending.
 
 Wallet connection requires a public HTTPS manifest. Local builds leave Connect disabled unless explicitly configured. The safety lab is a simulation, not a testnet swap or proof of settlement.
 
@@ -54,7 +54,7 @@ pnpm test:e2e
 pnpm test:wallet
 ```
 
-The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. GitHub Actions passed on merged `main` commit `894dd7c`. New branch changes require their own checks. `pnpm check` includes a plain-Node test of the standalone API bundle outside the repository.
+The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. Both GitHub Actions checks passed for PR #2 before merging the application release at `0cc0e05`. New changes require their own checks. `pnpm check` includes a plain-Node test of the standalone API bundle outside the repository.
 
 ## Structure
 
