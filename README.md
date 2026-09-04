@@ -67,4 +67,4 @@ The browser suite covers sequential approvals, failure pauses, report download, 
 - `docs/engineering/foundation-status.md`: completed scope, compatibility findings and remaining release gates.
 - `docs/architecture/read-only-providers.md`: current provider contracts, real-read evidence and limitations.
 
-No npm package has been published. License selection remains open; public source visibility alone does not grant reuse rights. See [contributing](CONTRIBUTING.md), [security](SECURITY.md), and the [release checklist](docs/operations/release-readiness.md).
+No npm package has been published. Source code is available under the [MIT License](LICENSE). Third-party dependencies retain their own licenses. See [contributing](CONTRIBUTING.md), [security](SECURITY.md), and the [release checklist](docs/operations/release-readiness.md).

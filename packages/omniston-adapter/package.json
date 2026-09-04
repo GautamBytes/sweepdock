@@ -10,5 +10,6 @@
     "@sweepdock/core": "workspace:*",
     "@ston-fi/omniston-sdk": "0.8.9",
     "zod": "4.5.4"
-  }
+  },
+  "license": "MIT"
 }

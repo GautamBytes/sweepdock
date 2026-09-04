@@ -34,4 +34,4 @@ pnpm test:wallet
 
 Changes to custody, signing, persistence or trust boundaries need a documented design and security review before implementation. See the architecture and testing documents linked in the README.
 
-License selection is pending the repository owner's decision. Do not assume permission to redistribute an unlicensed checkout; check for a root `LICENSE` before contributing code intended for reuse.
+SweepDock is available under the [MIT License](LICENSE). Contributions must be compatible with that license. Third-party dependencies retain their own licenses.

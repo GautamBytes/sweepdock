@@ -8,7 +8,7 @@ Updated 2026-09-05. This checklist separates local engineering evidence from wor
 - Readiness fixes: isolated branch `fix/grant-readiness`.
 - Fresh pinned dependency installation and baseline: 23 test files / 178 tests passed.
 - README refreshed; contribution and security guidance added.
-- License: owner decision pending. Do not describe the repository as licensed open source yet.
+- License: MIT, selected by the owner on 2026-09-05; root license and package metadata added.
 - Final local checks: typecheck, 180 unit tests, production build, standalone API check, ESLint and Prettier passed.
 - Browser checks: 30 tests passed on a dedicated server at port 5183; one official TON Connect SDK no-funds fixture passed on port 5174. No physical wallet was used.
 - Vercel local package: its actual function entry returned healthy read-only JSON; the packaged bundle passed outside the checkout.
