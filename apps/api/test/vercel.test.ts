@@ -1,6 +1,15 @@
 // @vitest-environment node
 import { expect, it } from 'vitest';
 import handler from '../../../api/[...path]';
+import deployment from '../../../vercel.json';
+
+it('keeps direct safety-lab links refreshable in the deployment config', () => {
+  for (const source of ['/safety', '/safety/doctor'])
+    expect(deployment.rewrites).toContainEqual({
+      source,
+      destination: '/index.html',
+    });
+});
 
 it('serves read-only health through the Vercel Web Standard handler', async () => {
   const response = await handler.fetch(

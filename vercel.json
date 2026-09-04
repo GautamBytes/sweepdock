@@ -8,6 +8,8 @@
     "api/[...path].ts": { "maxDuration": 30 }
   },
   "rewrites": [
+    { "source": "/safety", "destination": "/index.html" },
+    { "source": "/safety/doctor", "destination": "/index.html" },
     { "source": "/app", "destination": "/index.html" },
     { "source": "/demo", "destination": "/index.html" },
     { "source": "/doctor", "destination": "/index.html" },

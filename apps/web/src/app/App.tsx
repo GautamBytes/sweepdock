@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Link,
 } from 'react-router-dom';
 import {
   Layers2,
@@ -16,6 +17,7 @@ import {
 import { Cleanup } from '../features/cleanup/Cleanup';
 import { Doctor } from '../features/doctor/Doctor';
 import { LiveEntry } from '../features/wallet/LiveEntry';
+import { SafetyLab } from '../features/safety/SafetyLab';
 import {
   reviewAssets,
   simulateApproval,
@@ -26,6 +28,7 @@ import {
 export function App() {
   const location = useLocation();
   const live = location.pathname === '/app';
+  const safety = location.pathname.startsWith('/safety');
   const [selected, setSelected] = useState<string[]>(['STON']);
   const [items, setItems] = useState<DemoItem[]>([]);
   const [outcome, setOutcome] = useState<DemoOutcome>('completed');
@@ -114,6 +117,7 @@ export function App() {
             </nav>
           )}
           <Routes>
+            <Route path="/safety/*" element={<SafetyLab />} />
             <Route path="/app" element={<LiveEntry />} />
             <Route
               path="/demo"
@@ -162,6 +166,9 @@ export function App() {
                     </p>
                   </div>
                   <section className="asset-panel developer-panel">
+                    <Link className="text-link" to="/safety">
+                      Open offline safety lab
+                    </Link>
                     <h2>Available in this local repository</h2>
                     <ul>
                       <li>Exact integer token parsing and formatting.</li>
@@ -204,7 +211,12 @@ export function App() {
         </main>
         <footer>
           Built for a calmer TON wallet.
-          <span>Local data clears on refresh · No analytics</span>
+          <span>
+            {safety
+              ? 'Safety lab saved in this browser'
+              : 'Cleanup data clears on refresh'}{' '}
+            · No analytics
+          </span>
         </footer>
       </div>
     </div>

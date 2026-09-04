@@ -1,0 +1,65 @@
+.safety-panel {
+  padding: 28px;
+  min-width: 0;
+}
+.safety-panel p,
+.safety-footnote {
+  line-height: 1.6;
+}
+.safety-panel > p {
+  margin-top: 12px;
+}
+.safety-panel label {
+  display: block;
+  margin: 24px 0 8px;
+  font-weight: 600;
+}
+.safety-panel select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+  color: inherit;
+}
+.safety-panel > .primary {
+  width: 100%;
+  margin-top: 16px;
+}
+.safety-actions {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0;
+}
+.safety-actions button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  color: inherit;
+  text-align: left;
+}
+.safety-lab button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.safety-error {
+  border-left: 3px solid #9b391b;
+  padding-left: 14px;
+  overflow-wrap: anywhere;
+}
+.safety-error code {
+  font-size: 12px;
+}
+.safety-footnote {
+  max-width: 82ch;
+  margin-top: 28px;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  .safety-panel {
+    padding: 20px;
+  }
+}
