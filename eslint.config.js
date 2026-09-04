@@ -7,10 +7,22 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist/**',
+      '.vercel/**',
+      'output/**',
       '**/node_modules/**',
       'playwright-report/**',
       'test-results/**',
     ],
+  },
+  {
+    files: ['scripts/*.mjs'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        Request: 'readonly',
+      },
+    },
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

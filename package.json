@@ -9,14 +9,16 @@
   },
   "scripts": {
     "dev": "vite --configLoader runner --config apps/web/vite.config.ts --host 127.0.0.1",
-    "build": "tsc -p packages/core/tsconfig.build.json && vite build --configLoader runner --config apps/web/vite.config.ts",
+    "build": "pnpm build:api && tsc -p packages/core/tsconfig.build.json && vite build --configLoader runner --config apps/web/vite.config.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:wallet": "playwright test --config playwright.wallet.config.ts",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "check": "pnpm typecheck && pnpm test && pnpm build && pnpm lint"
+    "check": "pnpm typecheck && pnpm test && pnpm build && pnpm test:api-artifact && pnpm lint",
+    "build:api": "node scripts/build-api.mjs",
+    "test:api-artifact": "node scripts/check-api-artifact.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -31,6 +33,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
     "@vitejs/plugin-react": "6.1.1",
+    "esbuild": "0.28.2",
     "eslint": "10.9.1",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.6",

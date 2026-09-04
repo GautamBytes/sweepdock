@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { expect, it } from 'vitest';
-import handler from '../../../api/[...path]';
+import handler from '../src/handler';
 import deployment from '../../../vercel.json';
 
 it('keeps direct safety-lab links refreshable in the deployment config', () => {

@@ -1,4 +1,4 @@
-import { createReadApi } from '../apps/api/src/index';
+import { createReadApi } from './index';
 
 const api = createReadApi(
   process.env.TONAPI_KEY ? { apiKey: process.env.TONAPI_KEY } : {},

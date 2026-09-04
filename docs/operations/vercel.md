@@ -1,5 +1,21 @@
 # SweepDock on Vercel
 
+## Current audit — 2026-09-05
+
+Remote `main` is `894dd7c`; GitHub Actions passed. The public alias still points at the first deployment below. The Vercel project has no Git repository link (`link: null`), so merging a PR currently does not deploy it.
+
+The public `/api/health` returns 500 (`FUNCTION_INVOCATION_FAILED`) and `/safety` returns 404. Vercel logs show `ERR_MODULE_NOT_FOUND` for `/var/task/apps/api/src/index`: the packager preserved an extensionless ESM import. A local Vercel build reproduced the same failure in plain Node. Workspace package exports also target TypeScript source, so merely changing the first import extension would not establish a standalone runtime.
+
+The repair branch bundles the existing read-only handler and dependencies with pinned esbuild into `apps/api/dist/handler.mjs`, imported by `api/[...path].js`. `pnpm check` loads that bundle outside the checkout and checks health/config, cross-origin rejection, invalid input and disabled signing. The Vercel install command uses version-pinned `npx` instead of replacing a global pnpm launcher.
+
+Production manifests use `VERCEL_PROJECT_PRODUCTION_URL`; previews use `VERCEL_URL`. Both are validated Vercel hostnames. Missing production identity blocks the build. Local builds remain unconfigured. Verify the emitted production URL equals the actual public alias before deploying; never use a synthetic local-build hostname for a public deployment.
+
+These fixes need a new deployment and hosted verification. No deployment, GitHub link change, signing, transaction or real-phone test is implied by the local build. Follow the [release checklist](release-readiness.md).
+
+## Historical first deployment — 2026-09-04
+
+The following is a dated record of the first deployment, not current readiness evidence.
+
 Created in the user's existing Hobby scope on 2026-09-04. No domain purchase, paid service, GitHub repository or Git push was made.
 
 - Project: `sweepdock`, ID `prj_z2mcP8cQWzy5xeZQOt2TuxGPjHh0`.
