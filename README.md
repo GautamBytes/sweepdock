@@ -12,7 +12,7 @@ Wallet connection requires a public HTTPS manifest. Local builds leave Connect d
 
 ## Website documentation
 
-The current UI branch adds a Docs section at `/docs`, with the product intention, approach and trade-offs, wallet-user instructions, developer setup, safety/privacy boundaries and implementation status. Documentation links appear on the landing page and in the workspace navigation. These pages describe implemented behaviour and label future work; they do not establish grant approval or live execution readiness.
+The website includes a Docs section at `/docs`, with the product intention, approach and trade-offs, wallet-user instructions, developer setup, safety/privacy boundaries and implementation status. Documentation links appear on the landing page and in the workspace navigation. These pages describe implemented behaviour and label future work; they do not establish grant approval or live execution readiness.
 
 ## Run locally
 
