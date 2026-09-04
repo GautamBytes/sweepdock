@@ -6,7 +6,7 @@ Local-first TON wallet cleanup and reusable swap diagnostics.
 
 Implementation has started. This repository is on the Mac's internal SSD at `/Users/gautammanch/Developer/sweepdock`, outside Documents and iCloud Drive.
 
-The labelled offline simulation, read-only mainnet preview, quote-derived USDT gas checks and read-only TON Connect adapter are implemented. Wallet connection needs this app's own hosted HTTPS manifest; the default local build leaves that button disabled until configured. Signing, transaction building, deployments and grant submissions are not enabled.
+The labelled offline simulation, read-only mainnet preview, quote-derived USDT gas checks and read-only TON Connect adapter are implemented. Wallet connection needs this app's own hosted HTTPS manifest; the default local build leaves that button disabled until configured. A separate offline safety lab exercises testnet preflight checks, durable browser recovery and cross-tab duplicate prevention. Real signing and transaction building remain disabled. The earlier read-only build is deployed; this safety-lab batch is local only.
 
 ## Run locally
 
@@ -19,7 +19,9 @@ pnpm dev
 
 Open http://127.0.0.1:5173/demo for the offline simulation or http://127.0.0.1:5173/app for explicit mainnet reads. No API key, account, wallet connection or environment file is required. The only supported `VITE_APP_MODE` setting remains `mock`; another value blocks the application. `/demo` never contacts a blockchain or quote provider. `/app` contacts the local read-only API only after a user requests balances or a quote.
 
-The local Hono API is attached to Vite's development server. `pnpm build` produces the static frontend and core declarations, not a deployed API service. Hosting the frontend by itself will not enable live reads. Server packaging/deployment is a later task; do not expose this local development server publicly.
+The local Hono API is attached to Vite's development server. `pnpm build` produces the static frontend and core declarations. Vercel separately packages the read-only handler in `api/[...path].ts`; hosting only the static frontend does not enable live reads. See [deployment notes](docs/operations/vercel.md). Do not expose this local development server publicly.
+
+Open http://127.0.0.1:5173/safety for the new offline safety lab. Start a simulated attempt, refresh, then inspect its preserved unknown state in Swap Doctor. The lab never connects a wallet or calls a provider. Unlike `/demo`, its single sample attempt stays in IndexedDB until the user clears a finished sample. See [safety and recovery testing](docs/testing/safety-recovery.md).
 
 If the public TonAPI quota is insufficient, supply your own `TONAPI_KEY` in a root `.env.local` file. This is optional, server-only, and ignored by Git. Do not prefix it with `VITE_`. No paid plan or key has been created.
 
@@ -37,7 +39,7 @@ If the public TonAPI quota is insufficient, supply your own `TONAPI_KEY` in a ro
 - Value gas in USDT using a fresh, size-bound reverse quote, with integer rounding and fail-closed reference checks.
 - Connect a mainnet public account through the official wallet picker when a hosted manifest is configured; clear old reads on wallet changes or disconnect. No signer is exposed.
 
-Values and events on `/demo` are fixtures, not market prices or settlement evidence. `/app` uses real provider reads; its quotes are previews, not executable offers. The SDK has no guaranteed quote-expiry field, so previews become locally stale after at most 30 seconds. USDT cost checks require a supported, fresh reference quote; if unavailable, the app does not clear the quote for cleanup. State lives in memory and clears on refresh. The scenario reset is not permission to resend an actual transaction.
+Values and events on `/demo` and `/safety` are fixtures, not market prices or settlement evidence. `/app` uses real provider reads; its quotes are previews, not executable offers. The SDK has no guaranteed quote-expiry field, so previews become locally stale after at most 30 seconds. USDT cost checks require a supported, fresh reference quote; if unavailable, the app does not clear the quote for cleanup. `/demo` and `/app` state lives in memory and clears on refresh; `/safety` has an isolated simulation journal. The scenario reset is not permission to resend an actual transaction.
 
 Wallet setup and valuation details: [architecture notes](docs/architecture/wallet-and-usdt-costs.md). No-money testing, including TON testnet limitations: [testing guide](docs/testing/no-money-testing.md).
 
@@ -63,4 +65,4 @@ The browser suite covers sequential approvals, failure pauses, report download, 
 - `docs/engineering/foundation-status.md`: completed scope, compatibility findings and remaining release gates.
 - `docs/architecture/read-only-providers.md`: current provider contracts, real-read evidence and limitations.
 
-No remote repository, package publication or deployment has been created. License selection remains open; the kit is not yet a published open-source package.
+No remote repository or package publication has been created. The earlier read-only app is deployed to Vercel; see the deployment notes for scope. License selection remains open; the kit is not yet a published open-source package.
