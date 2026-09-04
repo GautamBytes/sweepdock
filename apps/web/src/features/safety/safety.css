@@ -20,7 +20,7 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px;
-  background: white;
+  background: var(--surface);
   color: inherit;
 }
 .safety-panel > .primary {
@@ -37,7 +37,7 @@
   padding: 10px 16px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: white;
+  background: var(--surface);
   color: inherit;
   text-align: left;
 }
@@ -46,7 +46,7 @@
   cursor: not-allowed;
 }
 .safety-error {
-  border-left: 3px solid #9b391b;
+  border-left: 3px solid #efa99b;
   padding-left: 14px;
   overflow-wrap: anywhere;
 }

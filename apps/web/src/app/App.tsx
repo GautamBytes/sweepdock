@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Landing } from '../features/landing/Landing';
+import { Docs } from '../features/docs/Docs';
 import {
   NavLink,
   Navigate,
@@ -13,6 +15,7 @@ import {
   Code2,
   ArrowUpRight,
   ShieldCheck,
+  BookOpen,
 } from 'lucide-react';
 import { Cleanup } from '../features/cleanup/Cleanup';
 import { Doctor } from '../features/doctor/Doctor';
@@ -28,6 +31,18 @@ import {
 export function App() {
   const location = useLocation();
   const live = location.pathname === '/app';
+  const docs =
+    location.pathname === '/docs' || location.pathname.startsWith('/docs/');
+  useEffect(() => {
+    const section = location.hash
+      ? document.getElementById(location.hash.slice(1))
+      : null;
+    if (section) section.scrollIntoView();
+    else {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [location.pathname, location.hash]);
   const safety = location.pathname.startsWith('/safety');
   const [selected, setSelected] = useState<string[]>(['STON']);
   const [items, setItems] = useState<DemoItem[]>([]);
@@ -61,17 +76,18 @@ export function App() {
       );
     });
   }
+  if (location.pathname === '/') return <Landing />;
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <aside className="sidebar">
-        <NavLink className="brand" to="/demo">
+        <NavLink className="brand" to="/" aria-label="SweepDock home">
           <span className="brand-mark">
             <Layers2 size={23} />
           </span>
-          SweepDock<span className="brand-dot">.</span>
+          SweepDock
         </NavLink>
         <span className="nav-label">WORKSPACE</span>
         <nav aria-label="Main navigation">
@@ -86,6 +102,10 @@ export function App() {
           <NavLink to="/developers">
             <Code2 size={18} />
             Developer Kit
+          </NavLink>
+          <NavLink to="/docs">
+            <BookOpen size={18} />
+            Docs
           </NavLink>
         </nav>
         <div className="sidebar-note">
@@ -106,7 +126,13 @@ export function App() {
           <span>Less clutter. More clarity.</span>
           <span className="local-badge">
             <span className="status-dot" />
-            {live ? 'Mainnet · read only' : 'Offline simulation'}
+            {docs
+              ? 'Product documentation'
+              : live
+                ? 'Mainnet · read only'
+                : location.pathname === '/developers'
+                  ? 'Toolkit · in development'
+                  : 'Offline simulation'}
           </span>
         </header>
         <main id="main">
@@ -117,6 +143,7 @@ export function App() {
             </nav>
           )}
           <Routes>
+            <Route path="/docs/*" element={<Docs />} />
             <Route path="/safety/*" element={<SafetyLab />} />
             <Route path="/app" element={<LiveEntry />} />
             <Route
@@ -212,9 +239,11 @@ export function App() {
         <footer>
           Built for a calmer TON wallet.
           <span>
-            {safety
-              ? 'Safety lab saved in this browser'
-              : 'Cleanup data clears on refresh'}{' '}
+            {docs
+              ? 'Read-only prototype · Signing disabled'
+              : safety
+                ? 'Safety lab saved in this browser'
+                : 'Cleanup data clears on refresh'}{' '}
             · No analytics
           </span>
         </footer>

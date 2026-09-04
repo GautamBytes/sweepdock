@@ -2,7 +2,7 @@
   display: flex;
   gap: 4px;
   margin: 0 0 30px;
-  background: #eaf0e8;
+  background: var(--surface);
   padding: 4px;
   border-radius: 8px;
   width: fit-content;
@@ -13,16 +13,16 @@
   border-radius: 5px;
 }
 .mode-tabs a.active {
-  background: #fff;
-  box-shadow: 0 1px 3px #20332f12;
+  background: var(--surface);
+  box-shadow: 0 1px 3px #100b1b26;
 }
 .live-note {
-  background: #eef3f8;
-  border-color: #d6e2eb;
-  color: #345269;
+  background: #303347;
+  border-color: #58617c;
+  color: #dce6f7;
 }
 .live-note > span:last-child {
-  color: #4c6475;
+  color: #becbe2;
 }
 .live-grid {
   grid-template-columns: minmax(0, 1fr) 360px;
@@ -43,8 +43,8 @@
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 7px;
-  background: #fcfdfb;
-  color: #20332f;
+  background: var(--canvas);
+  color: var(--text);
   padding: 12px;
   font-size: 12px;
   min-width: 0;
@@ -63,12 +63,12 @@
   color: var(--muted);
 }
 .live-empty svg {
-  color: var(--green);
+  color: var(--accent);
   margin-bottom: 14px;
 }
 .live-empty h3 {
   font-size: 16px;
-  color: #344a3d;
+  color: var(--text);
   margin: 0 0 9px;
   font-weight: 550;
 }
@@ -158,7 +158,7 @@
 }
 .real-asset-list code {
   display: block;
-  color: #536b60;
+  color: var(--muted);
   font-size: 9px;
   overflow-wrap: anywhere;
   line-height: 1.7;
@@ -176,16 +176,16 @@
 }
 .text-button {
   border: 1px solid var(--border);
-  background: #f6f9f3;
+  background: var(--raised);
   border-radius: 5px;
   padding: 8px 10px;
-  color: var(--green);
+  color: var(--accent);
   font-size: 10px;
   white-space: nowrap;
 }
 .text-button:disabled {
-  color: #707b73;
-  background: #f7f8f6;
+  color: var(--muted);
+  background: var(--surface);
 }
 .live-wallet-data .balance-strip strong {
   overflow-wrap: anywhere;
@@ -202,7 +202,7 @@
   margin: 0 0 24px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
 }
 .wallet-connection h2 {
   font-size: 17px;

@@ -3,8 +3,8 @@ import { expect, it } from 'vitest';
 import handler from '../src/handler';
 import deployment from '../../../vercel.json';
 
-it('keeps direct safety-lab links refreshable in the deployment config', () => {
-  for (const source of ['/safety', '/safety/doctor'])
+it('keeps direct documentation and safety links refreshable in deployment', () => {
+  for (const source of ['/docs', '/docs/:path*', '/safety', '/safety/doctor'])
     expect(deployment.rewrites).toContainEqual({
       source,
       destination: '/index.html',
