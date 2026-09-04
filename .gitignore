@@ -11,3 +11,6 @@ test-results/
 .pnpm-store/
 .playwright-cli/
 output/
+.vercel/
+.vercel
+.env*

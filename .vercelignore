@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+.playwright-cli
+output
+test-results
+playwright-report
+coverage
+docs
+tests
+**/*.test.ts
+**/*.test.tsx
+**/test
+**/dist

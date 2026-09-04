@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 import { createLocalApiMiddleware } from '@sweepdock/api/vite';
+import { walletManifestPlugin } from './build/wallet-manifest';
 
 function readApi(mode: string): Plugin {
   const root = fileURLToPath(new URL('../..', import.meta.url));
@@ -23,7 +24,14 @@ export default defineConfig(({ mode }) => ({
   root: fileURLToPath(new URL('.', import.meta.url)),
   envDir: fileURLToPath(new URL('../..', import.meta.url)),
   optimizeDeps: { include: ['@tonconnect/ui-react'] },
-  plugins: [react(), tailwindcss(), readApi(mode)],
+  plugins: [
+    react(),
+    tailwindcss(),
+    readApi(mode),
+    walletManifestPlugin(
+      process.env.VERCEL === '1' ? process.env.VERCEL_URL : undefined,
+    ),
+  ],
   build: { outDir: 'dist', emptyOutDir: true },
   server: { host: '127.0.0.1' },
 }));
