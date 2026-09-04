@@ -28,9 +28,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     tailwindcss(),
     readApi(mode),
-    walletManifestPlugin(
-      process.env.VERCEL === '1' ? process.env.VERCEL_URL : undefined,
-    ),
+    walletManifestPlugin(process.env),
   ],
   build: { outDir: 'dist', emptyOutDir: true },
   server: { host: '127.0.0.1' },

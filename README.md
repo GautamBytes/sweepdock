@@ -4,9 +4,11 @@ Local-first TON wallet cleanup and reusable swap diagnostics.
 
 ## Development status
 
-Implementation has started. This repository is on the Mac's internal SSD at `/Users/gautammanch/Developer/sweepdock`, outside Documents and iCloud Drive.
+SweepDock has a [public repository](https://github.com/GautamBytes/sweepdock). The offline cleanup simulation, real read-only mainnet quotes, fee checks, read-only TON Connect adapter and offline safety/recovery lab are merged into `main`. Signing and transaction construction remain disabled.
 
-The labelled offline simulation, read-only mainnet preview, quote-derived USDT gas checks and read-only TON Connect adapter are implemented. Wallet connection needs this app's own hosted HTTPS manifest; the default local build leaves that button disabled until configured. A separate offline safety lab exercises testnet preflight checks, durable browser recovery and cross-tab duplicate prevention. Real signing and transaction building remain disabled. The earlier read-only build is deployed; this safety-lab batch is local only.
+**Hosted status checked 2026-09-05:** the [public alias](https://sweepdock.vercel.app) still serves an older build: `/api/health` fails and `/safety` returns 404. Deployment repair is in progress; do not treat the hosted alias as a complete live demo. See [deployment notes](docs/operations/vercel.md) for the diagnosis and verification gates.
+
+Wallet connection requires a public HTTPS manifest. Local builds leave Connect disabled unless explicitly configured. The safety lab is a simulation, not a testnet swap or proof of settlement.
 
 ## Run locally
 
@@ -19,7 +21,7 @@ pnpm dev
 
 Open http://127.0.0.1:5173/demo for the offline simulation or http://127.0.0.1:5173/app for explicit mainnet reads. No API key, account, wallet connection or environment file is required. The only supported `VITE_APP_MODE` setting remains `mock`; another value blocks the application. `/demo` never contacts a blockchain or quote provider. `/app` contacts the local read-only API only after a user requests balances or a quote.
 
-The local Hono API is attached to Vite's development server. `pnpm build` produces the static frontend and core declarations. Vercel separately packages the read-only handler in `api/[...path].ts`; hosting only the static frontend does not enable live reads. See [deployment notes](docs/operations/vercel.md). Do not expose this local development server publicly.
+The local Hono API is attached to Vite's development server. `pnpm build` produces the static frontend and core declarations. The build also bundles the server into `apps/api/dist/handler.mjs`; Vercel packages it through `api/[...path].js`; hosting only the static frontend does not enable live reads. See [deployment notes](docs/operations/vercel.md). Do not expose this local development server publicly.
 
 Open http://127.0.0.1:5173/safety for the new offline safety lab. Start a simulated attempt, refresh, then inspect its preserved unknown state in Swap Doctor. The lab never connects a wallet or calls a provider. Unlike `/demo`, its single sample attempt stays in IndexedDB until the user clears a finished sample. See [safety and recovery testing](docs/testing/safety-recovery.md).
 
@@ -52,7 +54,7 @@ pnpm test:e2e
 pnpm test:wallet
 ```
 
-The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. CI is configured but has not run on a remote host.
+The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. GitHub Actions passed on merged `main` commit `894dd7c`. New branch changes require their own checks. `pnpm check` includes a plain-Node test of the standalone API bundle outside the repository.
 
 ## Structure
 
@@ -61,8 +63,8 @@ The browser suite covers sequential approvals, failure pauses, report download, 
 - `packages/core`: reusable domain rules, reviewed identity normalization and browser-safe response schemas. The main entry point has no network operations; TON primitives live in a separate assets entry point.
 - `packages/omniston-adapter`: bounded, cancellable quote subscriptions using official SDK 0.8.9. No build/sign/track wrapper yet.
 - `tests/e2e`: browser regression checks.
-- `docs/specs` and `docs/plans`: approved design and original implementation plan.
+- `docs/specs`: product design. Historical implementation checkpoints describe their own dates; they are not current deployment evidence.
 - `docs/engineering/foundation-status.md`: completed scope, compatibility findings and remaining release gates.
 - `docs/architecture/read-only-providers.md`: current provider contracts, real-read evidence and limitations.
 
-No remote repository or package publication has been created. The earlier read-only app is deployed to Vercel; see the deployment notes for scope. License selection remains open; the kit is not yet a published open-source package.
+No npm package has been published. Source code is available under the [MIT License](LICENSE). Third-party dependencies retain their own licenses. See [contributing](CONTRIBUTING.md), [security](SECURITY.md), and the [release checklist](docs/operations/release-readiness.md).

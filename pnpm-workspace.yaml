@@ -5,3 +5,5 @@ minimumReleaseAge: 1440
 strictPeerDependencies: true
 overrides:
   '@eslint/plugin-kit': 0.7.2
+allowBuilds:
+  esbuild: true

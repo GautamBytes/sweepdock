@@ -1,0 +1,99 @@
+{
+  "mode": "real mainnet read-only quotes through locally bundled API",
+  "walletUsed": false,
+  "transactionsSent": 0,
+  "note": "Cost ratio only; no wallet balance or reserve affordability verified. Quotes are momentary previews, not execution evidence.",
+  "results": [
+    {
+      "observedAt": "2026-09-04T20:49:02.525Z",
+      "input": "STON",
+      "amount": "0.1",
+      "inputUnits": "100000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:49:17.547Z",
+      "input": "STON",
+      "amount": "1",
+      "inputUnits": "1000000000",
+      "output": "TON",
+      "status": 200,
+      "expectedOutputUnits": "315264586",
+      "minimumOutputUnits": "312111941",
+      "gasConsumedUnits": "35000000",
+      "gasBudgetUnits": "185000000",
+      "routes": ["StonFiV1"],
+      "costWithinTenPercent": false
+    },
+    {
+      "observedAt": "2026-09-04T20:49:18.422Z",
+      "input": "STON",
+      "amount": "10",
+      "inputUnits": "10000000000",
+      "output": "TON",
+      "status": 200,
+      "expectedOutputUnits": "3152056954",
+      "minimumOutputUnits": "3120536385",
+      "gasConsumedUnits": "35000000",
+      "gasBudgetUnits": "185000000",
+      "routes": ["StonFiV1"],
+      "costWithinTenPercent": true
+    },
+    {
+      "observedAt": "2026-09-04T20:49:19.768Z",
+      "input": "NOT",
+      "amount": "10",
+      "inputUnits": "10000000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:49:34.770Z",
+      "input": "NOT",
+      "amount": "100",
+      "inputUnits": "100000000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:49:49.773Z",
+      "input": "NOT",
+      "amount": "1000",
+      "inputUnits": "1000000000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:50:04.775Z",
+      "input": "USDT",
+      "amount": "0.1",
+      "inputUnits": "100000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:50:19.777Z",
+      "input": "USDT",
+      "amount": "1",
+      "inputUnits": "1000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_INVALID_RESPONSE"
+    },
+    {
+      "observedAt": "2026-09-04T20:50:34.781Z",
+      "input": "USDT",
+      "amount": "10",
+      "inputUnits": "10000000",
+      "output": "TON",
+      "status": 503,
+      "error": "PROVIDER_UNAVAILABLE"
+    }
+  ]
+}
