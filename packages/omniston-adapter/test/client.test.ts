@@ -86,3 +86,42 @@ it('bounds a silent stream to fifteen seconds', async () => {
     vi.useRealTimers();
   }
 });
+it('ignores an unsupported first offer and accepts a later reviewed offer in the same stream', async () => {
+  const s = source();
+  const result = readQuote(
+    input,
+    new AbortController().signal,
+    s.client,
+    () => 1001000,
+  );
+  const unsupported = fixture();
+  if (unsupported.settlementData.$case !== 'swap')
+    throw new Error('Expected a swap fixture');
+  unsupported.settlementData.value.routes[0]!.steps[0]!.chunks[0]!.protocol =
+    'DeDustCPMMV2';
+  s.emit({ $case: 'quoteUpdated', value: unsupported });
+  s.emit({ $case: 'quoteUpdated', value: fixture() });
+  await expect(result).resolves.toMatchObject({ routes: ['StonFiV2'] });
+  expect(s.counts()).toEqual({ closed: 1, unsubscribed: 1, requested: 1 });
+});
+it('never accepts invalid offers when the stream deadline is reached', async () => {
+  vi.useFakeTimers();
+  try {
+    const s = source();
+    const result = readQuote(
+      input,
+      new AbortController().signal,
+      s.client,
+      () => 1001000,
+    );
+    const assertion = expect(result).rejects.toThrow(
+      'PROVIDER_INVALID_RESPONSE',
+    );
+    s.emit({ $case: 'quoteUpdated', value: { unexpected: 'payload' } });
+    await vi.advanceTimersByTimeAsync(15000);
+    await assertion;
+    expect(s.counts().requested).toBe(1);
+  } finally {
+    vi.useRealTimers();
+  }
+});

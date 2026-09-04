@@ -1,6 +1,6 @@
 import { formatUnits } from '@sweepdock/core';
 import type { QuotePreview } from '@sweepdock/core/read-models';
-import { assessPreview } from './economics';
+import { assessPreview, gasValueInUsdt } from './economics';
 
 export function QuoteResult({
   quote,
@@ -13,6 +13,7 @@ export function QuoteResult({
 }) {
   const decimals = quote.request.output === 'TON' ? 9 : 6;
   const status = assessPreview(quote, nativeBalance, now);
+  const usdtGas = gasValueInUsdt(quote, now);
   const descriptions: Record<string, string> = {
     COST_TOO_HIGH:
       'Skip this swap: estimated network cost exceeds the cleanup limit.',
@@ -20,7 +21,7 @@ export function QuoteResult({
       'Not enough TON for the upfront gas budget and the 0.05 TON reserve.',
     COST_DATA_UNAVAILABLE:
       quote.request.output === 'USDT'
-        ? 'Cost check unavailable: TON gas has not been valued in USDT. This quote is not cleared for cleanup.'
+        ? 'Cost check unavailable: a fresh USDT gas valuation is missing. Request a new quote. This quote is not cleared for cleanup.'
         : 'Gas information is missing. This quote is not cleared for cleanup.',
     BALANCE_REQUIRED:
       'Load a wallet to check its TON reserve. This quote alone does not prove affordability.',
@@ -77,7 +78,27 @@ export function QuoteResult({
           <dt>Route protocol</dt>
           <dd>{quote.routes.join(', ')}</dd>
         </div>
+        {quote.request.output === 'USDT' && (
+          <div>
+            <dt>Gas value in USDT · estimate</dt>
+            <dd>
+              {usdtGas === null
+                ? 'Unavailable'
+                : `${formatUnits(usdtGas, 6)} USDT`}
+            </dd>
+          </div>
+        )}
       </dl>
+      {usdtGas !== null && quote.gasValuation && (
+        <p className="fine-print">
+          Based on a USDT→TON reference quote—not another swap. Uses its minimum
+          output and rounds the gas value up. The 10% cost check uses your
+          minimum USDT output. This is an estimate, not a guaranteed exchange
+          rate. Reference freshness:{' '}
+          {Math.max(0, Math.ceil((quote.gasValuation.staleAtMs - now) / 1000))}
+          s.
+        </p>
+      )}
       <p role="status" className={status.acceptable ? 'success' : 'notice'}>
         {descriptions[status.reason]}
       </p>

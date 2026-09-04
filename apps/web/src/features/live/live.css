@@ -193,6 +193,40 @@
 .live-balances {
   min-width: 0;
 }
+.wallet-connection {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px;
+  margin: 0 0 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+.wallet-connection h2 {
+  font-size: 17px;
+  margin: 0 0 9px;
+}
+.wallet-connection p {
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 600px;
+}
+.wallet-connection .fine-print {
+  font-size: 11px;
+}
+.wallet-connection code {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.wallet-connection button {
+  flex-shrink: 0;
+  min-height: 44px;
+  width: auto;
+  padding-inline: 20px;
+  margin-top: 0;
+}
 @media (max-width: 1150px) {
   .live-grid {
     grid-template-columns: minmax(0, 1fr) 310px;
@@ -205,6 +239,10 @@
   }
 }
 @media (max-width: 800px) {
+  .wallet-connection {
+    flex-direction: column;
+    gap: 12px;
+  }
   .live-grid {
     grid-template-columns: 1fr;
   }

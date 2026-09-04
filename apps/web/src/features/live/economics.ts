@@ -1,5 +1,28 @@
 import type { QuotePreview } from '@sweepdock/core/read-models';
 import { assessCost } from '@sweepdock/core';
+export function gasValueInUsdt(
+  quote: QuotePreview,
+  now: number,
+): bigint | null {
+  const rate = quote.gasValuation;
+  if (
+    !rate ||
+    quote.request.output !== 'USDT' ||
+    quote.gasConsumedUnits === null ||
+    now >= quote.previewStaleAtMs ||
+    now >= rate.staleAtMs ||
+    now - rate.quotedAtMs >= 30000 ||
+    rate.quotedAtMs - now > 5000 ||
+    rate.staleAtMs > rate.quotedAtMs + 30000 ||
+    rate.inputUsdtUnits !== quote.expectedOutputUnits ||
+    BigInt(rate.minimumTonUnits) <= 0n
+  )
+    return null;
+  const numerator =
+    BigInt(quote.gasConsumedUnits) * BigInt(rate.inputUsdtUnits);
+  const denominator = BigInt(rate.minimumTonUnits);
+  return (numerator + denominator - 1n) / denominator;
+}
 export function assessPreview(
   quote: QuotePreview,
   nativeBalance: string | null,
@@ -7,15 +30,21 @@ export function assessPreview(
 ): { reason: string; acceptable: boolean } {
   if (now >= quote.previewStaleAtMs)
     return { reason: 'STALE_QUOTE', acceptable: false };
-  if (
-    quote.gasBudgetUnits === null ||
-    quote.gasConsumedUnits === null ||
-    quote.request.output !== 'TON'
-  )
+  if (quote.gasBudgetUnits === null || quote.gasConsumedUnits === null)
+    return { reason: 'COST_DATA_UNAVAILABLE', acceptable: false };
+  const cost =
+    quote.request.output === 'TON'
+      ? BigInt(quote.gasConsumedUnits)
+      : gasValueInUsdt(quote, now);
+  if (cost === null)
     return { reason: 'COST_DATA_UNAVAILABLE', acceptable: false };
   const decision = assessCost({
-    comparableOutputUnits: BigInt(quote.expectedOutputUnits),
-    incrementalNetworkCostUnits: BigInt(quote.gasConsumedUnits),
+    comparableOutputUnits: BigInt(
+      quote.request.output === 'USDT'
+        ? quote.minimumOutputUnits
+        : quote.expectedOutputUnits,
+    ),
+    incrementalNetworkCostUnits: cost,
     nativeBalanceUnits:
       BigInt(nativeBalance ?? quote.gasBudgetUnits) +
       (nativeBalance === null ? 50000000n : 0n),

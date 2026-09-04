@@ -6,6 +6,7 @@
   "dependencies": {
     "@sweepdock/api": "workspace:*",
     "@sweepdock/core": "workspace:*",
+    "@tonconnect/ui-react": "3.0.2",
     "lucide-react": "1.39.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",

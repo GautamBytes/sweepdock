@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowRight, Search, ShieldCheck } from 'lucide-react';
 import { formatUnits, parseUnits } from '@sweepdock/core';
 import {
@@ -10,8 +10,11 @@ import {
 import { fetchBalances, fetchQuote, errorCopy } from '../../lib/read-api';
 import { QuoteResult } from './QuoteResult';
 
-export function Live() {
-  const [address, setAddress] = useState('');
+export function Live({
+  connectedAddress,
+  walletPanel,
+}: { connectedAddress?: string | undefined; walletPanel?: ReactNode } = {}) {
+  const [address, setAddress] = useState(connectedAddress ?? '');
   const [balances, setBalances] = useState<Balances | null>(null);
   const [balanceError, setBalanceError] = useState('');
   const [quoteError, setQuoteError] = useState('');
@@ -123,8 +126,9 @@ export function Live() {
       <div className="simulation-note live-note">
         <ShieldCheck size={16} />
         <strong>Mainnet data — read only</strong>
-        <span>TonAPI balances + Omniston quotes. No wallet connection.</span>
+        <span>TonAPI balances + Omniston quotes. No signing or spending.</span>
       </div>
+      {walletPanel}
       <div className="workspace-grid live-grid">
         <section className="asset-panel live-balances">
           <div className="panel-header">
@@ -145,6 +149,7 @@ export function Live() {
             <input
               id="wallet-address"
               value={address}
+              readOnly={!!connectedAddress}
               onChange={(event) => changeAddress(event.target.value)}
               placeholder="EQ…, UQ… or 0:…"
               maxLength={70}

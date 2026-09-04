@@ -21,6 +21,8 @@ function readApi(mode: string): Plugin {
 
 export default defineConfig(({ mode }) => ({
   root: fileURLToPath(new URL('.', import.meta.url)),
+  envDir: fileURLToPath(new URL('../..', import.meta.url)),
+  optimizeDeps: { include: ['@tonconnect/ui-react'] },
   plugins: [react(), tailwindcss(), readApi(mode)],
   build: { outDir: 'dist', emptyOutDir: true },
   server: { host: '127.0.0.1' },

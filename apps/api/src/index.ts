@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { readBalances } from './tonapi';
 import { boundedText } from './bounded-json';
 import { readQuote } from '@sweepdock/omniston-adapter';
+import { readQuotePreview } from './quote-preview';
 import {
   normalizeMainnetAddress,
   reviewedAssets,
@@ -100,9 +101,11 @@ export function createReadApi(
       }
       const parsed = quoteInputSchema.safeParse(body);
       if (!parsed.success) throw new ReadError('INVALID_REQUEST');
-      const quote = await (options.quotes ?? readQuote)(
+      const quote = await readQuotePreview(
         parsed.data,
         c.req.raw.signal,
+        options.quotes ?? readQuote,
+        now,
       );
       return c.json(quotePreviewSchema.parse(quote));
     } finally {

@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Cleanup } from '../features/cleanup/Cleanup';
 import { Doctor } from '../features/doctor/Doctor';
-import { Live } from '../features/live/Live';
+import { LiveEntry } from '../features/wallet/LiveEntry';
 import {
   reviewAssets,
   simulateApproval,
@@ -114,7 +114,7 @@ export function App() {
             </nav>
           )}
           <Routes>
-            <Route path="/app" element={<Live />} />
+            <Route path="/app" element={<LiveEntry />} />
             <Route
               path="/demo"
               element={
@@ -180,10 +180,12 @@ export function App() {
                     </ul>
                     <h2>Before live use</h2>
                     <p>
-                      Transaction tracking, TON Connect, verified settlement
+                      Transaction tracking, wallet signing, verified settlement
                       evidence, persistent sessions and independent security
                       review still need to be built and checked. No SDK package
-                      has been published.
+                      has been published. TON Connect read-only connection is
+                      implemented but requires this app’s hosted manifest and a
+                      real-device connection check.
                     </p>
                     <a
                       className="text-link"

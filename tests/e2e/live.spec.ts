@@ -87,12 +87,50 @@ test('real-mode UI loads validated balances and previews without signing', async
     ),
   ).toBeVisible();
   await expect(
-    page.getByRole('button', { name: /approve|connect wallet|swap now/i }),
+    page.getByRole('button', { name: /approve|swap now/i }),
   ).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Connect wallet' }),
+  ).toBeDisabled();
   await page.getByLabel('Amount to preview').fill('2');
   await expect(
     page.getByRole('region', { name: 'Live quote result' }),
   ).toHaveCount(0);
+});
+
+test('USDT quote shows its gas valuation and withdraws it when the reference expires', async ({
+  page,
+}) => {
+  await page.clock.install();
+  const now = Date.now();
+  await page.route('**/api/quote', (route) =>
+    route.fulfill({
+      json: {
+        ...quote(),
+        request: { input: 'STON', output: 'USDT', inputUnits: '1000000000' },
+        expectedOutputUnits: '5000000',
+        minimumOutputUnits: '4950000',
+        gasValuation: {
+          source: 'omniston-reverse-quote',
+          referenceQuoteId: 'fixture-reference',
+          inputUsdtUnits: '5000000',
+          minimumTonUnits: '2000000000',
+          quotedAtMs: now,
+          staleAtMs: now + 2000,
+        },
+      },
+    }),
+  );
+  await page.goto('/app');
+  await page.getByLabel('To', { exact: true }).selectOption('USDT');
+  await page.getByRole('button', { name: 'Get live quote' }).click();
+  await expect(page.getByText('0.09375 USDT')).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('Load a wallet');
+  await page.clock.fastForward(3000);
+  await expect(page.getByText('0.09375 USDT')).toHaveCount(0);
+  await expect(page.getByRole('status')).toContainText(
+    'Cost check unavailable',
+  );
 });
 
 test('incomplete reads disable balance selection and errors do not become demo data', async ({

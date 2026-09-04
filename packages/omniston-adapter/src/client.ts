@@ -41,9 +41,10 @@ export async function readQuote(
   const source = suppliedSource ?? createSource();
   return new Promise((resolve, reject) => {
     let done = false;
+    let rejectedOffer: ReadError | undefined;
     let subscription: { unsubscribe(): void } | undefined;
     const timer = setTimeout(
-      () => finish(new ReadError('PROVIDER_UNAVAILABLE')),
+      () => finish(rejectedOffer ?? new ReadError('PROVIDER_UNAVAILABLE')),
       15000,
     );
     const abort = () => finish(new ReadError('CANCELLED'));
@@ -66,11 +67,10 @@ export async function readQuote(
             try {
               finish(undefined, normalizeQuote(event.value, request, now()));
             } catch (error) {
-              finish(
+              rejectedOffer =
                 error instanceof ReadError
                   ? error
-                  : new ReadError('PROVIDER_INVALID_RESPONSE'),
-              );
+                  : new ReadError('PROVIDER_INVALID_RESPONSE');
             }
           } else if (event.$case === 'noQuote')
             finish(new ReadError('NO_QUOTE'));

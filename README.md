@@ -6,7 +6,7 @@ Local-first TON wallet cleanup and reusable swap diagnostics.
 
 Implementation has started. This repository is on the Mac's internal SSD at `/Users/gautammanch/Developer/sweepdock`, outside Documents and iCloud Drive.
 
-The first two implementation batches are available: the labelled offline simulation and a separate read-only mainnet preview. Live wallet connections, signing, transaction building, deployments and grant submissions are not enabled.
+The labelled offline simulation, read-only mainnet preview, quote-derived USDT gas checks and read-only TON Connect adapter are implemented. Wallet connection needs this app's own hosted HTTPS manifest; the default local build leaves that button disabled until configured. Signing, transaction building, deployments and grant submissions are not enabled.
 
 ## Run locally
 
@@ -34,8 +34,12 @@ If the public TonAPI quota is insufficient, supply your own `TONAPI_KEY` in a ro
 - Preview real Omniston STON.fi V1/V2 swap quotes into TON or USDT. No transaction is constructed or signed.
 - Show net output, minimum output, already-included protocol fees, upfront TON gas budget and estimated consumed gas separately.
 - Screen TON-output previews against a 10% gas-cost ceiling and a 0.05 TON reserve; reject incomplete or stale balance snapshots for affordability checks.
+- Value gas in USDT using a fresh, size-bound reverse quote, with integer rounding and fail-closed reference checks.
+- Connect a mainnet public account through the official wallet picker when a hosted manifest is configured; clear old reads on wallet changes or disconnect. No signer is exposed.
 
-Values and events on `/demo` are fixtures, not market prices or settlement evidence. `/app` uses real provider reads; its quotes are previews, not executable offers. The SDK has no guaranteed quote-expiry field, so previews become locally stale after at most 30 seconds. USDT-output quotes show gas but are not cleared by the cost policy because this version has no trustworthy TON-to-USDT cost valuation. State lives in memory and clears on refresh. The scenario reset is not permission to resend an actual transaction.
+Values and events on `/demo` are fixtures, not market prices or settlement evidence. `/app` uses real provider reads; its quotes are previews, not executable offers. The SDK has no guaranteed quote-expiry field, so previews become locally stale after at most 30 seconds. USDT cost checks require a supported, fresh reference quote; if unavailable, the app does not clear the quote for cleanup. State lives in memory and clears on refresh. The scenario reset is not permission to resend an actual transaction.
+
+Wallet setup and valuation details: [architecture notes](docs/architecture/wallet-and-usdt-costs.md). No-money testing, including TON testnet limitations: [testing guide](docs/testing/no-money-testing.md).
 
 ## Checks
 
@@ -43,9 +47,10 @@ Values and events on `/demo` are fixtures, not market prices or settlement evide
 pnpm check
 pnpm exec playwright install chromium
 pnpm test:e2e
+pnpm test:wallet
 ```
 
-The browser suite covers sequential approvals, failure pauses, report download, a favicon regression, accessibility and viewport overflow at 360, 390, 768, 1024 and 1440 pixels. Browser screenshots stay in the ignored `output/playwright/` directory. CI is configured but has not run on a remote host.
+The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. CI is configured but has not run on a remote host.
 
 ## Structure
 

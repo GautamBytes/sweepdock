@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:wallet": "playwright test --config playwright.wallet.config.ts",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "check": "pnpm typecheck && pnpm test && pnpm build && pnpm lint"

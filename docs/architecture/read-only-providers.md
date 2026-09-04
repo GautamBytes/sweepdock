@@ -1,5 +1,7 @@
 # Read-only balances and quote preview — 2026-09-04
 
+Historical checkpoint for `8395fee`. USDT valuation and wallet connection were subsequently added; see [the next batch](wallet-and-usdt-costs.md) for current behavior and remaining prerequisites.
+
 This batch implements the next two user-approved targets. It is not a signing release or completion of every Task 4/6 requirement in the original roadmap.
 
 ## Local paths and execution

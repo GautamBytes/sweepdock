@@ -71,3 +71,61 @@ it('blocks missing cost data, unvalued USDT outputs and expired local previews',
 it('does not imply affordability without a wallet balance', () => {
   expect(assessPreview(quote, null, 1000001).reason).toBe('BALANCE_REQUIRED');
 });
+
+const usdtQuote = {
+  ...quote,
+  request: { ...quote.request, output: 'USDT' as const },
+  expectedOutputUnits: '5000000',
+  minimumOutputUnits: '4950000',
+  gasValuation: {
+    source: 'omniston-reverse-quote' as const,
+    referenceQuoteId: 'reference',
+    inputUsdtUnits: '5000000',
+    minimumTonUnits: '2000000000',
+    quotedAtMs: 1000000,
+    staleAtMs: 1020000,
+  },
+};
+it('assesses USDT using a fresh reverse-quote reference, not dollar parity', () => {
+  expect(assessPreview(usdtQuote, '1000000000', 1000001)).toMatchObject({
+    acceptable: true,
+  });
+});
+it('rejects stale or mismatched USDT valuation even while the primary quote is fresh', () => {
+  for (const change of [
+    { staleAtMs: 1000001 },
+    { inputUsdtUnits: '4000000' },
+    { minimumTonUnits: '0' },
+    { quotedAtMs: 1100000 },
+    { staleAtMs: 2000000 },
+  ]) {
+    expect(
+      assessPreview(
+        {
+          ...usdtQuote,
+          gasValuation: { ...usdtQuote.gasValuation, ...change },
+        },
+        '1000000000',
+        1000001,
+      ).reason,
+    ).toBe('COST_DATA_UNAVAILABLE');
+  }
+});
+it('rounds USDT gas up and tests against protected output, not optimistic output', () => {
+  const costly = {
+    ...usdtQuote,
+    gasConsumedUnits: '200000001',
+    gasValuation: { ...usdtQuote.gasValuation, minimumTonUnits: '2000000000' },
+  };
+  expect(assessPreview(costly, '1000000000', 1000001).reason).toBe(
+    'COST_TOO_HIGH',
+  );
+});
+it('still requires native TON and wallet evidence for an inexpensive USDT preview', () => {
+  expect(assessPreview(usdtQuote, '100000000', 1000001).reason).toBe(
+    'INSUFFICIENT_NATIVE_BALANCE',
+  );
+  expect(assessPreview(usdtQuote, null, 1000001).reason).toBe(
+    'BALANCE_REQUIRED',
+  );
+});

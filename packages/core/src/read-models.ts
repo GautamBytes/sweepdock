@@ -42,6 +42,14 @@ export const balancesSchema = z.object({
   assets: z.array(balanceAssetSchema).max(300),
 });
 export type Balances = z.infer<typeof balancesSchema>;
+export const gasValuationSchema = z.object({
+  source: z.literal('omniston-reverse-quote'),
+  referenceQuoteId: z.string().min(1).max(128),
+  inputUsdtUnits: unitsSchema.refine((value) => BigInt(value) > 0n),
+  minimumTonUnits: unitsSchema.refine((value) => BigInt(value) > 0n),
+  quotedAtMs: z.number().int().nonnegative(),
+  staleAtMs: z.number().int().nonnegative(),
+});
 export const quotePreviewSchema = z.object({
   network: z.literal('ton-mainnet'),
   readOnly: z.literal(true),
@@ -58,6 +66,7 @@ export const quotePreviewSchema = z.object({
   previewStaleAtMs: z.number().int().nonnegative(),
   providerExpiry: z.null(),
   routes: z.array(z.string().min(1).max(64)).max(8),
+  gasValuation: gasValuationSchema.nullable().optional(),
 });
 export type QuotePreview = z.infer<typeof quotePreviewSchema>;
 export const apiErrorCodes = [
