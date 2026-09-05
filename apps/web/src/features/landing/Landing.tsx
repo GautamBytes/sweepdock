@@ -17,6 +17,7 @@ import {
 import { formatUnits } from '@sweepdock/core';
 import { assets } from '../demo/model';
 import { HeroArtwork } from './HeroArtwork';
+import { ReachOut } from './ReachOut';
 import './landing.css';
 
 const tools = [
@@ -316,6 +317,7 @@ export function Landing() {
             Read the guides <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </section>
+        <ReachOut />
       </main>
       <footer className="landing-footer">
         <p>

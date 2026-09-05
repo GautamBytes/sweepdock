@@ -171,6 +171,67 @@
   stroke: #efa99b;
   opacity: 0.35;
 }
+/* Keep placement on the outer SVG groups; only their contents drift. */
+.hero-token-motion {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-token-drift 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.hero-token:nth-of-type(4) .hero-token-motion {
+  animation-duration: 4.5s;
+  animation-delay: -1.5s;
+}
+.hero-token:nth-of-type(5) .hero-token-motion {
+  animation-duration: 3.5s;
+  animation-delay: -2.5s;
+}
+.hero-token:nth-of-type(6) .hero-token-motion {
+  animation-duration: 5s;
+  animation-delay: -1s;
+}
+.hero-artwork-right .hero-token-motion {
+  animation-direction: reverse;
+}
+.hero-artwork[data-motion='paused'] .hero-token-motion {
+  animation-play-state: paused;
+}
+@keyframes hero-token-drift {
+  0%,
+  100% {
+    transform: translateY(2px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+}
+.hero-motion-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #b7adbf;
+}
+.hero-motion-toggle:hover {
+  color: #eee5f8;
+  background: #c5b6dd0d;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-token-motion {
+    animation: none;
+    transform: none;
+  }
+  .hero-motion-toggle {
+    display: none;
+  }
+}
 .landing-hero h1 {
   font-size: clamp(60px, 7.2vw, 94px);
   line-height: 1.02;
@@ -622,6 +683,70 @@
 }
 .landing-tool:hover h3 {
   color: #d9c8f2;
+}
+.landing-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin: 16px 0 32px;
+  padding: clamp(28px, 4vw, 52px);
+  border: 1px solid #c5b6dd30;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at top right, #c5b6dd12, transparent 65%);
+}
+.landing-contact-copy {
+  max-width: 490px;
+}
+.landing-contact-eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  color: #c5b6dd;
+}
+.landing-contact h2 {
+  margin: 14px 0 10px;
+  font-size: clamp(34px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: -1.5px;
+}
+.landing-contact p {
+  color: #c7c0cf;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.landing-socials {
+  display: flex;
+  gap: clamp(16px, 3vw, 36px);
+}
+.landing-socials a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #d4cdda;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 16px;
+}
+.landing-social-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #c5b6dd40;
+  border-radius: 18px;
+  background: #c5b6dd0a;
+  color: #d2c5e8;
+}
+.landing-socials a:hover .landing-social-icon {
+  background: #c5b6dd20;
+  border-color: #c5b6dd;
+  color: #faf7ff;
+}
+.landing-socials a:focus-visible {
+  outline: 2px solid #c5b6dd;
+  outline-offset: 6px;
 }
 .landing-footer {
   max-width: 1256px;
