@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { formatUnits } from '@sweepdock/core';
 import { assets } from '../demo/model';
+import { HeroArtwork } from './HeroArtwork';
 import './landing.css';
 
 const tools = [
@@ -53,6 +54,9 @@ export function Landing() {
       </a>
       <header className="landing-header">
         <Link to="/" className="landing-brand" aria-label="SweepDock home">
+          <span className="landing-brand-mark">
+            <Layers2 size={23} strokeWidth={1.5} aria-hidden="true" />
+          </span>
           SweepDock
         </Link>
         <nav aria-label="Main navigation">
@@ -67,27 +71,34 @@ export function Landing() {
       </header>
       <main id="main" className="landing-main">
         <section className="landing-hero" aria-labelledby="landing-title">
-          <span className="landing-eyebrow">Wallet cleanup for TON</span>
-          <h1 id="landing-title">
-            <span>See which tokens</span>
-            <em>are worth swapping.</em>
-          </h1>
-          <p>
-            SweepDock helps you review small token balances in your TON wallet,
-            compare fees with what you’d receive, and decide what to keep or
-            swap.
-          </p>
-          <div className="landing-actions">
-            <Link className="landing-primary" to="/demo">
-              Try the demo <ArrowRight size={23} aria-hidden="true" />
-            </Link>
-            <Link className="landing-secondary" to="/app">
-              Compare live quotes <ArrowUpRight size={17} aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="landing-status">
-            <ShieldCheck size={17} aria-hidden="true" />
-            <span>No wallet needed for the demo. No real transactions.</span>
+          <HeroArtwork />
+          <div className="landing-hero-content">
+            <span className="landing-eyebrow hero-eyebrow">
+              <span className="hero-network-dot" aria-hidden="true" />
+              Wallet cleanup for TON
+            </span>
+            <h1 id="landing-title">
+              <span>See which tokens</span>
+              <em>are worth swapping.</em>
+            </h1>
+            <p>
+              SweepDock helps you review small token balances in your TON
+              wallet, compare fees with what you’d receive, and decide what to
+              keep or swap.
+            </p>
+            <div className="landing-actions">
+              <Link className="landing-primary" to="/demo">
+                Try the demo <ArrowRight size={23} aria-hidden="true" />
+              </Link>
+              <Link className="landing-secondary" to="/app">
+                Compare live quotes{' '}
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="landing-status">
+              <ShieldCheck size={17} aria-hidden="true" />
+              <span>No wallet needed for the demo. No real transactions.</span>
+            </div>
           </div>
         </section>
         <section
