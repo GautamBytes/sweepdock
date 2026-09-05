@@ -17,14 +17,16 @@ test('docs are discoverable, guides navigate, and unknown guides offer recovery'
     .getByRole('link', { name: 'Docs', exact: true })
     .click();
   await expect(
-    page.getByRole('heading', { name: 'A clearer decision before a swap.' }),
+    page.getByRole('heading', {
+      name: 'Decide what to do with leftover tokens.',
+    }),
   ).toBeVisible();
   for (const [label, heading] of [
-    ['Why this approach', 'Check the cost. Explain the outcome.'],
-    ['Wallet user guide', 'Try the workflow without spending.'],
-    ['Developer guide', 'Inspect the rules behind the interface.'],
-    ['Safety & privacy', 'Know what each mode can do.'],
-    ['What works today', 'A working prototype, with a defined next step.'],
+    ['Why this approach', 'Compare the cost before taking action.'],
+    ['Wallet user guide', 'Try SweepDock without spending money.'],
+    ['Developer guide', 'Run the code and test the rules.'],
+    ['Safety and privacy', 'Know what each mode can do.'],
+    ['What works today', 'What you can use, and what comes next.'],
   ] as const) {
     await page
       .getByRole('navigation', { name: 'Documentation', exact: true })
@@ -96,6 +98,6 @@ test('guide section links work directly, after refresh, and on navigation', asyn
     .getByRole('link', { name: 'Wallet Cleanup', exact: true })
     .click();
   await expect(
-    page.getByRole('heading', { name: 'A little less clutter.' }),
+    page.getByRole('heading', { name: 'Decide which tokens to keep.' }),
   ).toBeInViewport();
 });

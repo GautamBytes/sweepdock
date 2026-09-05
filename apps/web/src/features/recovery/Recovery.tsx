@@ -12,6 +12,7 @@ import {
   settleCleanupItem,
   type CleanupSession,
 } from '@sweepdock/core';
+import { stateLabels } from '../../lib/simulation-copy';
 import { SectionHeading } from '../../app/SectionHeading';
 import { Doctor } from '../doctor/Doctor';
 import { readCleanupSession, saveCleanupSession } from './store';
@@ -33,11 +34,11 @@ const messages: Record<string, string> = {
 };
 const statesCopy: Record<string, string> = {
   selected: 'Waiting for your review',
-  awaiting_signature: 'Waiting for wallet response',
-  submitted: 'Submitted · outcome unconfirmed',
-  confirming: 'Checking settlement',
+  awaiting_signature: 'Waiting for a simulated wallet response',
+  submitted: 'Wallet responded · result unconfirmed',
+  confirming: 'Checking the sample result',
   unknown: 'Uncertain · do not send again',
-  completed: 'Completed · matched fixture',
+  completed: 'Completed · sample result matched',
   partial: 'Partial result · queue paused',
   aborted: 'Refunded · queue paused',
   rejected: 'Rejected · queue paused',
@@ -126,10 +127,10 @@ export function Recovery() {
       <SectionHeading
         icon={RotateCcw}
         eyebrow="CLEANUP RECOVERY · OFFLINE LAB"
-        title="Every swap has a next step."
+        title="Return to an unfinished cleanup."
       >
-        Practice a whole cleanup, close the page, and return to the same saved
-        session.
+        Practise with three sample tokens. Close or refresh the page, then
+        return to the saved steps and check why an unfinished swap stays paused.
       </SectionHeading>
       <div className="simulation-note">
         <strong>Simulation only · no transactions</strong>
@@ -149,7 +150,7 @@ export function Recovery() {
           </p>
           {!session ? (
             <div className="recovery-empty">
-              <h3>Try a cleanup that remembers.</h3>
+              <h3>Create a saved practice session.</h3>
               <p>
                 Approve one item, simulate the wallet response, then test
                 success, a refund, or an uncertain result.
@@ -179,15 +180,13 @@ export function Recovery() {
                       <strong>{i.symbol} → TON</strong>
                       <small>{statesCopy[states[index]!]}</small>
                     </div>
-                    <span className="state">
-                      {states[index]?.replaceAll('_', ' ')}
-                    </span>
+                    <span className="state">{stateLabels[states[index]!]}</span>
                   </li>
                 ))}
               </ol>
               <p className="fine-print">
                 Saved locally in this browser. No wallet connection or real
-                address is stored. Clearing site data removes this protection.
+                address is stored. Clearing site data removes the saved sample.
               </p>
             </>
           )}
@@ -200,7 +199,7 @@ export function Recovery() {
           className="review-panel recovery-panel"
           aria-label="Recovery controls"
         >
-          <span className="eyebrow">REVIEW · RESPOND · RECONCILE</span>
+          <span className="eyebrow">REVIEW · SIMULATE · CHECK THE RESULT</span>
           <h2>
             {item ? `${item.symbol}: follow the result` : 'One step at a time'}
           </h2>
@@ -356,18 +355,19 @@ export function Recovery() {
             )}
           </div>
           <p className="fine-print">
-            The approval is saved before a response is allowed. Refreshing an
-            in-flight attempt pauses it as uncertain. Loading saved status never
-            confirms a blockchain result or sends again.
+            The app saves your sample approval before the next step. Refreshing
+            an unfinished attempt pauses it because the result is unknown.
+            Loading saved status reads the sample; it cannot confirm or send a
+            real swap.
           </p>
         </section>
       </div>
       <aside className="recovery-boundary">
         <strong>Real test swaps are not enabled.</strong>
         <p>
-          The documented testnet route has not passed preflight. This lab tests
-          the application’s recovery rules with explicit fixtures; it does not
-          prove real wallet signing or settlement.
+          The documented testnet contracts have not passed our checks. This lab
+          uses made-up wallet responses and results to test recovery. It does
+          not show that a real testnet swap works.
         </p>
         <Link className="text-link" to="/docs/status">
           Read implementation status

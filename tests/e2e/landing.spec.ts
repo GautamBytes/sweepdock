@@ -61,21 +61,23 @@ test('landing links open all tools and returning home preserves a paused simulat
     .getByRole('link', { name: 'Try the demo', exact: true })
     .click();
   await expect(
-    page.getByRole('heading', { name: 'A little less clutter.' }),
+    page.getByRole('heading', { name: 'Decide which tokens to keep.' }),
   ).toBeVisible();
   await page.getByLabel('Demo outcome').selectOption('unknown');
   await page.getByRole('button', { name: 'Review selection' }).click();
   await page.getByRole('button', { name: 'Approve simulation' }).click();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
   await page.getByRole('link', { name: /^Swap Doctor/ }).click();
-  await expect(page.getByText('status_unknown', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText('Result unconfirmed', { exact: true }),
+  ).toBeVisible();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
   await page
     .getByRole('navigation', { name: 'Main navigation' })
     .getByRole('link', { name: 'For developers' })
     .click();
   await expect(
-    page.getByRole('heading', { name: 'Useful beyond this screen.' }),
+    page.getByRole('heading', { name: 'Build with the same cost checks.' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'SweepDock home' }).click();
   await page

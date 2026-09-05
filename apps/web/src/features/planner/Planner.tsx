@@ -21,20 +21,22 @@ import './planner.css';
 
 const reasonCopy: Record<PlanReason, string> = {
   WITHIN_COST_LIMIT: 'Within the cost limit',
-  BALANCE_STALE: 'Balances expired. Refresh the plan.',
+  BALANCE_STALE: 'Balances need a fresh read. Refresh the plan.',
   BALANCE_INCOMPLETE: 'Incomplete balances. Refresh before reviewing.',
   ASSET_UNAVAILABLE: 'This token is unavailable or its identity changed.',
-  ALREADY_OUTPUT: 'Keep this token — it is already your output.',
-  NO_QUOTE: 'No route for this amount right now.',
+  ALREADY_OUTPUT:
+    'Keep this token. It is already the token you want to receive.',
+  NO_QUOTE: 'No swap quote is available for this amount right now.',
   QUOTE_MISMATCH: 'Quote does not match this selection. Refresh the plan.',
-  STALE_QUOTE: 'Quote expired. Refresh the plan.',
-  COST_TOO_HIGH: 'Skip — estimated gas exceeds 10% of minimum output.',
+  STALE_QUOTE: 'Quote needs a refresh. Refresh the plan.',
+  COST_TOO_HIGH:
+    'Skip this token. Estimated network fees exceed 10% of the minimum receive amount.',
   COST_DATA_UNAVAILABLE: 'Cost information is missing. Refresh to recheck.',
   INSUFFICIENT_NATIVE_BALANCE: 'Not enough TON for this swap and the reserve.',
   PROVIDER_UNAVAILABLE: 'Provider unavailable. Refresh to try again.',
   RATE_LIMITED: 'Request limit reached. Wait a minute, then refresh.',
   PROVIDER_INVALID_RESPONSE:
-    'Provider data could not be verified. Refresh to recheck.',
+    'Provider data did not pass our checks. Refresh to try again.',
 };
 type Snapshot = {
   balances: Balances;
@@ -148,15 +150,16 @@ export function Planner({
     >
       <div className="panel-header">
         <div>
-          <span className="eyebrow">ONE WALLET · ONE CLEAR PLAN</span>
+          <span className="eyebrow">COMPARE SEVERAL TOKENS</span>
           <h2 id="planner-title">Plan your cleanup</h2>
         </div>
         <Layers2 aria-hidden="true" size={24} />
       </div>
       <div className="planner-body">
         <p className="muted-copy">
-          Choose the tokens to review together. See what is worth swapping and
-          how much TON the whole plan needs.
+          Select tokens and choose what you would receive. Compare the cost of
+          each swap and the total TON needed upfront. Reviewing a plan does not
+          move funds.
         </p>
         {!balances ? (
           <p className="notice">
@@ -200,8 +203,8 @@ export function Planner({
             </fieldset>
             {!available && (
               <p className="notice">
-                Balances need a fresh, complete read. Refresh a selected plan or
-                read the wallet again above.
+                Read the wallet again to get current, complete balances. If you
+                have already selected tokens, you can refresh the plan instead.
               </p>
             )}
             <div className="planner-controls">
@@ -262,15 +265,15 @@ export function Planner({
                     ? `${approved} ${approved === 1 ? 'token fits' : 'tokens fit'} your cost limits`
                     : approved
                       ? 'The full plan needs more TON'
-                      : 'No tokens cleared for cleanup'}
+                      : 'No tokens passed the cost checks'}
               </h3>
               <p>
                 {expired
                   ? 'Fresh prices are required before relying on these estimates.'
                   : plan.withinBudget
-                    ? 'The suggested tokens fit the combined upfront gas budget and reserve.'
+                    ? 'The wallet has enough TON for these network budgets plus the 0.05 TON kept aside.'
                     : approved
-                      ? 'Deselect a token or add TON, then refresh. Expected swap proceeds are not counted as available gas.'
+                      ? 'Select fewer tokens and review again. This preview needs no deposit. TON you might receive from a swap does not count toward the upfront budget.'
                       : 'Review the reasons below. You can keep these tokens and check again later.'}
               </p>
             </div>
@@ -294,15 +297,15 @@ export function Planner({
                   {row.reason === 'WITHIN_COST_LIMIT' && row.quote && (
                     <dl>
                       <div>
-                        <dt>Expected output</dt>
+                        <dt>Estimated receive amount</dt>
                         <dd>{units(BigInt(row.quote.expectedOutputUnits))}</dd>
                       </div>
                       <div>
-                        <dt>Minimum output</dt>
+                        <dt>Minimum receive amount</dt>
                         <dd>{units(BigInt(row.quote.minimumOutputUnits))}</dd>
                       </div>
                       <div>
-                        <dt>Estimated gas</dt>
+                        <dt>Estimated network fee</dt>
                         <dd>
                           {formatUnits(BigInt(row.quote.gasConsumedUnits!), 9)}{' '}
                           TON
@@ -316,19 +319,19 @@ export function Planner({
             {approved > 0 && (
               <dl className="planner-totals">
                 <div>
-                  <dt>Expected output · included tokens</dt>
+                  <dt>Estimated receive amount · included tokens</dt>
                   <dd>{units(plan.totals.expectedOutput)}</dd>
                 </div>
                 <div>
-                  <dt>Minimum output · included tokens</dt>
+                  <dt>Minimum receive amount · included tokens</dt>
                   <dd>{units(plan.totals.minimumOutput)}</dd>
                 </div>
                 <div>
-                  <dt>Estimated gas spent</dt>
+                  <dt>Estimated network fees</dt>
                   <dd>{formatUnits(plan.totals.gasSpent, 9)} TON</dd>
                 </div>
                 <div>
-                  <dt>Total upfront gas budget</dt>
+                  <dt>Total TON needed upfront for the network</dt>
                   <dd>{formatUnits(plan.totals.gasBudget, 9)} TON</dd>
                 </div>
                 <div>
@@ -343,9 +346,9 @@ export function Planner({
             )}
             <p className="fine-print">
               Totals include only tokens within their individual cost limits.
-              Output includes provider fees; network gas is separate. Each swap
-              would require a new quote and its own approval. This plan cannot
-              sign or send transactions.
+              Receive amounts are after provider fees; network fees are
+              separate. Each swap would require a new quote and its own
+              approval. This plan cannot sign or send transactions.
             </p>
           </div>
         )}

@@ -34,7 +34,7 @@ it('shows USDT gas as an estimate with its reference source', () => {
   );
   expect(screen.getByText('0.09375 USDT')).toBeInTheDocument();
   expect(
-    screen.getByText(/reference quote.*not another swap/i),
+    screen.getByText(/separate USDT to TON quote.*No extra swap takes place/i),
   ).toBeInTheDocument();
 });
 it('hides a stale USDT gas estimate even when the primary quote is fresh', () => {
@@ -43,6 +43,6 @@ it('hides a stale USDT gas estimate even when the primary quote is fresh', () =>
   );
   expect(screen.queryByText('0.09375 USDT')).not.toBeInTheDocument();
   expect(screen.getByRole('status')).toHaveTextContent(
-    'Cost check unavailable',
+    'We cannot compare costs yet',
   );
 });

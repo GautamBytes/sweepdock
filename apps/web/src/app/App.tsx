@@ -50,7 +50,7 @@ export function App() {
     {
       to: '/demo',
       label: 'Wallet Cleanup',
-      detail: 'Review tokens & costs',
+      detail: 'Review tokens and costs',
       Icon: Layers2,
       active: live || location.pathname === '/demo',
     },
@@ -64,14 +64,14 @@ export function App() {
     {
       to: '/developers',
       label: 'Developer Kit',
-      detail: 'Explore the building blocks',
+      detail: 'Use the shared code',
       Icon: Code2,
       active: location.pathname === '/developers',
     },
     {
       to: '/docs',
       label: 'Docs',
-      detail: 'Learn & get started',
+      detail: 'Learn how to use SweepDock',
       Icon: BookOpen,
       active: docs,
     },
@@ -89,7 +89,8 @@ export function App() {
       <main>
         <h1>Signing mode is not available.</h1>
         <p>
-          This build supports the demo and explicit read-only previews only.
+          You can use sample tokens or read live balances and quotes. This
+          version cannot send transactions.
         </p>
       </main>
     );
@@ -150,9 +151,9 @@ export function App() {
         </nav>
         <div className="sidebar-note">
           <ShieldCheck size={22} />
-          <strong>Your wallet stays yours.</strong>
+          <strong>You control your wallet.</strong>
           <p>
-            No keys. No custody.
+            Keep your keys and funds in your wallet.
             <br />
             No real transactions in this build.
           </p>
@@ -229,13 +230,13 @@ export function App() {
           </Routes>
         </main>
         <footer>
-          Built for a calmer TON wallet.
+          Compare token balances and swap costs on TON.
           <span>
             {docs
               ? 'Read-only prototype · Signing disabled'
               : safety
                 ? 'Safety lab saved in this browser'
-                : 'Cleanup data clears on refresh'}{' '}
+                : 'Demo and live reads clear on refresh'}{' '}
             · No analytics
           </span>
         </footer>

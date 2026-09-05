@@ -5,7 +5,7 @@ import { Live } from './Live';
 
 it('keeps mainnet reads explicit and never opens a wallet', () => {
   render(<Live />);
-  expect(screen.getByText('Mainnet data — read only')).toBeInTheDocument();
+  expect(screen.getByText('Mainnet data · read only')).toBeInTheDocument();
   expect(
     screen.getByRole('button', { name: 'Read wallet balances' }),
   ).toBeInTheDocument();

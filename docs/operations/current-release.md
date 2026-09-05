@@ -27,12 +27,12 @@ The release notes should link successful checks, exact commit/deployment, the se
 
 ## Gates still open
 
-| Gate                                                             | Actual status                                                         |
-| ---------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Physical phone connect/return/disconnect                         | Pending owner test; [checklist](../testing/physical-device.md)        |
-| Five wallet users and one external developer                     | Not conducted; [study and ledger](../validation/participant-study.md) |
-| Independent security review                                      | Not conducted; current report is a self-review                        |
-| Public-chain signing, authenticated settlement and live recovery | Not implemented; hosted signing remains disabled                      |
-| Grant application                                                | Paused at the owner's request; not submitted                          |
+| Gate                                                             | Actual status                                                                                                                                |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Physical phone connect/return/disconnect                         | Basic Android Chrome/Tonkeeper check passed by owner report; broader testing pending. [Results and checklist](../testing/physical-device.md) |
+| Five wallet users and one external developer                     | Deferred to a later phase; [study and ledger](../validation/participant-study.md)                                                            |
+| Independent security review                                      | Not conducted; current report is a self-review                                                                                               |
+| Public-chain signing, authenticated settlement and live recovery | Not implemented; hosted signing remains disabled                                                                                             |
+| Grant application                                                | Paused at the owner's request; not submitted                                                                                                 |
 
 A [three-minute walkthrough script](../validation/demo-walkthrough.md) is ready. A script is not a recorded video or participant evidence. Development milestones should distinguish this completed prototype work from future execution/receipt/recovery work.

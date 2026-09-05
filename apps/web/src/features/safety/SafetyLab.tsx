@@ -19,7 +19,7 @@ import './safety.css';
 
 const messages: Record<string, string> = {
   NETWORK_MISMATCH:
-    'This request needs testnet. A mainnet wallet cannot continue.',
+    'The sample expects a testnet account. The simulated mainnet account does not match.',
   WALLET_CHANGED:
     'The wallet changed after review. Review again with the right account.',
   QUOTE_EXPIRED: 'The quote is too old. Get a fresh quote and review it again.',
@@ -35,11 +35,12 @@ const messages: Record<string, string> = {
 };
 const stateCopy: Record<string, string> = {
   awaiting_signature: 'Waiting for a simulated wallet response.',
-  submitted: 'Wallet responded. Settlement is not confirmed.',
-  confirming: 'Waiting for matching settlement evidence.',
+  submitted:
+    'The simulated wallet responded. The swap result is not confirmed.',
+  confirming: 'Waiting for a sample result that matches this attempt.',
   unknown: 'Status not confirmed. Do not send again.',
   rejected: 'The simulated wallet rejected this request.',
-  completed: 'Simulated receipt matched. No real swap took place.',
+  completed: 'The sample result matched this attempt. No real swap took place.',
 };
 
 export function SafetyLab() {
@@ -132,17 +133,17 @@ export function SafetyLab() {
     <>
       <div className="page-heading">
         <span className="eyebrow">OFFLINE SAFETY LAB</span>
-        <h1>Pause safely. Pick up clearly.</h1>
+        <h1>Test what happens after an interruption.</h1>
         <p>
-          Try wallet failures and refresh the page. The saved attempt should
-          stay protected.
+          Start a sample swap and refresh before it finishes. See how the app
+          remembers the unfinished attempt and blocks another one.
         </p>
       </div>
       <div className="simulation-note">
-        <strong>Safety lab — simulated events</strong>
+        <strong>Safety lab · simulated events</strong>
         <span>
-          Synthetic testnet account and quote. No wallet connection, network
-          request or real signing.
+          Made-up wallet and quote data. This lab does not connect to a wallet
+          or blockchain, and it cannot send transactions.
         </span>
       </div>
       <p>
@@ -154,8 +155,9 @@ export function SafetyLab() {
         <section className="asset-panel safety-panel">
           <h2>Check before starting</h2>
           <p>
-            A matching account, testnet network and at least 15 seconds of quote
-            validity are required.
+            Choose a scenario to test the checks. The sample account and network
+            must match the review, and the quote must have at least 15 seconds
+            left.
           </p>
           <label htmlFor="safety-scenario">Safety check scenario</label>
           <select
@@ -180,8 +182,9 @@ export function SafetyLab() {
             Start simulated attempt
           </button>
           <p className="muted-copy">
-            The attempt is saved before a response can be simulated. Another tab
-            cannot start over it.
+            The app saves this attempt before you can simulate a wallet
+            response. Another tab on this site cannot start a second attempt
+            over it.
           </p>
           {error && (
             <div className="safety-error" role="alert">
@@ -272,10 +275,11 @@ export function SafetyLab() {
         </section>
       </div>
       <p className="safety-footnote">
-        Rechecking reads saved data only; it cannot confirm a blockchain result.
-        Refreshing an in-flight attempt makes it uncertain. Fixture receipt
-        buttons are for this simulation only. Protection is limited to this
-        browser and website; clearing site data removes the record.
+        Recheck saved status reads this browser’s saved sample. It does not
+        contact a blockchain. Refreshing an unfinished attempt marks its result
+        as unknown. Use the simulation buttons to test what happens next. The
+        record exists only in this browser on this site; clearing site data
+        removes it.
       </p>
     </>
   );

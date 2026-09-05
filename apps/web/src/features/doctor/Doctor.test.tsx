@@ -40,7 +40,7 @@ it('explains uncertain results without presenting them as failures or completion
       />
     </MemoryRouter>,
   );
-  expect(screen.getByText('Safety lab — simulated events')).toBeInTheDocument();
+  expect(screen.getByText('Safety lab · simulated events')).toBeInTheDocument();
   expect(
     screen.getByText(
       'The result is not confirmed. Keep the attempt paused and do not send again.',

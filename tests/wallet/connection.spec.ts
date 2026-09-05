@@ -14,7 +14,7 @@ test('official TON Connect picker connects a no-funds fixture, reads balances an
       return route.fulfill({
         json: [
           {
-            name: 'Fixture wallet — no funds',
+            name: 'Fixture wallet · no funds',
             app_name: 'sweepdock-fixture',
             about_url: 'https://sweepdock.test',
             image: 'https://sweepdock.test/icon.png',
@@ -48,7 +48,7 @@ test('official TON Connect picker connects a no-funds fixture, reads balances an
       isWalletBrowser: false,
       deviceInfo: device,
       walletInfo: {
-        name: 'Fixture wallet — no funds',
+        name: 'Fixture wallet · no funds',
         app_name: 'sweepdock-fixture',
         about_url: 'https://sweepdock.test',
         image:
@@ -119,7 +119,7 @@ test('official TON Connect picker connects a no-funds fixture, reads balances an
   await page
     .getByRole('button', { name: 'Connect wallet', exact: true })
     .click();
-  await page.getByText('Fixture wallet — no funds', { exact: true }).click();
+  await page.getByText('Fixture wallet · no funds', { exact: true }).click();
   await expect(
     page.getByRole('heading', { name: 'Wallet connected · mainnet' }),
   ).toBeVisible();
@@ -127,12 +127,10 @@ test('official TON Connect picker connects a no-funds fixture, reads balances an
     '0:' + 'a'.repeat(64),
   );
   await page.getByRole('button', { name: 'Read wallet balances' }).click();
-  await expect(page.getByText('Native balance', { exact: true })).toBeVisible();
+  await expect(page.getByText('TON balance', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Disconnect wallet' }).click();
   await expect(page.getByLabel('Public TON wallet address')).toHaveValue('');
-  await expect(page.getByText('Native balance', { exact: true })).toHaveCount(
-    0,
-  );
+  await expect(page.getByText('TON balance', { exact: true })).toHaveCount(0);
   expect(
     await page.evaluate(() => Reflect.get(window, 'sweepdockFixtureCalls')),
   ).toEqual(['connect', 'disconnect']);

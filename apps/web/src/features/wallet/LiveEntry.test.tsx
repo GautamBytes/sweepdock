@@ -12,7 +12,9 @@ it('does not initialize the SDK without a configured public manifest', () => {
     expect(
       screen.getByRole('button', { name: 'Connect wallet' }),
     ).toBeDisabled();
-    expect(screen.getByText(/public HTTPS manifest/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Wallet connection is not configured/i),
+    ).toBeInTheDocument();
     expect(factory).not.toHaveBeenCalled();
   } finally {
     vi.unstubAllEnvs();
@@ -31,7 +33,7 @@ it('loads the wallet adapter only after a user click and handles failure plainly
     await user.click(screen.getByRole('button', { name: 'Connect wallet' }));
     await waitFor(() =>
       expect(screen.getByRole('alert')).toHaveTextContent(
-        'Wallet connection could not open',
+        'The wallet picker could not open',
       ),
     );
     expect(
