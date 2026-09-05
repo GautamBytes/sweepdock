@@ -101,3 +101,17 @@ supported testnet router, pTON/token addresses and a funded test pool, or tell
 us how to access a supported no-money Omniston sandbox?
 
 This message is a draft only. It has not been sent or posted.
+
+## Recheck on 5 September 2026
+
+At 11:34 UTC, both public version getters again returned exit code 9. Toncenter's masterchain block was 82802714. [Fresh JSON evidence](../testing/testnet-preflight-2026-09-05.json) preserves the read-only observations. No route, pool, signing or receipt-verification claim can be made from this result. The multi-token read-only planner and saved offline cleanup lab can be tested independently; see [current feature boundaries](../testing/cleanup-planner-recovery.md).
+
+## Root cause established on 5 September 2026
+
+The earlier unexplained exit 9 is now reproduced as `failed to load library cell` in the local TVM. The router **and pool** refer to missing public testnet code libraries. Both independent public providers report them unavailable. Their exact hashes resolve on mainnet; supplying those verified code cells **only inside a local emulator** restores getters and allows real signed contract swaps and refunds to pass.
+
+See [contract execution evidence and commands](../testing/contract-execution.md) and [timestamped public checks](../testing/testnet-library-preflight-2026-09-05.json). `pnpm check:testnet` now diagnoses this directly. Seven local contract tests cover signed round trips, delivery, refunds, expiry, tampered code, invalid signatures and replay after restoring state. This makes local integration testing possible without enabling public signing. Public testnet still requires library restoration or a supported replacement deployment.
+
+### Updated unsent support draft
+
+We traced the documented testnet router's exit 9 to an unavailable code library, confirmed through Toncenter and TonAPI and reproduced in `@ton/sandbox` as `failed to load library cell`. The router references `5a34c333bcdcac70d41f9afca79aa6e782f1c80a5e4b2ef896ec5e20e9182c86`; its pool references `631cf98bbb3ee540dacc48256975d8e2c3080c634f39005ccd8e1593cab0035f`. Both code hashes resolve on mainnet. With exact hash-matched code mounted only locally, the router reports 2.1 beta3.2 and signed swaps/refunds work. Could you restore the supported testnet library deployment or provide a current supported router/pool? We have not sent public transactions. This remains an unsent draft.

@@ -1,6 +1,7 @@
+import { validateQuotePreview } from '@sweepdock/core/providers';
+import { readPolicy } from '../../../shared/read-policy';
+import { balancesSchema } from '@sweepdock/core/read-models';
 import {
-  balancesSchema,
-  quotePreviewSchema,
   apiErrorCodes,
   ReadError,
   type QuoteInput,
@@ -36,10 +37,20 @@ async function post(
   return result;
 }
 export async function fetchBalances(address: string, signal: AbortSignal) {
-  return balancesSchema.parse(await post('/api/balances', { address }, signal));
+  const result = balancesSchema.parse(
+    await post('/api/balances', { address }, signal),
+  );
+  if (result.source !== readPolicy.balanceSource)
+    throw new ReadError('PROVIDER_INVALID_RESPONSE');
+  return result;
 }
 export async function fetchQuote(input: QuoteInput, signal: AbortSignal) {
-  return quotePreviewSchema.parse(await post('/api/quote', input, signal));
+  return validateQuotePreview(
+    await post('/api/quote', input, signal),
+    input,
+    readPolicy,
+    Date.now(),
+  );
 }
 
 export function errorCopy(error: unknown): string {

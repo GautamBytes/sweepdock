@@ -1,4 +1,5 @@
 import { ArrowRight, Check, ShieldCheck, Layers2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { SectionHeading } from '../../app/SectionHeading';
 import { formatUnits } from '@sweepdock/core';
 import { assets, type DemoItem, type DemoOutcome } from '../demo/model';
@@ -265,6 +266,11 @@ export function Cleanup({
           </div>
         </aside>
       </div>
+      <p>
+        <Link className="text-link" to="/safety/cleanup">
+          Try a saved cleanup with refresh recovery →
+        </Link>
+      </p>
       <div className="bottom-note">
         <span>01 — SELECT</span>
         <span>02 — CHECK COSTS</span>

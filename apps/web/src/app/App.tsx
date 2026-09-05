@@ -21,6 +21,7 @@ import {
 import { Cleanup } from '../features/cleanup/Cleanup';
 import { Doctor } from '../features/doctor/Doctor';
 import { LiveEntry } from '../features/wallet/LiveEntry';
+import { Recovery } from '../features/recovery/Recovery';
 import { SafetyLab } from '../features/safety/SafetyLab';
 import {
   reviewAssets,
@@ -187,6 +188,7 @@ export function App() {
           )}
           <Routes>
             <Route path="/docs/*" element={<Docs />} />
+            <Route path="/safety/cleanup/*" element={<Recovery />} />
             <Route path="/safety/*" element={<SafetyLab />} />
             <Route path="/app" element={<LiveEntry />} />
             <Route

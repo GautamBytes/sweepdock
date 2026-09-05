@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { createReadApi } from '../src/index';
+import { createFixtureReadApi as createReadApi } from './read-api-fixture';
 import {
   ReadError,
   type QuoteInput,
@@ -47,7 +47,8 @@ it('adds a size-bound USDT gas valuation from a second validated quote', async (
   expect(response.status).toBe(200);
   expect(await response.json()).toMatchObject({
     gasValuation: {
-      source: 'omniston-reverse-quote',
+      source: 'reverse-quote',
+      provider: 'omniston',
       inputUsdtUnits: '5000000',
       minimumTonUnits: '1980000000',
       referenceQuoteId: 'reference',

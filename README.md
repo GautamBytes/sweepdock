@@ -10,6 +10,14 @@ SweepDock has a [public repository](https://github.com/GautamBytes/sweepdock). T
 
 Wallet connection requires a public HTTPS manifest. Local builds leave Connect disabled unless explicitly configured. The safety lab is a simulation, not a testnet swap or proof of settlement.
 
+## Cleanup planner and saved recovery
+
+The new `/app` planner selects reviewed tokens, rereads balances before quoting, shows individual skip reasons, and checks the total upfront gas budget plus the 0.05 TON reserve. Quotes expire locally and changing the selection or wallet discards the review. Only included tokens contribute to totals; the plan cannot sign or send.
+
+`/safety/cleanup` exercises a saved three-token simulation with atomic approval claims, sequential progression, timeout/reload recovery, matching synthetic receipts and a persisted Doctor report at `/safety/cleanup/doctor`. No live wallet data or connection keys are persisted. The original quick `/demo` remains in memory.
+
+Real testnet construction/signing, chain receipt ingestion, and live-session recovery are **not implemented**. Both independent testnet getters still returned exit code 9 on 5 September; [fresh evidence](docs/testing/testnet-preflight-2026-09-05.json) and [feature boundaries](docs/testing/cleanup-planner-recovery.md) distinguish implemented behavior from that external dependency. A normalized receipt matcher is not a blockchain verifier.
+
 ## Website documentation
 
 The website includes a Docs section at `/docs`, with the product intention, approach and trade-offs, wallet-user instructions, developer setup, safety/privacy boundaries and implementation status. Documentation links appear on the landing page and in the workspace navigation. These pages describe implemented behaviour and label future work; they do not establish grant approval or live execution readiness.
@@ -72,3 +80,11 @@ The browser suite covers sequential approvals, failure pauses, report download, 
 - `docs/architecture/read-only-providers.md`: current provider contracts, real-read evidence and limitations.
 
 No npm package has been published. Source code is available under the [MIT License](LICENSE). Third-party dependencies retain their own licenses. See [contributing](CONTRIBUTING.md), [security](SECURITY.md), and the [release checklist](docs/operations/release-readiness.md).
+
+### Contract execution checks
+
+`pnpm check:testnet` diagnoses public testnet contract dependencies without a wallet. The documented router and pool currently reference unavailable testnet libraries. `pnpm capture:contracts` explicitly captures public state and hash-matched code for local emulation; `pnpm test:contracts` then tests real signed swaps, actual delivery, refunds, expiry and replay without network access. This is separate from public execution and the browser simulation journal. See [evidence, commands and limits](docs/testing/contract-execution.md).
+
+### Provider independence
+
+The cleanup planner and API orchestration use explicit balance/quote interfaces and a deployment-owned source/route policy. TonAPI and Omniston remain the only configured live integrations; synthetic replacement tests prove the core can consume another reviewed adapter. This does not add live execution or automatic failover. See [provider boundaries and replacement steps](docs/architecture/provider-independence.md).

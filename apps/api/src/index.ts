@@ -1,29 +1,30 @@
+import {
+  readPolicySchema,
+  validateBalanceSnapshot,
+  type ReadProviders,
+} from '@sweepdock/core/providers';
 import { Hono } from 'hono';
 import { z } from 'zod';
-import { readBalances } from './tonapi';
 import { boundedText } from './bounded-json';
-import { readQuote } from '@sweepdock/omniston-adapter';
 import { readQuotePreview } from './quote-preview';
 import {
   normalizeMainnetAddress,
   reviewedAssets,
 } from '@sweepdock/core/assets';
 import {
-  balancesSchema,
   quoteInputSchema,
   quotePreviewSchema,
   ReadError,
   type ApiErrorCode,
 } from '@sweepdock/core/read-models';
 
-export function createReadApi(
-  options: {
-    balances?: typeof readBalances;
-    quotes?: typeof readQuote;
-    now?: () => number;
-    apiKey?: string;
-  } = {},
-) {
+export function createReadApi(options: ReadProviders & { now?: () => number }) {
+  const policy = readPolicySchema.parse(options.policy);
+  if (
+    options.balances.id !== policy.balanceSource ||
+    options.quotes.id !== policy.quoteSource
+  )
+    throw new Error('Provider configuration does not match read policy');
   const app = new Hono();
   const now = options.now ?? Date.now;
   let windowStart = now();
@@ -49,7 +50,8 @@ export function createReadApi(
       network: 'ton-mainnet',
       readOnly: true,
       assets: reviewedAssets,
-      supportedProtocols: ['StonFiV1', 'StonFiV2'],
+      supportedProtocols: policy.supportedProtocols,
+      providers: policy,
     }),
   );
   app.post('/api/:operation', async (c) => {
@@ -93,18 +95,17 @@ export function createReadApi(
         } catch {
           throw new ReadError('INVALID_REQUEST');
         }
-        const result = await (options.balances ?? readBalances)(address, {
-          signal: c.req.raw.signal,
-          ...(options.apiKey ? { apiKey: options.apiKey } : {}),
-        });
-        return c.json(balancesSchema.parse(result));
+        const result = await options.balances.read(address, c.req.raw.signal);
+        if (c.req.raw.signal.aborted) throw new ReadError('CANCELLED');
+        return c.json(validateBalanceSnapshot(result, address, policy));
       }
       const parsed = quoteInputSchema.safeParse(body);
       if (!parsed.success) throw new ReadError('INVALID_REQUEST');
       const quote = await readQuotePreview(
         parsed.data,
         c.req.raw.signal,
-        options.quotes ?? readQuote,
+        options.quotes,
+        policy,
         now,
       );
       return c.json(quotePreviewSchema.parse(quote));

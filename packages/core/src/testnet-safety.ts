@@ -7,7 +7,7 @@ const address = z
   .transform((v) => v.toLowerCase());
 const identifier = z.string().min(1).max(100);
 const time = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
-const reviewSchema = z
+export const reviewSchema = z
   .strictObject({
     id: identifier,
     wallet: address,

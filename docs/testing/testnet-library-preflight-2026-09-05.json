@@ -1,0 +1,94 @@
+{
+  "checkedAt": "2026-09-05T12:03:36.787Z",
+  "network": "ton-testnet",
+  "status": "missing_libraries",
+  "missing": [
+    "5a34c333bcdcac70d41f9afca79aa6e782f1c80a5e4b2ef896ec5e20e9182c86",
+    "631cf98bbb3ee540dacc48256975d8e2c3080c634f39005ccd8e1593cab0035f"
+  ],
+  "publicExecutionEnabled": false,
+  "getters": {
+    "router": {
+      "toncenterExitCode": 9,
+      "tonapiExitCode": 9,
+      "tonapiSuccess": false
+    },
+    "pool": {
+      "toncenterExitCode": 9,
+      "tonapiExitCode": 9,
+      "tonapiSuccess": false
+    }
+  },
+  "independentLibraryCheck": {
+    "5a34c333bcdcac70d41f9afca79aa6e782f1c80a5e4b2ef896ec5e20e9182c86": "not_found",
+    "631cf98bbb3ee540dacc48256975d8e2c3080c634f39005ccd8e1593cab0035f": "not_found"
+  },
+  "accounts": {
+    "router": {
+      "address": "kQALh-JBBIKK7gr0o4AVf9JZnEsFndqO0qTCyT-D-yBsWk0v",
+      "codeHash": "ca4c3052a1396aef50ca358ac355e2a99be4e1683eb87a2c11fbd452bb4acec5",
+      "dataHash": "019210413f8c1cfee5728a41874d18b62ff0b55085fc35722fdf04072868ec2d",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "92206675000008",
+        "hash": "zwDbfOcNN2xfUx5HN+znd6COs1SSG+8vQlvv4Fenf1Y="
+      },
+      "observedAt": 1788609799
+    },
+    "pton": {
+      "address": "kQACS30DNoUQ7NfApPvzh7eBmSZ9L4ygJ-lkNWtba8TQT-Px",
+      "codeHash": "faf8bb63fe7c20f8468c1cda6981998eb1fdfb86571bf6e592e141f30f8e4461",
+      "dataHash": "471f12a89a5921abfb0dd3f811eb63d96c1f543cb2575dbf9d28f5103413b24b",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "90316554000003",
+        "hash": "V4V3MzoA/5xaPItDwtm0uPmaeisZV539jdm4KGCCtco="
+      },
+      "observedAt": 1788609800
+    },
+    "pool": {
+      "address": "kQA79dCQ7yeNwZUHoVP7Rmmf2F_-fwf8pzCLYAJljY5NShQq",
+      "codeHash": "71c21694f438d1654643be842afe867093c0e0042e3ff4a9edaac6db73730041",
+      "dataHash": "7fb4c4c7f1297bf76dc055144b28bb742cea7471710cae410c6cb590a33f6a0c",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "45400303000006",
+        "hash": "cf+s/pFiO7tayIqO7sMyEgWXDI6G5vciTGqQiZ+qdsM="
+      },
+      "observedAt": 1788609801
+    },
+    "routerPtonWallet": {
+      "address": "kQBbJjnahBMGbMUJwhAXLn8BiigcGXMJhSC0l7DBhdYABhG7",
+      "codeHash": "ed91066ad36ee3aaaff29e78db287acb51376292ea0e01bca1b92c97cdf0421b",
+      "dataHash": "f2a7d9244c787e018ed420d9729b283a27fcd68715ca7c99baebd7b988f1a8e6",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "92206675000007",
+        "hash": "QQ83NEiErMN4vKNBuPp3Jv2difQTT6ZDz5mWJdmkews="
+      },
+      "observedAt": 1788609803
+    },
+    "routerTokenWallet": {
+      "address": "kQDZwYOajSRXMeg2YQKEXvcZT0lnnWkDDib0xCBZfbJWLKHJ",
+      "codeHash": "19e71bb18ffe8cf82d6d00ae55771112e7b4e8169f1b60b8cc3d632b0c4d8930",
+      "dataHash": "bd4a6956bbc9eff8b47bacd9ba8fdd8afc491bd60c03c6f8e4c76e5f7b14f812",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "81384388000005",
+        "hash": "ts5JDf/pt97iTAiMZ/dTAqJ0WhC6y0prY4lD01rhwEE="
+      },
+      "observedAt": 1788609804
+    },
+    "token": {
+      "address": "kQDLvsZol3juZyOAVG8tWsJntOxeEZWEaWCbbSjYakQpuYN5",
+      "codeHash": "fee99cb7dcbf52c9baca6d64b0745b35324cb448f34d7f49c2cfd31d51e32190",
+      "dataHash": "120f5fa75c32d921a35a4e584470b36042f214e8aec978018bfa9583d381ebcf",
+      "lastTransaction": {
+        "@type": "internal.transactionId",
+        "lt": "93976223000003",
+        "hash": "+Dxevd8S6HqOyoLEfUpYs6mDuLgUvDdzegPkNYDaWPE="
+      },
+      "observedAt": 1788609805
+    }
+  }
+}

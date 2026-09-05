@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-09-05T11:34:16.438443+00:00",
+  "router": "kQALh-JBBIKK7gr0o4AVf9JZnEsFndqO0qTCyT-D-yBsWk0v",
+  "kind": "read-only-getter-preflight",
+  "checks": [
+    {
+      "url": "https://testnet.toncenter.com/api/v2/runGetMethod",
+      "status": 200,
+      "result": {
+        "ok": true,
+        "result": {
+          "@type": "smc.runResult",
+          "gas_used": 160,
+          "stack": [["num", "0x0"]],
+          "exit_code": 9,
+          "block_id": {
+            "@type": "ton.blockIdExt",
+            "workchain": -1,
+            "shard": "-9223372036854775808",
+            "seqno": 82802714,
+            "root_hash": "VjpypQ5lCC3satHveaRasQuVzpSCBh7fPATl0siR4PM=",
+            "file_hash": "7lXGbPaDeDIhwfItrXeyruLpx6k26mdKjB+KJ3U/ZPs="
+          },
+          "last_transaction_id": {
+            "@type": "internal.transactionId",
+            "lt": "92206675000008",
+            "hash": "zwDbfOcNN2xfUx5HN+znd6COs1SSG+8vQlvv4Fenf1Y="
+          }
+        },
+        "@extra": "1788608057:6:38.481"
+      }
+    },
+    {
+      "url": "https://testnet.tonapi.io/v2/blockchain/accounts/kQALh-JBBIKK7gr0o4AVf9JZnEsFndqO0qTCyT-D-yBsWk0v/methods/get_router_version",
+      "status": 200,
+      "result": {
+        "success": false,
+        "exit_code": 9,
+        "stack": [
+          {
+            "type": "num",
+            "num": "0x0"
+          }
+        ]
+      }
+    }
+  ],
+  "signingEnabled": false
+}

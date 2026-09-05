@@ -78,7 +78,8 @@ const usdtQuote = {
   expectedOutputUnits: '5000000',
   minimumOutputUnits: '4950000',
   gasValuation: {
-    source: 'omniston-reverse-quote' as const,
+    source: 'reverse-quote' as const,
+    provider: 'omniston',
     referenceQuoteId: 'reference',
     inputUsdtUnits: '5000000',
     minimumTonUnits: '2000000000',
@@ -127,5 +128,14 @@ it('still requires native TON and wallet evidence for an inexpensive USDT previe
   );
   expect(assessPreview(usdtQuote, null, 1000001).reason).toBe(
     'BALANCE_REQUIRED',
+  );
+});
+it('does not use a gas valuation attributed to a different provider', () => {
+  const different = {
+    ...usdtQuote,
+    gasValuation: { ...usdtQuote.gasValuation, provider: 'other-provider' },
+  };
+  expect(assessPreview(different, '1000000000', 1000001).reason).toBe(
+    'COST_DATA_UNAVAILABLE',
   );
 });

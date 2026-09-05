@@ -1,3 +1,4 @@
+import { providerLabels } from '../../../../shared/read-policy';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowRight, Search, ShieldCheck } from 'lucide-react';
 import { formatUnits, parseUnits } from '@sweepdock/core';
@@ -9,11 +10,13 @@ import {
 } from '@sweepdock/core/read-models';
 import { fetchBalances, fetchQuote, errorCopy } from '../../lib/read-api';
 import { QuoteResult } from './QuoteResult';
+import { Planner } from '../planner/Planner';
 
 export function Live({
   connectedAddress,
   walletPanel,
 }: { connectedAddress?: string | undefined; walletPanel?: ReactNode } = {}) {
+  const [balanceGeneration, setBalanceGeneration] = useState(0);
   const [address, setAddress] = useState(connectedAddress ?? '');
   const [balances, setBalances] = useState<Balances | null>(null);
   const [balanceError, setBalanceError] = useState('');
@@ -50,6 +53,7 @@ export function Live({
     setAddress(value);
   }
   async function loadBalances() {
+    setBalanceGeneration((n) => n + 1);
     balanceRequest.current?.abort();
     invalidateQuote();
     const controller = new AbortController();
@@ -126,7 +130,10 @@ export function Live({
       <div className="simulation-note live-note">
         <ShieldCheck size={16} />
         <strong>Mainnet data — read only</strong>
-        <span>TonAPI balances + Omniston quotes. No signing or spending.</span>
+        <span>
+          {providerLabels.balances} balances + {providerLabels.quotes} quotes.
+          No signing or spending.
+        </span>
       </div>
       {walletPanel}
       <div className="workspace-grid live-grid">
@@ -159,7 +166,8 @@ export function Live({
             />
             <p id="wallet-privacy" className="fine-print">
               Only paste a public address—not a seed phrase. Clicking below
-              shares the address with TonAPI. It is not saved in SweepDock.
+              shares the address with {providerLabels.balances}. It is not saved
+              in SweepDock.
             </p>
             <button
               className="primary"
@@ -342,11 +350,16 @@ export function Live({
             />
           )}
           <p className="fine-print">
-            Only swap routes using STON.fi V1 or V2 are accepted for these
-            read-only previews. A quote is not proof of a successful swap.
+            Only swap routes using {providerLabels.protocols} are accepted for
+            these read-only previews. A quote is not proof of a successful swap.
           </p>
         </aside>
       </div>
+      <Planner
+        key={`${address}:${balanceGeneration}`}
+        balances={balances}
+        onSnapshot={setBalances}
+      />
     </>
   );
 }

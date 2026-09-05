@@ -1,7 +1,7 @@
 import { getRequestListener } from '@hono/node-server';
-import { createReadApi } from './index';
+import { createDefaultReadApi } from './composition';
 
 export function createLocalApiMiddleware(apiKey?: string) {
-  const api = createReadApi(apiKey ? { apiKey } : {});
+  const api = createDefaultReadApi(apiKey);
   return getRequestListener(api.fetch, { overrideGlobalObjects: false });
 }

@@ -1,5 +1,13 @@
 # Release readiness checklist
 
+## Cleanup planner and recovery feature branch — 5 September 2026
+
+The new branch passes `pnpm check` with 207 unit tests and all 64 browser checks. It adds the live multi-token planner and a durable, explicit three-token simulation at `/safety/cleanup`. Production transaction construction, signing, real trace ingestion and live execution recovery remain unimplemented. Both fresh public testnet version getters returned exit code 9; [evidence](../testing/testnet-preflight-2026-09-05.json) and [feature boundaries](../testing/cleanup-planner-recovery.md) describe the remaining dependency. A PR or preview is not a production release.
+
+## Earlier release checkpoint
+
+The release observations below describe the earlier PR #2/#3 checkpoint. Later UI releases and this feature branch have their own verification; the old test counts are historical.
+
 Updated 2026-09-05. This checklist separates local engineering evidence from work that still needs deployment, an owner's decision or real participants.
 
 ## Repository
@@ -48,3 +56,7 @@ The automated TON Connect fixture is complementary evidence, not a physical-devi
 A [read-only quote sample](../testing/quote-economics-2026-09-05.md) records both accepted quotes and rejected/unavailable requests. Additional production balance and quote requests succeeded; their results are recorded in the release evidence. Neither sample proves reliable availability across every asset or amount.
 
 The supported testnet/sandbox path remains unresolved. The existing support draft is unsent. Production signing, settlement verification, a reusable published kit, external review and physical-device results remain future work.
+
+## Testnet library diagnosis and local contract execution — 5 September 2026
+
+The documented router and pool both reference unavailable public testnet code libraries. The failure is reproduced locally as `failed to load library cell` (exit 9). Hash-matched code restores execution inside the local VM. See [contract evidence](../testing/contract-execution.md). Five dependency/hash tests now run in `pnpm check` alongside the 207 existing unit tests. Seven additional captured-state TVM tests pass for real signatures, swaps, delivery, refunds, expiry, tampering and replay after serialized-state restoration. These tests are local, not public-chain or physical-wallet validation. No production signer or live journal has been added.

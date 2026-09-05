@@ -19,7 +19,8 @@ const quote: QuotePreview = {
   providerExpiry: null,
   routes: ['StonFiV2'],
   gasValuation: {
-    source: 'omniston-reverse-quote',
+    source: 'reverse-quote',
+    provider: 'omniston',
     referenceQuoteId: 'reference',
     inputUsdtUnits: '5000000',
     minimumTonUnits: '2000000000',

@@ -15,12 +15,16 @@ export default tseslint.config(
     ],
   },
   {
-    files: ['scripts/*.mjs'],
+    files: ['scripts/**/*.mjs', 'tests/contracts/*.mjs'],
     languageOptions: {
       globals: {
         process: 'readonly',
         console: 'readonly',
         Request: 'readonly',
+        fetch: 'readonly',
+        AbortSignal: 'readonly',
+        URL: 'readonly',
+        structuredClone: 'readonly',
       },
     },
   },
