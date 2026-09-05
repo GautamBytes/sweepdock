@@ -84,6 +84,7 @@ export const apiErrorCodes = [
   'PROVIDER_INVALID_RESPONSE',
   'RATE_LIMITED',
   'REQUEST_TOO_LARGE',
+  'REQUEST_TIMEOUT',
   'NO_QUOTE',
   'STALE_QUOTE',
   'CANCELLED',

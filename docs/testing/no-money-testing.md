@@ -12,7 +12,7 @@ Open `http://127.0.0.1:5173/demo` after `pnpm dev`.
 4. Open Swap Doctor to inspect the timeline and download its redacted report.
 5. Reset and choose the unknown, partial or rejected outcome. The queue must pause instead of automatically retrying.
 
-These are simulated amounts and events. No wallet, coins, faucet or network is needed. This tests the current application lifecycle and reports, not contract execution or real settlement. Reload recovery and real transaction construction are not implemented yet.
+These are simulated amounts and events. No wallet, coins, faucet or network is needed. This tests the current application lifecycle and reports, not contract execution or real settlement. Saved simulation recovery is available in `/safety/cleanup`; real transaction construction remains unimplemented.
 
 ### Official wallet SDK with a fake wallet
 

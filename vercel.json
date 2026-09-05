@@ -5,35 +5,94 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "apps/web/dist",
   "functions": {
-    "api/[...path].js": { "maxDuration": 30 }
+    "api/[...path].js": {
+      "maxDuration": 30
+    }
   },
   "rewrites": [
-    { "source": "/docs", "destination": "/index.html" },
-    { "source": "/docs/:path*", "destination": "/index.html" },
-    { "source": "/safety", "destination": "/index.html" },
-    { "source": "/safety/doctor", "destination": "/index.html" },
-    { "source": "/safety/cleanup", "destination": "/index.html" },
-    { "source": "/safety/cleanup/doctor", "destination": "/index.html" },
-    { "source": "/app", "destination": "/index.html" },
-    { "source": "/demo", "destination": "/index.html" },
-    { "source": "/doctor", "destination": "/index.html" },
-    { "source": "/developers", "destination": "/index.html" }
+    {
+      "source": "/docs",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/safety",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/safety/doctor",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/safety/cleanup",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/safety/cleanup/doctor",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/doctor",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/developers",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/tonconnect-manifest.json",
-      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     },
     {
       "source": "/wallet-icon.png",
-      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "no-referrer" },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     }
   ]

@@ -1,4 +1,6 @@
-# Release readiness checklist
+# Release readiness history
+
+For the current release and pending gates, use [current release status](current-release.md). Everything below records earlier checkpoints and their original test counts.
 
 ## Cleanup planner and recovery feature branch — 5 September 2026
 

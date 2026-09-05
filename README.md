@@ -6,7 +6,7 @@ Local-first TON wallet cleanup and reusable swap diagnostics.
 
 SweepDock has a [public repository](https://github.com/GautamBytes/sweepdock). The offline cleanup simulation, real read-only mainnet quotes, fee checks, read-only TON Connect adapter and offline safety/recovery lab are merged into `main`. Signing and transaction construction remain disabled.
 
-**Hosted status verified 2026-09-05:** the [public demo](https://sweepdock.vercel.app/demo), [read-only app](https://sweepdock.vercel.app/app) and [safety lab](https://sweepdock.vercel.app/safety) are deployed. All documented routes, API health/config, real balance and quote reads, and the canonical wallet manifest were checked. The application release is merged in [PR #2](https://github.com/GautamBytes/sweepdock/pull/2). See [deployment evidence](docs/operations/release-verification-2026-09-05.json) and [limitations](docs/operations/release-readiness.md); a physical-phone wallet-return test remains pending.
+Current release, verification links and unfinished manual gates are recorded in [current release status](docs/operations/current-release.md). Earlier dated deployment files remain historical observations, not evidence for later commits.
 
 Wallet connection requires a public HTTPS manifest. Local builds leave Connect disabled unless explicitly configured. The safety lab is a simulation, not a testnet swap or proof of settlement.
 
@@ -64,9 +64,12 @@ pnpm check
 pnpm exec playwright install chromium
 pnpm test:e2e
 pnpm test:wallet
+pnpm example:core
+# Separate public-read integration check:
+pnpm verify:contracts
 ```
 
-The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. Both GitHub Actions checks passed for PR #2 before merging the application release at `0cc0e05`. New changes require their own checks. `pnpm check` includes a plain-Node test of the standalone API bundle outside the repository.
+The browser suite covers sequential approvals, failure pauses, report download, USDT reference expiry, accessibility and viewport overflow. The separate wallet suite runs the actual SDK against a no-funds protocol fixture, not a real wallet. Browser screenshots stay in the ignored `output/playwright/` directory. Per-PR CI runs the full check, browser suite, official wallet protocol fixture, and a packed core consumer outside the monorepo. Public contract capture/execution runs in a separate manually dispatched workflow because it depends on external read services. `pnpm check` includes a plain-Node test of the standalone API bundle outside the repository.
 
 ## Structure
 
@@ -88,3 +91,7 @@ No npm package has been published. Source code is available under the [MIT Licen
 ### Provider independence
 
 The cleanup planner and API orchestration use explicit balance/quote interfaces and a deployment-owned source/route policy. TonAPI and Omniston remain the only configured live integrations; synthetic replacement tests prove the core can consume another reviewed adapter. This does not add live execution or automatic failover. See [provider boundaries and replacement steps](docs/architecture/provider-independence.md).
+
+### Standalone consumer and review evidence
+
+Run `pnpm example:core` to build and consume a private local tarball in plain Node with strict NodeNext type checks. See the [consumer example](examples/core-consumer/README.md), [security self-review](docs/security/readiness-review.md), [physical-device checklist](docs/testing/physical-device.md), and [participant study](docs/validation/participant-study.md). Device and participant results remain pending until actual observations are recorded.

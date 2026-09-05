@@ -63,3 +63,11 @@ it('rejects balance provenance changes in the browser', async () => {
     fetchBalances(address, new AbortController().signal),
   ).rejects.toBeInstanceOf(ReadError);
 });
+it('recognizes an edge 429 even when its body is HTML', async () => {
+  vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+    new Response('<html>limit</html>', { status: 429 }),
+  );
+  await expect(
+    fetchQuote(input, new AbortController().signal),
+  ).rejects.toMatchObject({ code: 'RATE_LIMITED' });
+});

@@ -299,3 +299,11 @@ test('restored chain state rejects replay of the exact signed message without se
     balance,
   );
 });
+
+test('rejects a substituted account even when its embedded report was updated to match', async () => {
+  const copy = structuredClone(snapshot);
+  const code = beginCell().storeUint(42, 8).endCell();
+  copy.accounts.router.code = code.toBoc().toString('base64');
+  copy.report.accounts.router.codeHash = code.hash().toString('hex');
+  await assert.rejects(createLocalChain(true, copy), /Unreviewed router code/);
+});

@@ -874,8 +874,10 @@ pnpm test:wallet`}</code>
                 journal currently contains simulations only.
               </li>
               <li>
-                A published, stable SDK with an independently tested consumer
-                example.
+                A published, stable SDK. A private local package and standalone
+                consumer example are available in the repository; they are
+                checked in plain Node and strict TypeScript outside the
+                workspace.
               </li>
               <li>
                 Telegram Mini App integration and physical-phone wallet-return

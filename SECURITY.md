@@ -12,4 +12,6 @@ Do not post secrets, personal wallet data, actionable exploit payloads or sensit
 
 Use local fixtures for signing, unknown outcomes, recovery and report handling. Do not probe other users' accounts, send transactions, stress public providers or test denial-of-service against the hosted app. Report problems with provider or wallet services to their respective maintainers.
 
-The safety lab journal contains one simulated attempt. It is not evidence of production transaction recovery. Automated checks and protocol fixtures do not constitute an external security audit.
+The safety labs contain isolated single-attempt and three-token simulated journals. It is not evidence of production transaction recovery. Automated checks and protocol fixtures do not constitute an external security audit.
+
+The [read-only release self-review](docs/security/readiness-review.md) records API hardening, dependency findings, deployed firewall verification and limits. It is not an independent audit.

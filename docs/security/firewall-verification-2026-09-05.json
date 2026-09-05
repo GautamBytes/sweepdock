@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-05T13:20:33.340Z",
+  "method": "POST",
+  "path": "/api/readiness-check",
+  "providerCalls": 0,
+  "statuses": {
+    "404": 60,
+    "429": 1
+  },
+  "blocked": {
+    "request": 61,
+    "contentType": "application/json",
+    "mitigated": "deny"
+  }
+}
