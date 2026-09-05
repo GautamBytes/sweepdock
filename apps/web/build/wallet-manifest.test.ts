@@ -61,3 +61,46 @@ it('rejects paths, credentials, localhost and unrelated hosts in both environmen
     ).toThrow('Invalid Vercel deployment host');
   }
 });
+
+it('uses the approved custom domain for production only', () => {
+  expect(
+    deploymentManifest({
+      ...preview,
+      VERCEL_ENV: 'production',
+      SWEEPDOCK_PUBLIC_HOST: 'sweepdock.online',
+    }),
+  ).toEqual({
+    url: 'https://sweepdock.online',
+    name: 'SweepDock',
+    iconUrl: 'https://sweepdock.online/wallet-icon.png',
+  });
+  expect(
+    deploymentManifest({
+      ...preview,
+      SWEEPDOCK_PUBLIC_HOST: 'sweepdock.online',
+    })?.url,
+  ).toBe('https://sweepdock-fixture.vercel.app');
+  expect(() =>
+    deploymentManifest({ ...preview, VERCEL_URL: 'sweepdock.online' }),
+  ).toThrow('Invalid Vercel deployment host');
+});
+
+it('rejects unapproved or malformed public host overrides', () => {
+  for (const host of [
+    'evil.example',
+    'www.sweepdock.online',
+    'sweepdock.online.evil.example',
+    'https://sweepdock.online',
+    'sweepdock.online/path',
+    'sweepdock.online@evil.example',
+    '',
+  ]) {
+    expect(() =>
+      deploymentManifest({
+        ...preview,
+        VERCEL_ENV: 'production',
+        SWEEPDOCK_PUBLIC_HOST: host,
+      }),
+    ).toThrow();
+  }
+});

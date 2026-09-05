@@ -1,5 +1,7 @@
 # Current release
 
+Public website: https://sweepdock.online. Production wallet identity uses `SWEEPDOCK_PUBLIC_HOST=sweepdock.online`; previews keep their own Vercel URL.
+
 Release record: [v0.1.0-readiness.1](https://github.com/GautamBytes/sweepdock/releases/tag/v0.1.0-readiness.1). Its publication status, immutable tag and verification notes identify the exact source and deployment. This page records capabilities and manual gates; a branch or preview alone is not production evidence.
 
 ## Implemented

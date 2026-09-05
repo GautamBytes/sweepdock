@@ -4,12 +4,17 @@ type DeploymentEnvironment = Record<string, string | undefined>;
 
 export function deploymentManifest(environment: DeploymentEnvironment) {
   if (environment.VERCEL !== '1') return null;
-  const host =
-    environment.VERCEL_ENV === 'production'
-      ? environment.VERCEL_PROJECT_PRODUCTION_URL
-      : environment.VERCEL_URL;
+  const production = environment.VERCEL_ENV === 'production';
+  const host = production
+    ? (environment.SWEEPDOCK_PUBLIC_HOST ??
+      environment.VERCEL_PROJECT_PRODUCTION_URL)
+    : environment.VERCEL_URL;
   if (!host) throw new Error('Missing Vercel wallet host');
-  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.vercel\.app$/.test(host))
+  const approvedCustomHost = production && host === 'sweepdock.online';
+  if (
+    !approvedCustomHost &&
+    !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.vercel\.app$/.test(host)
+  )
     throw new Error('Invalid Vercel deployment host');
   const url = `https://${host}`;
   return { url, name: 'SweepDock', iconUrl: `${url}/wallet-icon.png` };

@@ -390,8 +390,8 @@ export const docPages: DocPage[] = [
               <li>
                 Tap <strong>Connect wallet</strong> and choose your wallet app.
                 Check that its request identifies SweepDock and{' '}
-                <code>sweepdock.vercel.app</code>. Approve connection only.
-                Reject any transaction or payment request.
+                <code>sweepdock.online</code>. Approve connection only. Reject
+                any transaction or payment request.
               </li>
               <li>
                 Return to the browser. It should say{' '}

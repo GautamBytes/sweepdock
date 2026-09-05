@@ -1,5 +1,7 @@
 # SweepDock
 
+Website: https://sweepdock.online
+
 Local-first TON wallet cleanup and reusable swap diagnostics.
 
 ## Development status
