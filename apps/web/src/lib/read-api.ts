@@ -61,21 +61,22 @@ export function errorCopy(error: unknown): string {
     return 'The data provider is unavailable. Please check again later.';
   const copy = {
     INVALID_REQUEST:
-      'Check the address or amount. Only reviewed TON mainnet assets are supported.',
+      'Check the address and amount. Live quotes support STON, NOT and USDT on TON mainnet.',
     PROVIDER_UNAVAILABLE:
       'The data provider is unavailable. Please check again later.',
     PROVIDER_INVALID_RESPONSE:
-      'The provider returned data we could not safely use. No quote is approved.',
+      'The data provider returned information that did not pass our checks. Please try reading again.',
     RATE_LIMITED:
       'The request limit was reached. Wait a minute before checking again.',
     REQUEST_TIMEOUT:
       'The request took too long. Check your connection and try again.',
     REQUEST_TOO_LARGE:
-      'The response or request is too large to process safely.',
+      'There is too much data to process. Try a smaller request.',
     NO_QUOTE: 'No quote is available for this pair and amount right now.',
     STALE_QUOTE: 'That quote is too old to preview. Request a fresh quote.',
     CANCELLED: 'The request was cancelled.',
-    READ_ONLY_DISABLED: 'The read-only API is not enabled on this server.',
+    READ_ONLY_DISABLED:
+      'Live balance and quote reads are not enabled on this server.',
   };
   return copy[error.code];
 }

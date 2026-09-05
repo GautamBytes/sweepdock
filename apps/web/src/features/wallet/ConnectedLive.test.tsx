@@ -93,7 +93,7 @@ it('clears old reads and ignores an outstanding response when the wallet changes
         '0:' + 'b'.repeat(64),
       ),
     );
-    expect(screen.queryByText('Native balance')).not.toBeInTheDocument();
+    expect(screen.queryByText('TON balance')).not.toBeInTheDocument();
   } finally {
     vi.unstubAllGlobals();
   }

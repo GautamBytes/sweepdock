@@ -22,22 +22,22 @@ const capabilities = [
   },
   {
     icon: Gauge,
-    title: 'Cost guardrails',
+    title: 'Cost and reserve checks',
     detail:
-      'Check estimated fees and the TON reserve before a swap can make sense.',
+      'Compare estimated fees with the receive amount and keep enough TON aside.',
     source: 'packages/core · policy',
   },
   {
     icon: Radio,
     title: 'Read-only providers',
-    detail: 'Read TonAPI balances and validate Omniston quote snapshots.',
+    detail: 'Read balances through TonAPI and check quotes from Omniston.',
     source: 'apps/api · omniston-adapter',
   },
   {
     icon: Route,
     title: 'Swap diagnostics',
     detail:
-      'Track lifecycle events, pause uncertain outcomes, and project an allowlisted report.',
+      'Follow swap states, pause unresolved attempts and export selected event fields.',
     source: 'packages/core · lifecycle & report',
   },
 ];
@@ -56,10 +56,10 @@ export function Developers() {
       <SectionHeading
         icon={Code2}
         eyebrow="SWEEPDOCK KIT · IN DEVELOPMENT"
-        title="Useful beyond this screen."
+        title="Build with the same cost checks."
       >
-        The shared rules behind wallet cleanup, fee checks, and swap
-        diagnostics. Available as repository source.
+        Explore the TypeScript code used by SweepDock. Run the example to check
+        token amounts, costs and simulated swap results in your own project.
       </SectionHeading>
       <div className="section-actions">
         <Link className="primary" to="/docs/developers">
@@ -79,7 +79,7 @@ export function Developers() {
         className="developer-capabilities"
       >
         <div className="workspace-section-title">
-          <h2 id="capabilities-title">What you can build with</h2>
+          <h2 id="capabilities-title">Available tools</h2>
           <span>Available in the repository</span>
         </div>
         <div className="capability-grid">
@@ -103,9 +103,12 @@ export function Developers() {
             <span>TypeScript</span>
           </div>
           <div className="code-example-heading">
-            <h2 id="example-title">Small API. Exact values.</h2>
+            <h2 id="example-title">
+              Convert token amounts without rounding errors.
+            </h2>
             <p>
-              A source example for this workspace; no published SDK package yet.
+              This example uses the workspace package. The developer guide also
+              covers the standalone package test.
             </p>
           </div>
           <pre>
@@ -113,7 +116,7 @@ export function Developers() {
           </pre>
           <div className="code-example-foot">
             <ShieldCheck size={15} aria-hidden="true" />
-            Pure amount conversion · No network calls
+            Runs locally without network calls
           </div>
         </section>
         <section className="lab-card" aria-labelledby="lab-title">
@@ -121,10 +124,10 @@ export function Developers() {
             <FlaskConical size={26} aria-hidden="true" />
           </span>
           <span className="eyebrow">OFFLINE SAFETY LAB</span>
-          <h2 id="lab-title">Explore the difficult outcomes.</h2>
+          <h2 id="lab-title">Test an interrupted swap.</h2>
           <p>
-            Practise an uncertain response, a refresh, or an interrupted
-            attempt. Inspect the simulated events in Swap Doctor.
+            Start a sample attempt and refresh the page before it finishes. See
+            why it stays paused, then inspect the steps in Swap Doctor.
           </p>
           <Link className="secondary" to="/safety">
             Open offline safety lab <ArrowRight size={17} aria-hidden="true" />
@@ -137,10 +140,11 @@ export function Developers() {
         <div>
           <h2 id="boundary-title">Before live use</h2>
           <p>
-            Transaction tracking, signing, verified settlement, persistent live
-            sessions, and independent security review still need to be built and
-            checked. Read-only TON Connect is implemented; a physical-device
-            connection check remains pending.
+            Real swaps still need transaction building, wallet signing, proof of
+            received funds and recovery after interruptions. An independent
+            security review is also pending. The owner tested read-only
+            connection and balance reading with Tonkeeper in Android Chrome.
+            Broader device testing is still needed.
           </p>
         </div>
         <a

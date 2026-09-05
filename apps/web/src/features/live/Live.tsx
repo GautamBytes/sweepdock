@@ -81,7 +81,7 @@ export function Live({
       });
     } catch {
       setQuoteError(
-        'Enter a positive amount using a dot for decimals. Input and output must differ.',
+        'Enter an amount greater than zero, using a dot for decimals. Choose different tokens in From and To.',
       );
       return;
     }
@@ -124,12 +124,14 @@ export function Live({
         <span className="eyebrow">WALLET CLEANUP · LIVE PREVIEW</span>
         <h1>Real balances. Clear costs.</h1>
         <p>
-          Read a wallet or check a swap quote. Nothing can be signed or sent.
+          See your token balances and compare estimated swap costs. You can
+          check a quote without connecting a wallet. This page cannot send
+          transactions.
         </p>
       </div>
       <div className="simulation-note live-note">
         <ShieldCheck size={16} />
-        <strong>Mainnet data — read only</strong>
+        <strong>Mainnet data · read only</strong>
         <span>
           {providerLabels.balances} balances + {providerLabels.quotes} quotes.
           No signing or spending.
@@ -165,9 +167,10 @@ export function Live({
               required
             />
             <p id="wallet-privacy" className="fine-print">
-              Only paste a public address—not a seed phrase. Clicking below
-              shares the address with {providerLabels.balances}. It is not saved
-              in SweepDock.
+              Paste a public wallet address. Never enter a recovery phrase.
+              Reading balances sends the address through SweepDock to{' '}
+              {providerLabels.balances}. SweepDock keeps it in this page’s
+              memory until you refresh or clear it.
             </p>
             <button
               className="primary"
@@ -187,7 +190,7 @@ export function Live({
             <div className="live-wallet-data">
               <div className="balance-strip">
                 <div>
-                  <span>Native balance</span>
+                  <span>TON balance</span>
                   <strong>
                     {formatUnits(BigInt(balances.nativeBalanceUnits), 9)}{' '}
                     <small>TON</small>
@@ -197,19 +200,22 @@ export function Live({
               <p className="wallet-timestamp">
                 Read at {new Date(balances.observedAtMs).toLocaleTimeString()}.{' '}
                 {balanceFresh
-                  ? 'Current read-only snapshot.'
-                  : 'Balance snapshot is stale—read it again before assessing costs.'}
+                  ? 'Balances from the latest read.'
+                  : 'These balances are over a minute old. Read them again before checking costs.'}
               </p>
               {!balances.complete && (
                 <p role="status" className="notice inset-notice">
-                  Balance results are incomplete or inconsistent. Cleanup
-                  selection is disabled.
+                  Some balance data is missing or does not match. Read the
+                  wallet again before selecting tokens.
                 </p>
               )}
               {balances.assets.length === 0 ? (
                 <div className="live-empty">
-                  <h3>No jetton balances returned.</h3>
-                  <p>You can still check a quote on the right.</p>
+                  <h3>No token balances found.</h3>
+                  <p>
+                    You can still use “Check a live quote” to try an amount. No
+                    funds are needed.
+                  </p>
                 </div>
               ) : (
                 <ul className="real-asset-list">
@@ -226,12 +232,12 @@ export function Live({
                       <div className="real-asset-action">
                         <span>
                           {asset.reason === 'METADATA_MISMATCH'
-                            ? 'Metadata changed · blocked'
+                            ? 'Token details do not match · blocked'
                             : asset.reason === 'UNSUPPORTED_TOKEN'
-                              ? 'Unsupported token features'
+                              ? 'Token features are not supported'
                               : asset.reviewedId
-                                ? 'Reviewed contract identity'
-                                : 'Unreviewed · quotes disabled'}
+                                ? 'Contract matches the supported token'
+                                : 'Not supported for quotes'}
                         </span>
                         <button
                           className="text-button"
@@ -242,7 +248,7 @@ export function Live({
                           }
                           onClick={() => selectBalance(asset)}
                         >
-                          Use balance
+                          Use this amount
                         </button>
                       </div>
                     </li>
@@ -254,10 +260,11 @@ export function Live({
             !loadingBalances && (
               <div className="live-empty">
                 <ShieldCheck size={26} />
-                <h3>Just an address. No permissions.</h3>
+                <h3>Read balances without spending.</h3>
                 <p>
-                  STON, NOT and USDT are reviewed for this first version. Other
-                  tokens stay visible but cannot be selected.
+                  You can use supported STON, NOT and USDT balances for quotes.
+                  Other tokens may appear in the list, but you cannot select
+                  them.
                 </p>
               </div>
             )
@@ -267,8 +274,8 @@ export function Live({
           <span className="eyebrow">EXPLORE WITHOUT A WALLET</span>
           <h2>Check a live quote</h2>
           <p className="muted-copy">
-            Try an amount before sharing a wallet address. This does not reserve
-            a price.
+            A quote estimates what you could receive for a token amount. Enter
+            an amount to compare costs. You do not need to own the tokens.
           </p>
           <form
             onSubmit={(event) => {
@@ -350,8 +357,8 @@ export function Live({
             />
           )}
           <p className="fine-print">
-            Only swap routes using {providerLabels.protocols} are accepted for
-            these read-only previews. A quote is not proof of a successful swap.
+            These previews use {providerLabels.protocols} swap routes. Prices
+            can change, and requesting a quote does not send a swap.
           </p>
         </aside>
       </div>

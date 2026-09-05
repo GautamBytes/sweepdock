@@ -1,6 +1,7 @@
 import { ArrowRight, Check, ShieldCheck, Layers2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SectionHeading } from '../../app/SectionHeading';
+import { stateLabels } from '../../lib/simulation-copy';
 import { formatUnits } from '@sweepdock/core';
 import { assets, type DemoItem, type DemoOutcome } from '../demo/model';
 
@@ -40,13 +41,14 @@ export function Cleanup({
       <SectionHeading
         icon={Layers2}
         eyebrow="WALLET CLEANUP"
-        title="A little less clutter."
+        title="Decide which tokens to keep."
       >
-        Review small token balances. Keep the swaps that make sense.
+        Select sample tokens, compare their costs and practise each swap. This
+        demo uses made-up balances and never connects to a wallet.
       </SectionHeading>
       <div className="simulation-note">
         <span className="status-dot" />
-        <strong>Simulation — no real funds</strong>
+        <strong>Simulation · no real funds</strong>
         <span>
           Sample balances and prices. No wallet connection or live quotes.
         </span>
@@ -57,14 +59,14 @@ export function Cleanup({
             <div>
               <span className="eyebrow">SAMPLE WALLET</span>
               <h2 id="balances-title">
-                Your token shelf <span className="count">6</span>
+                Your token balances <span className="count">6</span>
               </h2>
             </div>
             <span className="small-label">TON network · demo</span>
           </div>
           <div className="balance-strip">
             <div>
-              <span>TON set aside for fees</span>
+              <span>Sample TON balance</span>
               <strong>
                 1.20 <small>TON</small>
               </strong>
@@ -114,10 +116,10 @@ export function Cleanup({
                     {asset.symbol === 'REDO'
                       ? 'Likely too small to swap'
                       : asset.symbol === 'USDT'
-                        ? 'Already your output token'
+                        ? 'Keeping USDT in this demo'
                         : !asset.available
                           ? 'Not available for swapping'
-                          : 'Illustrative value'}
+                          : 'Sample value'}
                   </small>
                 </div>
               </label>
@@ -126,22 +128,21 @@ export function Cleanup({
           <div className="panel-foot">
             <ShieldCheck size={16} />
             <span>
-              Unreviewed tokens stay out. STON is preselected only for this
-              demo.
+              Tokens we have not reviewed cannot be selected. STON is selected
+              to help you start the demo.
             </span>
           </div>
         </section>
         <aside className="review-panel" aria-label="Cleanup review">
           <span className="eyebrow">YOUR CLEANUP</span>
           <h2>
-            {items.length
-              ? 'Review your cleanup'
-              : 'Small balances. One place.'}
+            {items.length ? 'Review your cleanup' : 'Choose tokens to compare.'}
           </h2>
           {!items.length ? (
             <>
               <p className="muted-copy">
-                Choose a few tokens to explore how a cleanup works.
+                Select tokens, then review their estimated costs. Try REDO to
+                see why a small balance may be worth keeping.
               </p>
               <div className="output-token">
                 <span>Convert to</span>
@@ -171,8 +172,9 @@ export function Cleanup({
                 Review selection <ArrowRight size={18} />
               </button>
               <p className="fine-print">
-                Each swap needs its own review and approval. This is not a
-                single batch transaction.
+                Keep at least 0.05 TON aside in addition to the network budget.
+                In this demo, you review and approve each sample swap on its
+                own.
               </p>
             </>
           ) : (
@@ -182,7 +184,7 @@ export function Cleanup({
                   <li key={item.record.id}>
                     <strong>{item.asset.symbol}</strong>
                     <span className={`state state-${item.record.state}`}>
-                      {item.record.state.replaceAll('_', ' ')}
+                      {stateLabels[item.record.state]}
                     </span>
                   </li>
                 ))}
@@ -208,8 +210,8 @@ export function Cleanup({
                 )}
                 {items.some((item) => item.record.state === 'partial') && (
                   <p className="notice">
-                    Partial result simulated. The remaining queue is paused for
-                    review.
+                    Only part of the expected result matched in this simulation.
+                    The remaining swaps are paused.
                   </p>
                 )}
                 {items.some((item) => item.record.state === 'rejected') && (
@@ -232,7 +234,8 @@ export function Cleanup({
                       {formatUnits(current.asset.cost, 6)} USDT equivalent.
                     </p>
                     <small>
-                      These are fixed scenario values, not executable quotes.
+                      These are sample amounts. You cannot trade at these
+                      prices.
                     </small>
                   </div>
                   <button className="primary" onClick={onApprove}>
@@ -244,8 +247,9 @@ export function Cleanup({
                 Start new simulation
               </button>
               <p className="fine-print">
-                Scenario controls only. A real pending transaction would need
-                reconciliation before another attempt.
+                Resetting starts a new practice scenario. For a real pending
+                swap, you would need to check the original result before trying
+                again.
               </p>
             </>
           )}
@@ -262,20 +266,22 @@ export function Cleanup({
               <option value="rejected">Wallet rejection</option>
               <option value="partial">Partial result</option>
             </select>
-            <small>Try a failure case, too. It matters.</small>
+            <small>
+              Choose a different outcome to see why the demo pauses.
+            </small>
           </div>
         </aside>
       </div>
       <p>
         <Link className="text-link" to="/safety/cleanup">
-          Try a saved cleanup with refresh recovery →
+          Try saving a cleanup and returning after refresh →
         </Link>
       </p>
       <div className="bottom-note">
-        <span>01 — SELECT</span>
-        <span>02 — CHECK COSTS</span>
-        <span>03 — REVIEW EACH SWAP</span>
-        <span>04 — FOLLOW THE RESULT</span>
+        <span>01 · SELECT</span>
+        <span>02 · CHECK COSTS</span>
+        <span>03 · REVIEW EACH SWAP</span>
+        <span>04 · FOLLOW THE RESULT</span>
       </div>
     </>
   );

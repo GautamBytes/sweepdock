@@ -21,7 +21,7 @@ test('cleanup requires a separate approval for each item and produces a local re
       externalRequests.push(request.url());
   });
   await page.goto('/demo');
-  await expect(page.getByText('Simulation — no real funds')).toBeVisible();
+  await expect(page.getByText('Simulation · no real funds')).toBeVisible();
   await page.getByRole('checkbox', { name: 'Select NOT', exact: true }).check();
   await page
     .getByRole('checkbox', { name: 'Select REDO', exact: true })
@@ -39,9 +39,9 @@ test('cleanup requires a separate approval for each item and produces a local re
     page.getByRole('button', { name: 'Approve simulation' }),
   ).toHaveCount(0);
   await page.getByRole('link', { name: 'Swap Doctor', exact: true }).click();
-  await expect(page.getByText('receipt_verified', { exact: true })).toHaveCount(
-    2,
-  );
+  await expect(
+    page.getByText('Expected result matched', { exact: true }),
+  ).toHaveCount(2);
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('link', { name: 'Download report' }).click();
   const download = await downloadPromise;

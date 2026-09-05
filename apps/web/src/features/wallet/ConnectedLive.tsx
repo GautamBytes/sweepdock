@@ -61,18 +61,20 @@ export function ConnectedLive({ session }: { session: ReadOnlyWalletSession }) {
               </code>
             )}
             <p>
-              Connection shares your public account, not spending permission.
-              Click “Read wallet balances” to share it with TonAPI.
+              Your wallet has shared its public address. SweepDock cannot spend
+              your funds. Choose “Read wallet balances” to read the address
+              through TonAPI.
             </p>
             <p className="fine-print">
-              Session keys stay in this page’s memory. Refreshing forgets the
-              session. SDK analytics are off.
+              Refreshing this page forgets the connection. Disconnecting also
+              clears the address, balances and quotes shown here.
             </p>
             {account.kind === 'wrong-network' && (
               <p className="notice" role="alert">
-                This wallet is on testnet or an unsupported network. This screen
-                reads mainnet only. Disconnect before choosing a mainnet wallet;
-                test coins cannot be used here.
+                This page reads the live TON network, called mainnet. Your
+                wallet is on testnet or another unsupported network. Disconnect
+                and choose a mainnet account. An empty account works; no deposit
+                is needed.
               </p>
             )}
             {account.kind === 'invalid' && (

@@ -24,7 +24,7 @@ test('a multi-item cleanup survives refresh, reconciles the original attempt, an
   await page.getByRole('button', { name: 'Simulate matching success' }).click();
   await page.getByRole('button', { name: 'Approve NOT simulation' }).click();
   await page.getByRole('button', { name: 'Simulate wallet response' }).click();
-  await expect(page.getByRole('status')).toContainText('outcome unconfirmed');
+  await expect(page.getByRole('status')).toContainText('result unconfirmed');
   await page.getByRole('button', { name: 'Simulate matching success' }).click();
   await page.getByRole('button', { name: 'Approve USDT simulation' }).click();
   await page.getByRole('button', { name: 'Simulate wallet response' }).click();
@@ -34,9 +34,9 @@ test('a multi-item cleanup survives refresh, reconciles the original attempt, an
     .getByRole('link', { name: 'Inspect this session in Swap Doctor' })
     .click();
   await page.reload();
-  await expect(page.getByText('receipt_verified', { exact: true })).toHaveCount(
-    3,
-  );
+  await expect(
+    page.getByText('Expected result matched', { exact: true }),
+  ).toHaveCount(3);
   const href = await page
     .getByRole('link', { name: 'Download report' })
     .getAttribute('href');

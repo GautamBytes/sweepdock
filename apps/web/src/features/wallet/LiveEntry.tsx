@@ -47,20 +47,20 @@ export function LiveEntry() {
           <div>
             <h2>Connect or paste an address</h2>
             <p>
-              Use the official TON Connect wallet picker, or keep using
-              public-address lookup. No signature or payment is requested.
+              Choose your wallet to share its public address, or paste an
+              address below. Connecting does not allow SweepDock to spend your
+              funds.
             </p>
             {!manifest && (
               <p className="fine-print">
-                Connection needs this app’s public HTTPS manifest. It is not
-                configured in this local preview yet. Address lookup and live
-                quotes still work.
+                Wallet connection is not configured for this preview. You can
+                still paste a public address or check a quote.
               </p>
             )}
             {error && (
               <p className="notice" role="alert">
-                Wallet connection could not open. Check the app setup and try
-                again. Nothing was signed or sent.
+                The wallet picker could not open. Try again, or paste a public
+                address below. No transaction was requested.
               </p>
             )}
           </div>

@@ -67,9 +67,11 @@ test('unfinished attempt survives refresh and stays blocked in Doctor', async ({
   ).toBeVisible();
   await page.getByRole('link', { name: 'Inspect in Swap Doctor' }).click();
   await expect(
-    page.getByText('Safety lab — simulated events', { exact: true }),
+    page.getByText('Safety lab · simulated events', { exact: true }),
   ).toBeVisible();
-  await expect(page.getByText('status_unknown', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText('Result unconfirmed', { exact: true }),
+  ).toBeVisible();
   await page.getByText('Preview report contents', { exact: true }).click();
   const report = await page.locator('pre').innerText();
   expect(report).toContain('simulation');
@@ -161,23 +163,29 @@ test('a simulated wallet response remains pending and a fixture receipt is expli
   await page.getByRole('button', { name: 'Start simulated attempt' }).click();
   await page.getByRole('button', { name: 'Simulate wallet response' }).click();
   await expect(
-    page.getByText('Wallet responded. Settlement is not confirmed.', {
-      exact: true,
-    }),
+    page.getByText(
+      'The simulated wallet responded. The swap result is not confirmed.',
+      {
+        exact: true,
+      },
+    ),
   ).toBeVisible();
   await page
     .getByRole('button', { name: 'Simulate transaction found' })
     .click();
   await expect(
-    page.getByText('Waiting for matching settlement evidence.', {
+    page.getByText('Waiting for a sample result that matches this attempt.', {
       exact: true,
     }),
   ).toBeVisible();
   await page.getByRole('button', { name: 'Simulate matching receipt' }).click();
   await expect(
-    page.getByText('Simulated receipt matched. No real swap took place.', {
-      exact: true,
-    }),
+    page.getByText(
+      'The sample result matched this attempt. No real swap took place.',
+      {
+        exact: true,
+      },
+    ),
   ).toBeVisible();
 });
 
@@ -315,7 +323,7 @@ test('safety lab and recovered Doctor fit a small screen and remain accessible',
   for (const url of ['/safety', '/safety/doctor']) {
     await page.goto(url);
     await expect(
-      page.getByText('Safety lab — simulated events', { exact: true }),
+      page.getByText('Safety lab · simulated events', { exact: true }),
     ).toBeVisible();
     expect(
       await page.evaluate(

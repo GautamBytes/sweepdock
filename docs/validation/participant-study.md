@@ -1,6 +1,6 @@
 # Wallet-user and developer validation
 
-Status: **not conducted**. Target: five TON wallet users and one external developer. These targets are a small formative study, not adoption metrics or a statistical sample. Owner participation in device QA does not count as independent user validation.
+Status: **not conducted; deferred by the owner to a later phase**. Proposed funding could support recruitment, testing and improvements. These remain planned activities. Target: five TON wallet users and one external developer. These targets are a small formative study, not adoption metrics or a statistical sample. Owner participation in device QA does not count as independent user validation.
 
 ## Consent and handling
 

@@ -14,27 +14,27 @@ export const docPages: DocPage[] = [
   {
     slug: '',
     label: 'Why SweepDock exists',
-    title: 'A clearer decision before a swap.',
+    title: 'Decide what to do with leftover tokens.',
     audience: 'Start here',
     summary:
-      'The purpose, the people we are building for, and the problem we want to make easier.',
+      'SweepDock helps you compare small token balances with the cost of swapping them on TON. Start with sample tokens or read live balances and quotes.',
     sections: [
       {
         id: 'intention',
-        title: 'Our intention',
+        title: 'What we want to help you do',
         body: (
           <>
             <p>
-              We are building SweepDock to help TON wallet owners review
-              supported tokens they no longer want, understand the cost of
-              converting them, and follow the outcome of each swap. A useful
-              cleanup should leave you with a decision you understand, including
-              when keeping a balance makes more sense.
+              You may have tokens left over from a trade, a reward or an app you
+              no longer use. We are building SweepDock to help you decide which
+              supported balances are worth converting and which to keep. You
+              should be able to see the costs before making that decision.
             </p>
             <p>
-              We also want TON developers to reuse the same amount checks, cost
-              rules and diagnostic events. The consumer app gives those tools a
-              concrete workflow to support and test.
+              Today, you can compare live quotes and plan a cleanup without
+              spending. You can also practise swap outcomes with sample data.
+              Sending real swaps and checking that the right tokens arrived are
+              later stages of the project.
             </p>
           </>
         ),
@@ -45,22 +45,21 @@ export const docPages: DocPage[] = [
         body: (
           <>
             <p>
-              A small token balance still asks you to make several decisions:
-              whether the token is supported, what you could receive, how much
-              TON the next operation needs, and whether the cost is reasonable.
-              Repeating that review across unwanted balances takes effort.
+              A small balance is not always worth swapping. Network fees can
+              take a large share of what you would receive. You also need TON
+              available upfront, even if you want to receive a different token.
+              Checking each balance, quote and fee takes time.
             </p>
             <p>
-              Unclear outcomes create a second problem. A wallet response does
-              not, by itself, establish that the intended swap completed. If the
-              result is uncertain, sending again can create another attempt
-              before you understand the first one.
+              An unclear swap result creates another problem. Your wallet may
+              respond before you know whether the swap finished. Trying again
+              could send a second transaction while the first is still pending.
+              Our simulations show how to pause and check the original result.
             </p>
             <p>
-              These are the problems the prototype is designed to explore. We
-              still need prospective users and developers to confirm how often
-              they encounter them and whether SweepDock improves their current
-              workflow.
+              We still need user research to learn how often people face these
+              problems and whether this workflow helps them. That research and
+              the changes it leads to are planned work.
             </p>
           </>
         ),
@@ -72,20 +71,21 @@ export const docPages: DocPage[] = [
           <>
             <h3>TON wallet owners</h3>
             <p>
-              You have unwanted, supported token balances that may still be
-              worth converting. SweepDock is aimed at economically meaningful
-              leftovers; very small dust may cost more to convert than it
-              returns.
+              Use SweepDock if you want to review leftover tokens before
+              deciding what to do with them. TON is the blockchain network;
+              tokens on it are also called jettons. This version supports live
+              quotes for STON, NOT and USDT, with TON or USDT as the receive
+              token.
             </p>
             <Link to="/docs/wallet-users">
               Start with the wallet user guide
             </Link>
-            <h3>TON application developers</h3>
+            <h3>Developers building TON apps</h3>
             <p>
-              You are adding swaps to a website or exploring a future Telegram
-              Mini App integration, and want predictable state handling and
-              reproducible failure scenarios. The current kit is repository
-              source, with no published npm release.
+              Explore the shared TypeScript code for token amounts, cost checks
+              and swap states. You can run a standalone consumer example and
+              reproduce interrupted-swap scenarios. The code is available in the
+              repository; a stable npm package is still planned.
             </p>
             <Link to="/docs/developers">Start with the developer guide</Link>
           </>
@@ -93,28 +93,28 @@ export const docPages: DocPage[] = [
       },
       {
         id: 'scope',
-        title: 'One workflow, three tools',
+        title: 'Choose where to start',
         body: (
           <>
             <ul>
               <li>
-                <strong>Wallet Cleanup</strong> lets you practise selecting
-                balances and reviewing costs, with a separate route for live
-                read-only previews.
+                <strong>Wallet Cleanup:</strong> select sample tokens and
+                compare costs, or switch to live data to read a wallet and build
+                a plan.
               </li>
               <li>
-                <strong>Swap Doctor</strong> explains events from your cleanup
-                or safety-lab simulation and exports a local report.
+                <strong>Swap Doctor:</strong> see the steps from a simulation,
+                understand a paused result and download its report.
               </li>
               <li>
-                <strong>Developer Kit</strong> exposes the shared rules behind
-                those screens for inspection and development.
+                <strong>Developer Kit:</strong> explore the shared code and
+                follow the setup guide.
               </li>
             </ul>
             <p>
-              The current app cannot build, sign or send a real transaction.{' '}
+              This website cannot build, sign or send a real transaction.{' '}
               <Link to="/docs/status">
-                Read what works today and what is still planned.
+                Read what works today and what is planned.
               </Link>
             </p>
           </>
@@ -125,38 +125,44 @@ export const docPages: DocPage[] = [
   {
     slug: 'approach',
     label: 'Why this approach',
-    title: 'Check the cost. Explain the outcome.',
-    audience: 'Product reasoning',
+    title: 'Compare the cost before taking action.',
+    audience: 'How we approach the problem',
     summary:
-      'Why a focused cleanup workflow and a shared toolkit fit the problem, and where that reasoning still needs evidence.',
+      'We bring balances, swap estimates and network costs into one review. The demo also shows why an unresolved result needs a pause.',
     sections: [
       {
         id: 'cost-first',
-        title: 'Start with the economics',
+        title: 'Show what a swap would cost',
         body: (
           <>
             <p>
-              Converting a balance only helps when you understand what remains
-              after costs. We show the expected output alongside the
-              network-cost estimate and the TON needed upfront. An upfront gas
-              budget can include value that returns; it is not automatically the
-              amount consumed as fees.
+              A quote estimates how much of one token you could receive for
+              another. SweepDock shows that amount after provider fees,
+              alongside network fees. Network fees are also called gas, and you
+              pay them in TON.
             </p>
             <p>
-              The current cost policy screens out an item when the comparable
-              network cost exceeds 10% of its output value, when the estimated
-              net value is non-positive, or when the next operation would leave
-              less than the configured TON reserve. The initial reserve is 0.05
-              TON, in addition to the upfront requirement. These are prototype
-              policy choices, not universal thresholds for every wallet.
+              The upfront network budget is the TON a swap would need at the
+              start. Some of that budget may return to your wallet. The
+              estimated network fee is the amount expected to be spent. We show
+              both so you can distinguish the required balance from the likely
+              cost.
+            </p>
+            <p>
+              We skip a token if its estimated network cost is over 10% of the
+              amount used for the cost check, or if nothing would remain after
+              costs. Live checks use the minimum receive amount. We also require
+              enough TON for the upfront budget plus a 0.05 TON reserve, which
+              stays untouched. These are the prototype’s rules, not a guarantee
+              that a swap is a good choice for you.
             </p>
             <aside className="docs-callout">
-              <strong>A sample worth skipping</strong>
+              <strong>An example worth skipping</strong>
               <p>
-                In the offline demo, REDO has an illustrative output value of
-                0.02 USDT and a network-cost estimate of 0.08 USDT equivalent.
-                Converting it would lose value before other considerations, so
-                the demo skips it. These are fixed fixtures, not market prices.
+                In the demo, REDO would return 0.02 USDT while the estimated
+                network fee is worth 0.08 USDT. The fee is larger than the
+                return, so the demo skips it. These are made-up values, not
+                current prices.
               </p>
             </aside>
           </>
@@ -164,85 +170,81 @@ export const docPages: DocPage[] = [
       },
       {
         id: 'controlled-steps',
-        title: 'Review one item at a time',
+        title: 'Review each token on its own',
         body: (
           <>
             <p>
-              Each item can have a different price, token identity and outcome.
-              Separate reviews make those differences visible and give the user
-              a chance to stop. The demo permits up to five selected tokens,
-              with a separate simulated approval for each supported item.
+              Each token can have a different price, fee and result. The live
+              planner checks each selected token, explains why it passes or gets
+              skipped, and adds up the upfront TON needed for the included
+              swaps. It does not count future swap returns or refunds as
+              available TON.
             </p>
             <p>
-              The trade-off is more interaction than a one-click flow. A
-              selection is a plan, not an atomic batch or a promise that one
-              wallet signature covers all items. Live execution still needs to
-              be built and verified.
+              The demo asks for a separate approval for each sample swap. This
+              takes more steps than one click, but lets you review each item and
+              stop after an unexpected result. A cleanup plan does not mean all
+              swaps happen together or share one wallet approval.
             </p>
           </>
         ),
       },
       {
         id: 'evidence',
-        title: 'Treat uncertainty as a real state',
+        title: 'Pause when the result is unclear',
         body: (
           <>
             <p>
-              The lifecycle distinguishes a wallet response, a located
-              transaction and a matching result. An unknown or partial outcome
-              pauses the simulated queue. That makes uncertainty visible rather
-              than presenting an unverified success or inviting another send.
+              A wallet response, a transaction found on the network and a
+              confirmed receive amount are different steps. The demo pauses when
+              the result is unknown or only partly matches what was expected.
+              Swap Doctor explains which step needs attention.
             </p>
             <p>
-              The safety lab exercises saving an intent before a simulated
-              wallet response and preserving an unresolved state after refresh.
-              It protects a synthetic sample within the same browser and site.
-              It does not yet reconcile real transactions or protect activity on
-              another device.
+              The saved labs let you refresh during an attempt and return to its
+              unfinished state. They use sample data in this browser. They do
+              not track real transactions or prevent actions on another device.
             </p>
           </>
         ),
       },
       {
         id: 'shared-core',
-        title: 'Use established providers and share the rules',
+        title: 'Use existing swap services and reusable code',
         body: (
           <>
             <p>
-              TonAPI supplies balance reads and Omniston supplies quote
-              previews. SweepDock adds application-level review, cost assessment
-              and diagnostic explanations around those interfaces. It does not
-              create a new liquidity protocol.
+              TonAPI supplies wallet balances. Omniston supplies quotes, which
+              this version limits to STON.fi routes. SweepDock adds the cost
+              comparison, cleanup plan and explanations around those services.
             </p>
             <p>
-              The app and toolkit share a TypeScript core. Integer base units
-              avoid floating-point rounding in amount decisions; contract
-              identity checks avoid trusting a token symbol alone. Developers
-              can inspect and test the same rules the interface uses.
+              The app and developer kit use the same TypeScript core. It uses
+              integer amounts to avoid floating-point rounding and checks token
+              contract addresses rather than trusting a name or symbol. Balance
+              and quote providers have separate interfaces, so a new provider
+              can be added with an adapter and tests.
             </p>
           </>
         ),
       },
       {
         id: 'validation',
-        title: 'What would establish that this works',
+        title: 'What we still need to learn',
         body: (
           <>
             <p>
-              The design is a reasoned approach, not proof of product-market
-              fit. We need to measure whether intended users understand skipped
-              balances and uncertain outcomes, whether a useful range of
-              balances remains after fees, and whether developers find the
-              shared tools useful.
+              We need to see whether wallet owners understand the costs and skip
+              reasons, whether enough leftover balances are worth converting,
+              and whether developers can use the shared code in their apps. User
+              research and usability improvements are planned; we are not
+              presenting them as completed validation.
             </p>
             <p>
-              The original validation target is five wallet-user interviews and
-              three developer interviews; those are research targets, not
-              existing adoption. The next engineering evidence must cover
-              supported execution environments, actual receipt verification,
-              recovery and real-device wallet return.{' '}
+              The next execution work needs a working test environment, verified
+              swap results and recovery after interruptions.{' '}
               <Link to="/docs/status">
-                See the current evidence and limitations.
+                See the current evidence and limits.
               </Link>
             </p>
           </>
@@ -253,10 +255,10 @@ export const docPages: DocPage[] = [
   {
     slug: 'wallet-users',
     label: 'Wallet user guide',
-    title: 'Try the workflow without spending.',
+    title: 'Try SweepDock without spending money.',
     audience: 'For wallet owners',
     summary:
-      'Learn the offline demo first, then explore real balances and quotes in read-only mode.',
+      'Use sample tokens to learn the flow, or read live balances and quotes. You do not need to deposit money for either.',
     sections: [
       {
         id: 'demo',
@@ -265,33 +267,31 @@ export const docPages: DocPage[] = [
           <>
             <ol>
               <li>
-                Open <Link to="/demo">Wallet Cleanup</Link>. Check that the
-                screen says <strong>Simulation — no real funds</strong>. You do
-                not need a wallet connection.
+                Open <Link to="/demo">Wallet Cleanup</Link>. The banner says{' '}
+                <strong>Simulation · no real funds</strong>. No wallet is
+                needed.
               </li>
               <li>
-                STON is selected to start. Select other available tokens if you
-                want to compare them. The demo limits a selection to five;
-                unavailable tokens stay disabled.
+                Start with the selected STON token or select other available
+                tokens. The selection limit is five. USDT stays as the receive
+                token, and the unreviewed sample stays disabled.
               </li>
               <li>
-                Choose <strong>Review selection</strong>. Read the output
-                estimate, cost and reason for any skipped item.
+                Choose <strong>Review selection</strong>. Check the sample
+                receive amount, estimated cost and reason for any skipped token.
               </li>
               <li>
-                Choose <strong>Approve simulation</strong> for the next reviewed
-                item. This changes sample state only. Review and approve
-                subsequent items separately.
+                Choose <strong>Approve simulation</strong> for the next item.
+                This advances the demo; it does not open a wallet or send
+                tokens.
               </li>
               <li>
-                Use <strong>Start new simulation</strong> when you want to
-                practise again. Refreshing this demo also clears its in-memory
-                progress.
+                Choose <strong>Start new simulation</strong> to try again.
+                Refreshing the demo also clears its progress.
               </li>
             </ol>
             <p>
-              Try REDO to see an uneconomical balance get skipped. Demo values
-              are illustrative, and the demo uses USDT as its output token.
+              Try REDO to see a token skipped because its fee exceeds its value.
             </p>
           </>
         ),
@@ -303,30 +303,29 @@ export const docPages: DocPage[] = [
           <>
             <ol>
               <li>
-                Before reviewing, set <strong>Demo outcome</strong> to{' '}
+                Before reviewing, change <strong>Demo outcome</strong> to{' '}
                 <strong>Unconfirmed transaction</strong>,{' '}
                 <strong>Partial result</strong> or{' '}
                 <strong>Wallet rejection</strong>.
               </li>
               <li>
-                Review your selection and approve the simulation. Read the pause
-                message; the remaining queue will not continue automatically.
+                Review the selection and approve the simulation. Read the reason
+                it pauses. The remaining swaps will not continue on their own.
               </li>
               <li>
-                Open <Link to="/doctor">Swap Doctor</Link> from the navigation.
-                Inspect the event timeline and its explanations.
+                Open <Link to="/doctor">Swap Doctor</Link> and follow the
+                timeline.
               </li>
               <li>
-                Expand <strong>Preview report contents</strong>, then use{' '}
-                <strong>Download report</strong> if you want a local JSON copy.
-                No report is uploaded automatically.
+                Open <strong>Preview report contents</strong>, then choose{' '}
+                <strong>Download report</strong> if you want to save the JSON
+                file. SweepDock does not upload the report.
               </li>
             </ol>
             <p>
-              Doctor only shows events from the current simulation. It cannot
-              look up an arbitrary transaction hash or diagnose another app. A
-              scenario reset is a practice control, not a way to resolve or
-              retry a real pending transaction.
+              Swap Doctor explains your simulation. It cannot look up real
+              transactions from SweepDock or another app. Resetting a demo does
+              not resolve a real pending transaction.
             </p>
           </>
         ),
@@ -338,64 +337,82 @@ export const docPages: DocPage[] = [
           <>
             <ol>
               <li>
-                Open <Link to="/app">Read live data</Link>. This screen is
-                labelled <strong>Mainnet · read only</strong>.
+                Open <Link to="/app">Read live data</Link>. This page reads TON
+                mainnet, the live network. It cannot send transactions.
               </li>
               <li>
-                In <strong>Check a live quote</strong>, choose{' '}
-                <strong>From</strong>, <strong>To</strong> and an{' '}
-                <strong>Amount to preview</strong>. The supported inputs are
-                STON, NOT and USDT; outputs are TON or USDT, with different
-                input and output assets.
+                Find <strong>Check a live quote</strong>. Choose the token in{' '}
+                <strong>From</strong>, the token in <strong>To</strong> and an{' '}
+                <strong>Amount to preview</strong>. You can quote STON, NOT or
+                USDT into TON or USDT. From and To must be different.
               </li>
               <li>
-                Select <strong>Get live quote</strong>. You can do this without
-                providing a wallet address.
+                Choose <strong>Get live quote</strong>. You do not need a wallet
+                address or a balance in those tokens.
               </li>
               <li>
-                Read the output, minimum output, upfront TON requirement,
-                estimated gas consumption and the cost assessment. Protocol fees
-                may already be included in the receive amount; do not subtract
-                them again.
+                Compare the estimated receive amount, minimum receive amount,
+                upfront TON budget and estimated network fee. Provider fees are
+                already included in the receive amounts; do not subtract them
+                again.
               </li>
               <li>
-                Refresh a stale quote. The app applies a local freshness limit
-                of at most 30 seconds; this does not reserve a price or
-                guarantee the provider will honour it.
+                Request a new quote when the freshness countdown ends. Our limit
+                is at most 30 seconds. Prices can change before then too.
               </li>
             </ol>
             <p>
-              A quote is a preview, not an executable offer. A favourable cost
-              check does not enable signing. If the USDT gas reference or other
-              required data is missing, the app cannot clear the cost check.
+              The minimum receive amount allows a 1% price change, called
+              slippage. It is a quote assumption, not a promise of funds
+              arriving. If a required fee estimate or its USDT value is missing,
+              SweepDock leaves the cost check incomplete.
             </p>
           </>
         ),
       },
       {
         id: 'balances',
-        title: '4. Optionally read a wallet',
+        title: '4. Read your wallet balances',
         body: (
           <>
             <p>
-              Enter a public TON address and choose{' '}
-              <strong>Read wallet balances</strong>, or use{' '}
-              <strong>Connect wallet</strong> through the official TON Connect
-              picker when a public HTTPS manifest is configured. Connecting
-              selects a public account; use the balance-read button to send the
-              address to the read-only API and TonAPI.
+              Paste a public TON address into <strong>Read your wallet</strong>,
+              then choose <strong>Read wallet balances</strong>. This sends the
+              address through SweepDock to TonAPI. Never enter your recovery
+              phrase or private key on the website.
             </p>
+            <h3>Connect a wallet on your phone</h3>
+            <ol>
+              <li>
+                Open the <Link to="/app">live data page</Link> in your browser.
+                An empty mainnet wallet works. Do not fund it for this test.
+              </li>
+              <li>
+                Tap <strong>Connect wallet</strong> and choose your wallet app.
+                Check that its request identifies SweepDock and{' '}
+                <code>sweepdock.vercel.app</code>. Approve connection only.
+                Reject any transaction or payment request.
+              </li>
+              <li>
+                Return to the browser. It should say{' '}
+                <strong>Wallet connected · mainnet</strong>.
+              </li>
+              <li>
+                Tap <strong>Read wallet balances</strong> if you want to share
+                the address with TonAPI. An empty wallet should show 0 TON and
+                no token balances.
+              </li>
+              <li>
+                Tap <strong>Disconnect wallet</strong> to clear the connected
+                address and old results. Refreshing also forgets the connection.
+              </li>
+            </ol>
             <p>
-              Keep a complete, fresh balance snapshot if you want an
-              affordability check. Without one, the app cannot establish whether
-              the wallet has enough tokens and TON. Unreviewed assets can appear
-              in the balance list but cannot be selected for quotes.
-            </p>
-            <p>
-              Use <strong>Disconnect wallet</strong> to end the wallet session.
-              The app clears old reads when the connected account changes or
-              disconnects. Local previews without a manifest leave connection
-              disabled; address lookup and quote previews can still work.
+              A current, complete balance read lets SweepDock check whether you
+              have enough tokens and TON. Tokens outside the supported list may
+              appear, but you cannot select them for quotes. If wallet
+              connection is unavailable in a local preview, you can still paste
+              an address.
             </p>
             <Link to="/docs/safety">Read the safety and privacy guide</Link>
           </>
@@ -403,57 +420,64 @@ export const docPages: DocPage[] = [
       },
       {
         id: 'cleanup-plan',
-        title: '5. Build a cleanup plan from your wallet',
+        title: '5. Build a cleanup plan',
         body: (
           <>
+            <ol>
+              <li>
+                After reading balances, find <strong>Plan your cleanup</strong>.
+                Select supported tokens and choose TON or USDT in{' '}
+                <strong>Receive in</strong>. Existing balances of that receive
+                token stay untouched.
+              </li>
+              <li>
+                Choose <strong>Review cleanup plan</strong>. SweepDock rereads
+                the wallet and gets a quote for each selected token using its
+                current balance.
+              </li>
+              <li>
+                Read each token’s result and compare the totals. The plan counts
+                only tokens that pass their individual cost checks. It also
+                checks the total upfront TON budget plus a 0.05 TON reserve.
+              </li>
+              <li>
+                Use <strong>Refresh balances &amp; quotes</strong> when the plan
+                needs fresh data. Changing the selection or receive token clears
+                the previous review.
+              </li>
+            </ol>
             <p>
-              After reading a wallet, use <strong>Plan your cleanup</strong>{' '}
-              below the balance and quote panels. Select reviewed STON, NOT or
-              USDT balances and choose TON or USDT as the output. The output
-              token stays untouched.
-            </p>
-            <p>
-              <strong>Review cleanup plan</strong> rereads your public address
-              through TonAPI, then requests each selected token’s quote. It uses
-              the newly read amounts. Compare per-token skip reasons, minimum
-              output, estimated gas and the total upfront TON requirement,
-              including a 0.05 TON reserve.
-            </p>
-            <p>
-              Only tokens within their individual cost limits contribute to
-              totals. A group can still require more TON than the wallet holds.
-              Expected proceeds and gas refunds are not counted as available
-              funds. Change the selection or output to discard the review; use{' '}
-              <strong>Refresh balances &amp; quotes</strong> when it expires.
-              This is a read-only plan and cannot execute swaps.
+              Individual swaps can pass the cost check while the full plan needs
+              more TON than the wallet holds. You can select fewer tokens and
+              review again. This is a read-only plan; no deposit or swap is
+              needed.
             </p>
           </>
         ),
       },
       {
         id: 'saved-cleanup',
-        title: '6. Practise a saved cleanup and recovery',
+        title: '6. Practise returning to a saved cleanup',
         body: (
           <>
             <p>
               Open the <Link to="/safety/cleanup">saved cleanup lab</Link> and
-              create a sample three-token session. Approve STON, simulate its
-              wallet response, then simulate a matching success before approving
-              NOT. Each remaining item needs its own approval.
+              choose <strong>Create sample cleanup</strong>. Approve the STON
+              simulation, simulate a wallet response, then simulate a matching
+              success. You can then approve NOT. Each token has its own steps.
             </p>
             <p>
-              Refresh after approval to test recovery. The original attempt
-              becomes uncertain and cannot be sent again or cleared. Simulate a
-              late response if needed, then a matching receipt to resolve it.
-              Rejection, partial output and a full refund pause the remaining
-              queue. You may explicitly clear a resolved sample; this never
-              authorizes retrying a real transaction.
+              Refresh after a sample approval to test an interruption. The app
+              keeps the original attempt and marks the result as unknown. Use
+              the late-response and matching-result buttons to continue the
+              scenario. A rejection, partial result or refund pauses the
+              remaining swaps.
             </p>
             <p>
-              Use the session’s Swap Doctor link to inspect its persisted events
-              or download an anonymous simulation report. The lab saves only
-              synthetic data in this browser. Clearing site data removes it. No
-              real wallet, transaction or chain receipt is involved.
+              The lab saves made-up data in this browser. Its Swap Doctor link
+              shows the saved steps. Clearing site data removes the sample.
+              These controls never connect to a real wallet or confirm a real
+              swap.
             </p>
           </>
         ),
@@ -463,10 +487,10 @@ export const docPages: DocPage[] = [
   {
     slug: 'developers',
     label: 'Developer guide',
-    title: 'Inspect the rules behind the interface.',
+    title: 'Run the code and test the rules.',
     audience: 'For TON developers',
     summary:
-      'Run the repository, explore the shared core, and reproduce failures before considering a live integration.',
+      'Start the app, try the core package outside the workspace and reproduce the tests. The current integrations read balances and quotes only.',
     sections: [
       {
         id: 'run',
@@ -474,9 +498,8 @@ export const docPages: DocPage[] = [
         body: (
           <>
             <p>
-              Use Node 24.19.0 and pnpm 11.24.0, as pinned in the repository.
-              The default demo needs no API key, wallet, account or environment
-              file.
+              Use the pinned Node 24.19.0 and pnpm 11.24.0 versions. The demo
+              needs no API key, wallet or environment file.
             </p>
             <pre>
               <code>{`git clone https://github.com/GautamBytes/sweepdock.git
@@ -485,72 +508,72 @@ pnpm install --frozen-lockfile
 pnpm dev`}</code>
             </pre>
             <p>
-              Open the URL printed by Vite. The default is{' '}
-              <code>http://127.0.0.1:5173</code>; add <code>/demo</code> for the
-              offline flow, <code>/app</code> for requested mainnet reads, or{' '}
-              <code>/safety</code> for recovery scenarios. Keep the development
-              server local.
+              Open the URL printed by Vite, usually{' '}
+              <code>http://127.0.0.1:5173</code>. Use <code>/demo</code> for
+              sample data, <code>/app</code> for live reads and{' '}
+              <code>/safety</code> for saved recovery scenarios. Keep the
+              development server local.
             </p>
             <p>
-              <code>VITE_APP_MODE</code> may be unset or <code>mock</code>.
-              Other values block the app; changing the value does not enable
-              signing. TON Connect needs the app’s hosted manifest. Follow the{' '}
+              Leave <code>VITE_APP_MODE</code> unset or set to <code>mock</code>
+              . Other values block the app; they do not enable signing. Wallet
+              connection needs a hosted TON Connect manifest, the file wallets
+              use to identify the app. See the{' '}
               <a
                 href="https://github.com/GautamBytes/sweepdock/blob/main/docs/operations/vercel.md"
                 target="_blank"
                 rel="noreferrer"
               >
-                deployment notes
-              </a>{' '}
-              for a hosted build.
+                deployment guide
+              </a>
+              .
             </p>
           </>
         ),
       },
       {
         id: 'packages',
-        title: 'Understand the boundaries',
+        title: 'Find the code you need',
         body: (
           <>
             <ul>
               <li>
-                <code>packages/core</code>: amount parsing/formatting, cost
-                policy, lifecycle transitions and allowlisted report generation.
-                The main entry point performs no network operations.
+                <code>packages/core</code>: integer token amounts, cost rules,
+                swap-state transitions and reports containing selected event
+                fields. The main entry point makes no network calls.
               </li>
               <li>
-                <code>packages/omniston-adapter</code>: bounded quote
-                subscriptions and quote validation. No build/sign/track wrapper
-                is implemented.
+                <code>packages/omniston-adapter</code>: quote subscriptions with
+                time and resource limits, plus quote validation. It does not
+                build, sign or track transactions.
               </li>
               <li>
                 <code>apps/api</code>: read-only balance and quote endpoints.
-                This is where optional provider credentials belong.
+                Keep optional provider credentials here, on the server.
               </li>
               <li>
-                <code>apps/web</code>: the React interface, explicit offline
-                fixtures and the separate browser safety journal.
+                <code>apps/web</code>: the React interface, sample scenarios and
+                browser storage for the saved labs.
               </li>
             </ul>
             <p>
-              Balance and quote providers implement shared interfaces. The
-              cleanup planner receives an explicit provider and route policy; it
-              does not import a swap SDK. TonAPI and Omniston remain the only
-              configured live integrations. Replacing either still requires a
-              reviewed adapter and its own tests.
+              The planner accepts balance and quote providers through shared
+              interfaces. Configure provider IDs and allowed routes in{' '}
+              <code>apps/shared/read-policy.ts</code>, then connect the
+              implementations in <code>apps/api/src/composition.ts</code>.
+              TonAPI and Omniston are the current live integrations. A
+              replacement provider needs a reviewed adapter and its own tests.
             </p>
+            <h3>Try the core outside the workspace</h3>
+            <pre>
+              <code>pnpm example:core</code>
+            </pre>
             <p>
-              Configure provider IDs, reviewed routes and labels in{' '}
-              <code>apps/shared/read-policy.ts</code>, and wire implementations
-              and credentials in <code>apps/api/src/composition.ts</code>.
-              Synthetic replacement-provider tests verify the boundary; they do
-              not represent another live service. Signing stays disabled.
-            </p>
-            <p>
-              The <code>@sweepdock/*</code> names are workspace packages. No npm
-              package or stable external integration API has been published.
-              Start by inspecting the repository’s own consumer rather than
-              installing an assumed public package.
+              This builds a local package, installs it in a temporary project,
+              checks strict NodeNext types and runs a plain Node consumer. Read{' '}
+              <code>examples/core-consumer/README.md</code> to adapt the
+              example. The <code>@sweepdock/*</code> names are workspace
+              packages; no stable npm package has been published.
             </p>
           </>
         ),
@@ -561,8 +584,10 @@ pnpm dev`}</code>
         body: (
           <>
             <p>
-              This example uses the existing workspace entry point. Supply the
-              reviewed asset’s decimals; do not infer them from its symbol.
+              Store amounts as integers in the token’s smallest unit. Use the
+              reviewed contract’s decimal count, not a guess based on its
+              symbol. For a token with six decimals, 1.25 tokens is 1,250,000
+              base units.
             </p>
             <pre>
               <code>{`import { parseUnits, formatUnits } from '@sweepdock/core';
@@ -571,84 +596,88 @@ const units = parseUnits('1.25', 6); // 1250000n
 const display = formatUnits(units, 6); // '1.25'`}</code>
             </pre>
             <p>
-              Keep monetary decisions in integer base units. For{' '}
-              <code>assessCost</code>, output and consumed-cost amounts must use
-              comparable units, while balance, upfront budget and reserve use
-              native TON units. An <code>executable: true</code> cost result
-              only means that policy check passed; it is not permission to sign
-              and does not establish settlement.
+              For <code>assessCost</code>, convert the receive amount and
+              consumed network cost to comparable units. Keep the native
+              balance, upfront budget and reserve in TON base units. An{' '}
+              <code>executable: true</code> result means the cost policy passed.
+              It does not authorize a signature or prove that a swap completed.
             </p>
           </>
         ),
       },
       {
         id: 'recovery',
-        title: 'Reproduce an unresolved attempt',
+        title: 'Reproduce an interrupted attempt',
         body: (
           <>
             <ol>
               <li>
-                Open <Link to="/safety">the offline safety lab</Link>. Leave{' '}
-                <strong>Matching testnet wallet</strong> selected. This is a
-                synthetic identity, not a connected testnet wallet.
+                Open the <Link to="/safety">offline safety lab</Link> and leave{' '}
+                <strong>Matching testnet wallet</strong> selected. This
+                represents a made-up account; it does not connect a testnet
+                wallet.
               </li>
               <li>
-                Select <strong>Start simulated attempt</strong>. Refresh before
-                completing the sample.
+                Choose <strong>Start simulated attempt</strong>, then refresh
+                before completing it.
               </li>
               <li>
-                Confirm the saved attempt becomes uncertain and another attempt
+                Check that the saved result becomes unknown and a second attempt
                 stays blocked.
               </li>
               <li>
-                Choose <strong>Inspect in Swap Doctor</strong> to inspect the
-                preserved event sequence.
+                Choose <strong>Inspect in Swap Doctor</strong> to read the saved
+                steps.
               </li>
               <li>
-                For this fixture only, use{' '}
-                <strong>Simulate matching receipt</strong> to complete the
-                scenario, then <strong>Clear finished sample</strong>. These
-                controls do not query a blockchain.
+                Use <strong>Simulate matching receipt</strong> to provide a
+                sample result, then <strong>Clear finished sample</strong>.
+                Neither button queries a blockchain.
               </li>
             </ol>
             <p>
-              You can also exercise wrong network, wallet changed after review,
-              expired quote, rejection and storage failures. The journal is
-              limited to one synthetic attempt on the same browser and origin.
+              You can also test a wrong network, an account change, an old
+              quote, rejection and unavailable storage. The lab saves one sample
+              attempt per browser and site. The{' '}
+              <Link to="/safety/cleanup">cleanup lab</Link> extends this to
+              three sample tokens with separate approvals.
             </p>
           </>
         ),
       },
       {
         id: 'verify',
-        title: 'Run the checks and assess integration scope',
+        title: 'Run the verification checks',
         body: (
           <>
             <pre>
               <code>{`pnpm check
 pnpm exec playwright install chromium
 pnpm test:e2e
-pnpm test:wallet`}</code>
+pnpm test:wallet
+pnpm example:core
+pnpm verify:contracts`}</code>
             </pre>
             <p>
-              The browser tests cover sequential approvals, paused states,
-              report download, quote freshness, accessibility and browser
-              recovery. The separate wallet suite uses the real SDK with a
-              synthetic no-funds protocol fixture, not a physical wallet.
+              The browser tests cover approvals, paused results, report
+              downloads, quote freshness, accessibility and saved recovery. The
+              wallet suite uses the real TON Connect SDK with a simulated
+              protocol peer. It does not replace a physical-phone test.
             </p>
             <p>
-              On a branch that supports it,{' '}
-              <code>E2E_PORT=5185 pnpm test:e2e</code> runs a fresh test server
-              on a dedicated port. This avoids accidentally checking an older
-              server already using the default port.
+              <code>pnpm verify:contracts</code> downloads public contract
+              state, checks it against pinned code and library hashes, then runs
+              local TON virtual machine tests. Those tests make no public-chain
+              transactions. Data changes between captures; a pinned code hash
+              alone does not authenticate historical chain state.
             </p>
             <p>
-              Before a live consumer integration, the project still needs
-              verified transaction construction, message correlation, receipt
-              validation, persistent execution sessions, device QA and
-              independent security review.{' '}
-              <Link to="/docs/status">Check the implementation status</Link>{' '}
-              before making integration commitments.
+              Use <code>E2E_PORT=5185 pnpm test:e2e</code> if you need a
+              separate test-server port. Before building a live swap
+              integration, read the{' '}
+              <Link to="/docs/status">current implementation limits</Link>.
+              Transaction construction, authenticated results and live recovery
+              still need work.
             </p>
           </>
         ),
@@ -657,15 +686,15 @@ pnpm test:wallet`}</code>
   },
   {
     slug: 'safety',
-    label: 'Safety & privacy',
+    label: 'Safety and privacy',
     title: 'Know what each mode can do.',
     audience: 'For everyone',
     summary:
-      'Where data goes, what persists, and how to interpret the prototype’s safety boundaries.',
+      'The demo uses sample data. Live reads use real public data. Neither mode can spend funds. The saved labs keep practice data in this browser.',
     sections: [
       {
         id: 'modes',
-        title: 'Three distinct data environments',
+        title: 'Data and storage in each mode',
         body: (
           <>
             <div className="docs-table-wrap">
@@ -673,7 +702,7 @@ pnpm test:wallet`}</code>
                 <thead>
                   <tr>
                     <th scope="col">Mode</th>
-                    <th scope="col">Data and requests</th>
+                    <th scope="col">Data used</th>
                     <th scope="col">After refresh</th>
                   </tr>
                 </thead>
@@ -681,118 +710,116 @@ pnpm test:wallet`}</code>
                   <tr>
                     <th scope="row">Cleanup demo</th>
                     <td>
-                      Sample balances and simulated events. No blockchain or
+                      Sample balances and events. No blockchain or
                       quote-provider requests.
                     </td>
-                    <td>In-memory progress clears.</td>
+                    <td>Progress clears.</td>
                   </tr>
                   <tr>
-                    <th scope="row">Live previews</th>
+                    <th scope="row">Live data</th>
                     <td>
-                      Requested balance reads go through the app API to TonAPI.
-                      Quote requests go through the API to Omniston.
+                      Balance requests go through our API to TonAPI. Quote
+                      requests go through our API to Omniston. Wallet connection
+                      uses TON Connect.
                     </td>
                     <td>
-                      Balance and quote view state clears; wallet-session
-                      handling belongs to TON Connect.
+                      The app forgets the connection and clears balances, quotes
+                      and the plan.
                     </td>
                   </tr>
                   <tr>
-                    <th scope="row">Safety and saved cleanup labs</th>
+                    <th scope="row">Saved labs</th>
                     <td>
-                      One synthetic attempt stored locally in IndexedDB. No
-                      wallet or provider calls.
+                      Made-up attempts stored in this browser using IndexedDB.
+                      No wallet or provider calls.
                     </td>
                     <td>
-                      The sample persists. An unfinished attempt becomes
-                      uncertain.
+                      The sample stays saved. An unfinished attempt becomes
+                      unconfirmed.
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <p>
-              The docs and demo use locally hosted fonts and assets. The app
-              adds no analytics. Hosting, wallet and data providers can still
-              process request metadata under their own policies.
+              SweepDock adds no analytics. We host the site’s fonts and artwork
+              with the app. Hosting, wallet and data providers may still process
+              request metadata under their own policies.
             </p>
           </>
         ),
       },
       {
         id: 'data',
-        title: 'A public address still deserves care',
+        title: 'What you share when you connect or read',
         body: (
           <>
             <p>
-              Reading balances shares the requested address with the app backend
-              and TonAPI. You can preview a quote without providing an address.
-              Connecting through TON Connect shares a public account with the
-              app; it is not a request to spend.
+              Connecting a wallet shares its public account with SweepDock.
+              Choosing Read wallet balances then sends the address through the
+              app backend to TonAPI. You can request a quote without sharing a
+              wallet address. You can also test connection with an empty wallet.
             </p>
             <p>
-              SweepDock does not ask for seed phrases or private keys. No
-              signing method is exposed by the application’s wallet adapter. Do
-              not enter recovery phrases into this website or a diagnostic
-              report.
+              SweepDock does not request recovery phrases or private keys. Its
+              wallet adapter exposes no transaction or data-signing method.
+              Approve connection only. If a wallet prompt asks you to send
+              funds, pay a fee or sign a transaction, cancel it.
             </p>
           </>
         ),
       },
       {
         id: 'reports',
-        title: 'Reports are local and limited',
+        title: 'Choose whether to share a report',
         body: (
           <>
             <p>
-              Swap Doctor’s current download includes event stages, relative
-              timings and anonymous item labels. It leaves out wallet addresses
-              and transaction payloads. You choose whether to download or share
-              the file; the app does not upload it automatically.
+              Swap Doctor reports contain event steps, time between events and
+              anonymous item labels. They exclude wallet addresses and
+              transaction payloads. The app does not upload them. You choose
+              whether to download a file or share it with someone.
             </p>
             <p>
-              These reports describe local simulations. They are not a
-              blockchain receipt, proof that funds arrived, or a scanner for
-              another application.
+              These files describe practice scenarios. They do not prove that
+              funds arrived or diagnose transactions from another application.
             </p>
           </>
         ),
       },
       {
         id: 'unknown',
-        title: 'Unconfirmed means unresolved',
+        title: 'An unknown result needs a pause',
         body: (
           <>
             <p>
-              A missing result does not prove failure. The demo pauses after
-              unknown and partial outcomes instead of continuing the queue. The
-              safety lab tests preserving that uncertainty across a reload.
+              A missing result can mean a swap is still pending. The demo pauses
+              after an unknown or partial result. The saved labs show how to
+              preserve that uncertainty after refresh instead of starting
+              another attempt.
             </p>
             <p>
-              <strong>Recheck saved status</strong> only reads the local
-              journal. Clearing browser site data removes that journal, and a
-              record on one device cannot prevent actions on another. Neither a
-              cleared sample nor a refreshed page establishes the outcome of an
-              actual transaction.
+              <strong>Recheck saved status</strong> reads the local sample only.
+              Clearing browser data removes the saved record, and the record
+              cannot block activity on another device. Clearing or restarting a
+              sample tells you nothing about a real transaction’s outcome.
             </p>
           </>
         ),
       },
       {
         id: 'limits',
-        title: 'Current limits',
+        title: 'Current safety limits',
         body: (
           <>
             <p>
-              Live transaction construction and signing are disabled. Real
-              settlement verification and production recovery remain future
-              work. The app has not completed an independent security audit or a
-              controlled real-money pilot.
+              Live transaction building and signing are disabled. Checking real
+              received funds and recovering live swaps remain future work. We
+              have not completed an independent security audit or a real-money
+              pilot.
             </p>
             <p>
-              Read the{' '}
-              <Link to="/docs/status">current implementation status</Link> and
-              the repository’s{' '}
+              See <Link to="/docs/status">what works today</Link> and the{' '}
               <a
                 href="https://github.com/GautamBytes/sweepdock/blob/main/SECURITY.md"
                 target="_blank"
@@ -800,7 +827,7 @@ pnpm test:wallet`}</code>
               >
                 security policy
               </a>{' '}
-              for reporting a vulnerability.
+              for how to report a vulnerability.
             </p>
           </>
         ),
@@ -810,144 +837,156 @@ pnpm test:wallet`}</code>
   {
     slug: 'status',
     label: 'What works today',
-    title: 'A working prototype, with a defined next step.',
-    audience: 'For evaluators & contributors',
+    title: 'What you can use, and what comes next.',
+    audience: 'For reviewers and contributors',
     summary:
-      'Separate the features you can try from the execution and validation work still ahead. Reviewed 5 September 2026.',
+      'The prototype supports live reads, cleanup planning and practice scenarios. This page separates those features from future execution work. Updated 5 September 2026.',
     sections: [
       {
         id: 'available',
-        title: 'Available in the current implementation',
+        title: 'Available now',
         body: (
           <>
             <ul>
               <li>
-                Offline cleanup selection, cost checks and separate simulated
+                A cleanup demo with sample balances, cost checks and separate
                 approvals.
               </li>
               <li>
-                Simulation timelines and local JSON report downloads in Swap
-                Doctor.
+                Live TON wallet balances, Omniston quotes limited to STON.fi
+                routes, and a multi-token cleanup planner.
               </li>
               <li>
-                Requested mainnet balance reads and Omniston quote previews,
-                including a multi-token cleanup planner, fresh balance rechecks,
-                per-token skip reasons and combined upfront TON/reserve checks.
+                Per-token skip reasons, fresh balance checks and a combined
+                upfront TON budget with a reserve.
+              </li>
+              <li>Read-only wallet connection through TON Connect.</li>
+              <li>
+                Saved practice attempts, refresh recovery and checks that stop
+                two tabs from starting the same sample at once.
               </li>
               <li>
-                Read-only TON Connect account connection when the public
-                manifest is configured.
+                Swap Doctor timelines and downloadable simulation reports.
               </li>
               <li>
-                A persistent single-attempt lab and a three-token cleanup lab
-                with sequential approval, receipt correlation, reload recovery
-                and atomic cross-tab claims.
+                Shared TypeScript code under the MIT License and a standalone
+                core consumer example.
               </li>
-              <li>Shared TypeScript source and tests under the MIT License.</li>
             </ul>
             <p>
-              The website documentation describes the current code. A hosted
-              deployment may lag a local branch; use the repository’s release
-              notes to identify what has been deployed.
+              The{' '}
+              <a
+                href="https://github.com/GautamBytes/sweepdock/releases"
+                target="_blank"
+                rel="noreferrer"
+              >
+                release notes
+              </a>{' '}
+              identify the source revision and deployment used for each set of
+              checks.
             </p>
           </>
         ),
       },
       {
         id: 'planned',
-        title: 'Still to be built or established',
+        title: 'Still to build and test',
         body: (
           <>
             <ul>
               <li>
-                Validated live transaction construction and explicit wallet
-                signing.
+                Build real swap transactions and request a separate wallet
+                approval for each.
               </li>
               <li>
-                A real provider adapter for message-to-transaction correlation
-                and independently verified recipient, token and received
-                amounts. The current matcher processes normalized observations
-                and is exercised with fixtures; it is not chain authentication.
+                Link wallet responses to chain transactions and verify the
+                recipient, token and amount received. Current result-matching
+                tests use supplied sample observations.
               </li>
               <li>
-                Production multi-item execution recovery. The saved three-token
-                journal currently contains simulations only.
+                Save and recover real multi-token execution across
+                interruptions. Today’s saved sessions contain simulations only.
               </li>
               <li>
-                A published, stable SDK. A private local package and standalone
-                consumer example are available in the repository; they are
-                checked in plain Node and strict TypeScript outside the
-                workspace.
+                Provide a supported public testnet execution path, complete an
+                independent security review and run a controlled pilot.
               </li>
               <li>
-                Telegram Mini App integration and physical-phone wallet-return
-                QA.
+                Publish a stable SDK and explore a Telegram Mini App
+                integration.
               </li>
               <li>
-                A supported no-money execution environment, independent security
-                review and a controlled pilot. On 5 September 2026, the
-                documented router’s version getter returned exit code 9 through
-                both Toncenter and TonAPI; live execution remains disabled.
+                Test more phones and wallets, conduct user research and improve
+                the flow based on observed problems.
               </li>
             </ul>
             <p>
-              No mainnet or testnet swap has been sent by SweepDock as evidence
-              for this prototype. An offline testnet-labelled fixture does not
-              establish that a supported testnet router or funded pool is
-              available.
+              On 5 September 2026, the documented testnet router failed checks
+              through both Toncenter and TonAPI with exit code 9. Local virtual
+              machine tests use reviewed libraries loaded into the local test
+              environment. They do not show a successful public-testnet swap.
+              SweepDock has not sent a mainnet or testnet swap as evidence for
+              this prototype.
             </p>
           </>
         ),
       },
       {
         id: 'evidence',
-        title: 'What the existing evidence establishes',
+        title: 'What we have checked',
         body: (
           <>
             <p>
-              Tests exercise the implemented amount rules, lifecycle guards,
-              quote handling, browser flows and recovery scenarios. Release
-              notes record successful hosted read-only balance and quote checks.
-              Those checks establish behaviour in the tested cases; they do not
-              prove universal safety, user demand or successful live settlement.
+              Automated checks cover token amounts, cost rules, quote
+              validation, browser flows, simulated wallet messages and saved
+              recovery. A separate workflow captures public contract state,
+              checks pinned code hashes and runs local virtual machine tests.
+              Release evidence also records hosted balance and quote reads.
             </p>
             <p>
-              The project still needs the planned wallet-user and developer
-              interviews. No adoption, audit, partnership or grant-selection
-              claim follows from this prototype.
+              On 5 September 2026, the owner reported passing read-only
+              connection, return to the browser, empty-wallet balance reading,
+              disconnect, reconnect, refresh reset and wallet-picker reopening
+              with Tonkeeper in Android Chrome. Account switching, extended
+              background behavior and other device combinations remain untested.
+              No funds were needed.
+            </p>
+            <p>
+              These checks cover the tested cases. They do not establish an
+              independent audit, user demand or successful live swaps. User
+              research is planned for a later phase.
             </p>
           </>
         ),
       },
       {
         id: 'next',
-        title: 'How to evaluate or contribute',
+        title: 'Evaluate the prototype or contribute',
         body: (
           <>
             <p>
-              If you own a TON wallet, start with the{' '}
-              <Link to="/docs/wallet-users">wallet user guide</Link> and see
-              whether the cost and outcome explanations answer your questions.
-              If you build TON applications, follow the{' '}
-              <Link to="/docs/developers">developer guide</Link> and compare the
-              failure scenarios with your integration needs.
+              Wallet owners can follow the{' '}
+              <Link to="/docs/wallet-users">wallet user guide</Link> to compare
+              costs without spending. Developers can follow the{' '}
+              <Link to="/docs/developers">developer guide</Link> to run the code
+              and check whether the shared tools fit their needs.
             </p>
             <p>
-              Contributors can inspect the{' '}
+              Review the{' '}
               <a
                 href="https://github.com/GautamBytes/sweepdock"
                 target="_blank"
                 rel="noreferrer"
               >
-                public repository
+                source code
               </a>
               ,{' '}
               <a
-                href="https://github.com/GautamBytes/sweepdock/blob/main/docs/operations/release-readiness.md"
+                href="https://github.com/GautamBytes/sweepdock/blob/main/docs/operations/current-release.md"
                 target="_blank"
                 rel="noreferrer"
               >
-                release checklist
+                current release record
               </a>{' '}
               and{' '}
               <a
@@ -956,9 +995,9 @@ pnpm test:wallet`}</code>
                 rel="noreferrer"
               >
                 contribution guide
-              </a>
-              . Execution, device and validation evidence should determine the
-              next release scope.
+              </a>{' '}
+              for setup and project status. Use these notes to reproduce a test
+              or find an area where you can contribute.
             </p>
           </>
         ),

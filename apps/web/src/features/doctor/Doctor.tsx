@@ -1,4 +1,5 @@
 import { makeShareableReport, type LifecycleEvent } from '@sweepdock/core';
+import { eventLabels } from '../../lib/simulation-copy';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -14,17 +15,18 @@ const explanations: Partial<Record<LifecycleEvent['kind'], string>> = {
   signature_requested: 'Waiting for the simulated wallet response.',
   signature_rejected:
     'The simulated wallet declined. No automatic retry is allowed.',
-  message_returned: 'The wallet responded. This does not prove settlement.',
+  message_returned:
+    'The simulated wallet responded. We still need to check whether the expected tokens arrived.',
   transaction_found:
-    'The simulated transaction was located. Its result still needs matching evidence.',
+    'The sample transaction was found. Its result still needs to match this attempt.',
   status_unknown:
     'The result is not confirmed. Keep the attempt paused and do not send again.',
   partial_verified:
-    'Only part of the sample outcome matched. The remaining queue stays paused.',
+    'Only part of the expected result matched. The remaining sample swaps stay paused.',
   abort_verified:
-    'A full refund was simulated and matched. The remaining queue stays paused.',
+    'The sample shows a full refund. The remaining swaps stay paused for review.',
   receipt_verified:
-    'A matching receipt was simulated. This is not a real on-chain result.',
+    'The sample result matches this attempt. No real tokens moved.',
 };
 
 export function Doctor({
@@ -41,7 +43,7 @@ export function Doctor({
       <SectionHeading
         icon={Stethoscope}
         eyebrow="SWAP DOCTOR"
-        title="Every step, explained."
+        title="Understand a simulated swap."
       >
         See what happened in your latest{' '}
         {source === 'safety'
@@ -54,11 +56,12 @@ export function Doctor({
       <div className="simulation-note">
         <strong>
           {source === 'safety'
-            ? 'Safety lab — simulated events'
-            : 'Simulation trace only'}
+            ? 'Safety lab · simulated events'
+            : 'Simulation history only'}
         </strong>
         <span>
-          These events are generated locally. They are not on-chain evidence.
+          These steps come from the demo on this device. They do not confirm a
+          real blockchain transaction.
         </span>
       </div>
       {events.length ? (
@@ -76,7 +79,7 @@ export function Doctor({
                 <li key={index} className={`event-${event.stage}`}>
                   <span className="event-marker">{index + 1}</span>
                   <div>
-                    <code>{event.stage}</code>
+                    <code>{eventLabels[event.stage]}</code>
                     {explanations[event.stage] && (
                       <p>{explanations[event.stage]}</p>
                     )}
@@ -93,10 +96,11 @@ export function Doctor({
               <FileJson size={24} aria-hidden="true" />
             </span>
             <span className="eyebrow">LOCAL DIAGNOSTICS</span>
-            <h2>A report you can inspect.</h2>
+            <h2>Save the simulation report.</h2>
             <p className="muted-copy">
-              Only event stages, relative times and anonymous item labels are
-              included. Nothing is uploaded.
+              The file lists the steps, time between events and anonymous token
+              labels. It excludes wallet addresses and stays on your device
+              unless you choose to share it.
             </p>
             <a
               className="primary"
@@ -119,7 +123,10 @@ export function Doctor({
             </span>
             <span className="eyebrow">SIMULATION TIMELINE</span>
             <h2>No events yet.</h2>
-            <p>Run a simulation to see its lifecycle here.</p>
+            <p>
+              Run a cleanup simulation, then return here to see each step and
+              its result.
+            </p>
             <Link
               className="primary"
               to={
@@ -141,7 +148,7 @@ export function Doctor({
             aria-labelledby="doctor-guide-title"
           >
             <span className="eyebrow">HOW TO USE SWAP DOCTOR</span>
-            <h2 id="doctor-guide-title">From a demo to an explanation.</h2>
+            <h2 id="doctor-guide-title">Follow a sample swap.</h2>
             <ol>
               <li>
                 <Play size={19} aria-hidden="true" />
@@ -165,8 +172,8 @@ export function Doctor({
                 <div>
                   <h3>Inspect your report</h3>
                   <p>
-                    Preview and download anonymous event data. Nothing is
-                    uploaded.
+                    Download a JSON file of the sample steps to inspect or
+                    share. SweepDock does not upload it.
                   </p>
                 </div>
               </li>

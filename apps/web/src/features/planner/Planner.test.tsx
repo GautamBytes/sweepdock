@@ -102,7 +102,9 @@ it('never uses another wallet returned by the provider', async () => {
   await user.click(screen.getByLabelText('Plan STON'));
   await user.click(screen.getByRole('button', { name: 'Review cleanup plan' }));
   await waitFor(() =>
-    expect(screen.getByRole('alert')).toHaveTextContent('could not safely use'),
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'did not pass our checks',
+    ),
   );
   expect(quotes).not.toHaveBeenCalled();
 });

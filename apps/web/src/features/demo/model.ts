@@ -55,7 +55,7 @@ export const assets = [
   {
     symbol: '???',
     name: 'Unreviewed token',
-    balance: '—',
+    balance: 'Unknown',
     output: 0n,
     cost: 0n,
     color: 'muted',

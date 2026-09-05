@@ -20,9 +20,9 @@ it('shows a labelled simulation and useful cleanup controls', () => {
       <App />
     </MemoryRouter>,
   );
-  expect(screen.getByText('Simulation — no real funds')).toBeInTheDocument();
+  expect(screen.getByText('Simulation · no real funds')).toBeInTheDocument();
   expect(
-    screen.getByRole('heading', { name: 'A little less clutter.' }),
+    screen.getByRole('heading', { name: 'Decide which tokens to keep.' }),
   ).toBeInTheDocument();
   expect(
     screen.getByRole('button', { name: /review selection/i }),
@@ -73,7 +73,7 @@ it('shows shared lifecycle events in Swap Doctor', async () => {
   await user.click(screen.getByRole('button', { name: 'Approve simulation' }));
   await user.click(screen.getByRole('link', { name: 'Swap Doctor' }));
   expect(
-    screen.getByRole('heading', { name: 'Every step, explained.' }),
+    screen.getByRole('heading', { name: 'Understand a simulated swap.' }),
   ).toBeInTheDocument();
-  expect(screen.getByText('receipt_verified')).toBeInTheDocument();
+  expect(screen.getByText('Expected result matched')).toBeInTheDocument();
 });

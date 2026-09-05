@@ -77,13 +77,13 @@ test('real-mode UI loads validated balances and previews without signing', async
   await page.getByRole('button', { name: 'Read wallet balances' }).click();
   await expect(page.getByText('Impersonator token')).toBeVisible();
   await expect(
-    page.getByRole('button', { name: 'Use balance' }).nth(1),
+    page.getByRole('button', { name: 'Use this amount' }).nth(1),
   ).toBeDisabled();
-  await page.getByRole('button', { name: 'Use balance' }).first().click();
+  await page.getByRole('button', { name: 'Use this amount' }).first().click();
   await page.getByRole('button', { name: 'Get live quote' }).click();
   await expect(
     page.getByText(
-      'Within the estimated cost limit for this wallet. Signing is still disabled.',
+      'This quote passes the cost and balance checks for this wallet. You can review it here, but you cannot send a swap.',
     ),
   ).toBeVisible();
   await expect(
@@ -126,11 +126,13 @@ test('USDT quote shows its gas valuation and withdraws it when the reference exp
   await page.getByLabel('To', { exact: true }).selectOption('USDT');
   await page.getByRole('button', { name: 'Get live quote' }).click();
   await expect(page.getByText('0.09375 USDT')).toBeVisible();
-  await expect(page.getByRole('status')).toContainText('Load a wallet');
+  await expect(page.getByRole('status')).toContainText(
+    'Read fresh wallet balances',
+  );
   await page.clock.fastForward(3000);
   await expect(page.getByText('0.09375 USDT')).toHaveCount(0);
   await expect(page.getByRole('status')).toContainText(
-    'Cost check unavailable',
+    'We cannot compare costs yet',
   );
 });
 
@@ -144,7 +146,7 @@ test('incomplete reads disable balance selection and errors do not become demo d
   await page.getByLabel('Public TON wallet address').fill(owner);
   await page.getByRole('button', { name: 'Read wallet balances' }).click();
   await expect(
-    page.getByRole('button', { name: 'Use balance' }).first(),
+    page.getByRole('button', { name: 'Use this amount' }).first(),
   ).toBeDisabled();
   await page.route('**/api/quote', (route) =>
     route.fulfill({ status: 422, json: { error: 'NO_QUOTE' } }),
@@ -172,10 +174,10 @@ test('stale quote countdown requires refresh and switching to demo isolates data
   ).toBeVisible();
   await page.clock.fastForward(2000);
   await expect(
-    page.getByText('Preview is stale. Request a fresh quote.'),
+    page.getByText('This quote needs a refresh. Request a new quote.'),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Practice with sample data' }).click();
-  await expect(page.getByText('Simulation — no real funds')).toBeVisible();
+  await expect(page.getByText('Simulation · no real funds')).toBeVisible();
   await expect(
     page.getByRole('region', { name: 'Live quote result' }),
   ).toHaveCount(0);

@@ -37,7 +37,7 @@ const tools = [
   {
     title: 'Developer Kit',
     description:
-      'Explore the source code for fee checks, swap states, and reports. Still in development.',
+      'Use the shared code for token amounts, cost checks and swap reports. Try the developer example.',
     to: '/developers',
     Icon: Code2,
   },
@@ -82,9 +82,9 @@ export function Landing() {
               <em>are worth swapping.</em>
             </h1>
             <p>
-              SweepDock helps you review small token balances in your TON
-              wallet, compare fees with what you’d receive, and decide what to
-              keep or swap.
+              Small token balances can cost more to swap than they’re worth.
+              SweepDock helps you compare what you’d receive with the fees, so
+              you can decide what to keep.
             </p>
             <div className="landing-actions">
               <Link className="landing-primary" to="/demo">
@@ -118,8 +118,8 @@ export function Landing() {
               <div>
                 <h3>Review your tokens</h3>
                 <p>
-                  Start with sample balances, or read the balances in a public
-                  TON wallet.
+                  Try sample balances, or read your TON wallet. You can connect
+                  a wallet or paste its public address.
                 </p>
               </div>
             </li>
@@ -130,8 +130,8 @@ export function Landing() {
               <div>
                 <h3>Compare the fees</h3>
                 <p>
-                  See what you could receive and how much TON you’d need for
-                  network fees.
+                  Choose a token and amount. Compare the estimated receive
+                  amount, network fees and TON you’d need upfront.
                 </p>
               </div>
             </li>
@@ -142,8 +142,8 @@ export function Landing() {
               <div>
                 <h3>Decide what’s worth it</h3>
                 <p>
-                  Keep tokens when the costs are too high. For now, explore
-                  quotes and practise in the demo.
+                  Review which tokens fit the cost limits and which to keep.
+                  This version lets you plan and practise; it cannot send swaps.
                 </p>
               </div>
             </li>
@@ -159,9 +159,9 @@ export function Landing() {
               <div className="preview-heading">
                 <div>
                   <h2 id="preview-shelf-title">
-                    Your token shelf <span>3</span>
+                    Your token balances <span>3</span>
                   </h2>
-                  <p>Small balances, one place.</p>
+                  <p>Compare the sample balances.</p>
                 </div>
                 <small>TON network · demo</small>
               </div>
@@ -218,7 +218,7 @@ export function Landing() {
                   Swaps still need network fees.
                 </p>
                 <div>
-                  <span>Min. reserve</span>
+                  <span>Sample reserve</span>
                   <strong>0.05 TON</strong>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export function Landing() {
               <div className="preview-heading">
                 <div>
                   <h2 id="preview-timeline-title">Cleanup timeline</h2>
-                  <p>Review before you act.</p>
+                  <p>Follow a sample swap from review to result.</p>
                 </div>
               </div>
               <ol>
@@ -265,7 +265,7 @@ export function Landing() {
                 <li className="preview-pending">
                   <Circle size={25} aria-hidden="true" />
                   <div>
-                    Await matching evidence<small>No automatic retry</small>
+                    Check the original result<small>No automatic retry</small>
                   </div>
                 </li>
                 <li className="preview-pending">
@@ -278,7 +278,7 @@ export function Landing() {
                 <p>
                   No transactions are made.
                   <br />
-                  This is an illustrative simulation.
+                  This example uses sample data.
                 </p>
               </div>
             </section>
@@ -320,7 +320,7 @@ export function Landing() {
       <footer className="landing-footer">
         <p>
           <Leaf size={31} strokeWidth={1.3} aria-hidden="true" />
-          <em>Your wallet stays yours.</em>
+          <em>You control your wallet.</em>
         </p>
         <span>
           <a
