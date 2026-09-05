@@ -1,7 +1,5 @@
-import { createReadApi } from './index';
+import { createDefaultReadApi } from './composition';
 
-const api = createReadApi(
-  process.env.TONAPI_KEY ? { apiKey: process.env.TONAPI_KEY } : {},
-);
+const api = createDefaultReadApi(process.env.TONAPI_KEY);
 
 export default { fetch: api.fetch };

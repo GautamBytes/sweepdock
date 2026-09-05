@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { expect, it } from 'vitest';
-import { createReadApi } from '../src/index';
+import { createFixtureReadApi as createReadApi } from './read-api-fixture';
 import type { Balances } from '@sweepdock/core/read-models';
 
 const address = '0:' + 'a'.repeat(64);
@@ -88,7 +88,6 @@ it('does not expose upstream errors, account data or secret configuration', asyn
     balances: async () => {
       throw new Error('secret-key ' + address);
     },
-    apiKey: 'secret-key',
   });
   const response = await api.fetch(post('/api/balances', { address }));
   expect(response.status).toBe(503);

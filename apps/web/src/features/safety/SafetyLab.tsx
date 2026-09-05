@@ -145,6 +145,11 @@ export function SafetyLab() {
           request or real signing.
         </span>
       </div>
+      <p>
+        <Link className="text-link" to="/safety/cleanup">
+          Try a saved three-token cleanup →
+        </Link>
+      </p>
       <div className="workspace-grid safety-lab">
         <section className="asset-panel safety-panel">
           <h2>Check before starting</h2>

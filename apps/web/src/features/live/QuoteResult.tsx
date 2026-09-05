@@ -1,3 +1,4 @@
+import { providerLabels } from '../../../../shared/read-policy';
 import { formatUnits } from '@sweepdock/core';
 import type { QuotePreview } from '@sweepdock/core/read-models';
 import { assessPreview, gasValueInUsdt } from './economics';
@@ -31,7 +32,9 @@ export function QuoteResult({
   };
   return (
     <section className="live-quote-result" aria-label="Live quote result">
-      <span className="eyebrow">OMNISTON · LIVE SNAPSHOT</span>
+      <span className="eyebrow">
+        {providerLabels.quotes.toUpperCase()} · LIVE SNAPSHOT
+      </span>
       <h3>
         {formatUnits(BigInt(quote.expectedOutputUnits), decimals)}{' '}
         <span>{quote.request.output}</span>

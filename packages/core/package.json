@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./assets": "./src/assets.ts",
-    "./read-models": "./src/read-models.ts"
+    "./read-models": "./src/read-models.ts",
+    "./providers": "./src/providers.ts"
   },
   "dependencies": {
     "@ton/core": "0.63.1",

@@ -401,6 +401,63 @@ export const docPages: DocPage[] = [
           </>
         ),
       },
+      {
+        id: 'cleanup-plan',
+        title: '5. Build a cleanup plan from your wallet',
+        body: (
+          <>
+            <p>
+              After reading a wallet, use <strong>Plan your cleanup</strong>{' '}
+              below the balance and quote panels. Select reviewed STON, NOT or
+              USDT balances and choose TON or USDT as the output. The output
+              token stays untouched.
+            </p>
+            <p>
+              <strong>Review cleanup plan</strong> rereads your public address
+              through TonAPI, then requests each selected token’s quote. It uses
+              the newly read amounts. Compare per-token skip reasons, minimum
+              output, estimated gas and the total upfront TON requirement,
+              including a 0.05 TON reserve.
+            </p>
+            <p>
+              Only tokens within their individual cost limits contribute to
+              totals. A group can still require more TON than the wallet holds.
+              Expected proceeds and gas refunds are not counted as available
+              funds. Change the selection or output to discard the review; use{' '}
+              <strong>Refresh balances &amp; quotes</strong> when it expires.
+              This is a read-only plan and cannot execute swaps.
+            </p>
+          </>
+        ),
+      },
+      {
+        id: 'saved-cleanup',
+        title: '6. Practise a saved cleanup and recovery',
+        body: (
+          <>
+            <p>
+              Open the <Link to="/safety/cleanup">saved cleanup lab</Link> and
+              create a sample three-token session. Approve STON, simulate its
+              wallet response, then simulate a matching success before approving
+              NOT. Each remaining item needs its own approval.
+            </p>
+            <p>
+              Refresh after approval to test recovery. The original attempt
+              becomes uncertain and cannot be sent again or cleared. Simulate a
+              late response if needed, then a matching receipt to resolve it.
+              Rejection, partial output and a full refund pause the remaining
+              queue. You may explicitly clear a resolved sample; this never
+              authorizes retrying a real transaction.
+            </p>
+            <p>
+              Use the session’s Swap Doctor link to inspect its persisted events
+              or download an anonymous simulation report. The lab saves only
+              synthetic data in this browser. Clearing site data removes it. No
+              real wallet, transaction or chain receipt is involved.
+            </p>
+          </>
+        ),
+      },
     ],
   },
   {
@@ -475,6 +532,20 @@ pnpm dev`}</code>
                 fixtures and the separate browser safety journal.
               </li>
             </ul>
+            <p>
+              Balance and quote providers implement shared interfaces. The
+              cleanup planner receives an explicit provider and route policy; it
+              does not import a swap SDK. TonAPI and Omniston remain the only
+              configured live integrations. Replacing either still requires a
+              reviewed adapter and its own tests.
+            </p>
+            <p>
+              Configure provider IDs, reviewed routes and labels in{' '}
+              <code>apps/shared/read-policy.ts</code>, and wire implementations
+              and credentials in <code>apps/api/src/composition.ts</code>.
+              Synthetic replacement-provider tests verify the boundary; they do
+              not represent another live service. Signing stays disabled.
+            </p>
             <p>
               The <code>@sweepdock/*</code> names are workspace packages. No npm
               package or stable external integration API has been published.
@@ -627,7 +698,7 @@ pnpm test:wallet`}</code>
                     </td>
                   </tr>
                   <tr>
-                    <th scope="row">Safety lab</th>
+                    <th scope="row">Safety and saved cleanup labs</th>
                     <td>
                       One synthetic attempt stored locally in IndexedDB. No
                       wallet or provider calls.
@@ -760,15 +831,17 @@ pnpm test:wallet`}</code>
               </li>
               <li>
                 Requested mainnet balance reads and Omniston quote previews,
-                including TON reserve and comparable gas-cost checks.
+                including a multi-token cleanup planner, fresh balance rechecks,
+                per-token skip reasons and combined upfront TON/reserve checks.
               </li>
               <li>
                 Read-only TON Connect account connection when the public
                 manifest is configured.
               </li>
               <li>
-                A persistent, single-sample safety lab for browser recovery and
-                failure scenarios.
+                A persistent single-attempt lab and a three-token cleanup lab
+                with sequential approval, receipt correlation, reload recovery
+                and atomic cross-tab claims.
               </li>
               <li>Shared TypeScript source and tests under the MIT License.</li>
             </ul>
@@ -791,12 +864,14 @@ pnpm test:wallet`}</code>
                 signing.
               </li>
               <li>
-                Message-to-transaction correlation and independent checks of
-                recipient, token and received amount.
+                A real provider adapter for message-to-transaction correlation
+                and independently verified recipient, token and received
+                amounts. The current matcher processes normalized observations
+                and is exercised with fixtures; it is not chain authentication.
               </li>
               <li>
-                Production multi-item session recovery, beyond the synthetic
-                safety-lab journal.
+                Production multi-item execution recovery. The saved three-token
+                journal currently contains simulations only.
               </li>
               <li>
                 A published, stable SDK with an independently tested consumer
@@ -808,7 +883,9 @@ pnpm test:wallet`}</code>
               </li>
               <li>
                 A supported no-money execution environment, independent security
-                review and a controlled pilot.
+                review and a controlled pilot. On 5 September 2026, the
+                documented router’s version getter returned exit code 9 through
+                both Toncenter and TonAPI; live execution remains disabled.
               </li>
             </ul>
             <p>

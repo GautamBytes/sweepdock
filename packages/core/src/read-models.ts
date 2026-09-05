@@ -1,12 +1,16 @@
 import { z } from 'zod';
 
+export const providerIdSchema = z.string().regex(/^[a-z][a-z0-9-]{0,39}$/);
+
 export const unitsSchema = z.string().regex(/^(0|[1-9]\d{0,77})$/);
 export const assetIdSchema = z.enum(['STON', 'NOT', 'USDT', 'TON']);
 export const quoteInputSchema = z
   .object({
     input: z.enum(['STON', 'NOT', 'USDT']),
     output: z.enum(['TON', 'USDT']),
-    inputUnits: unitsSchema.refine((value) => BigInt(value) > 0n),
+    inputUnits: unitsSchema.pipe(
+      z.string().refine((value) => BigInt(value) > 0n),
+    ),
   })
   .strict()
   .refine(
@@ -34,7 +38,7 @@ export const balanceAssetSchema = z.object({
 export const balancesSchema = z.object({
   network: z.literal('ton-mainnet'),
   readOnly: z.literal(true),
-  source: z.literal('tonapi'),
+  source: providerIdSchema,
   address: z.string().regex(/^0:[a-f0-9]{64}$/),
   observedAtMs: z.number().int().nonnegative(),
   nativeBalanceUnits: unitsSchema,
@@ -43,17 +47,22 @@ export const balancesSchema = z.object({
 });
 export type Balances = z.infer<typeof balancesSchema>;
 export const gasValuationSchema = z.object({
-  source: z.literal('omniston-reverse-quote'),
+  source: z.literal('reverse-quote'),
+  provider: providerIdSchema,
   referenceQuoteId: z.string().min(1).max(128),
-  inputUsdtUnits: unitsSchema.refine((value) => BigInt(value) > 0n),
-  minimumTonUnits: unitsSchema.refine((value) => BigInt(value) > 0n),
+  inputUsdtUnits: unitsSchema.pipe(
+    z.string().refine((value) => BigInt(value) > 0n),
+  ),
+  minimumTonUnits: unitsSchema.pipe(
+    z.string().refine((value) => BigInt(value) > 0n),
+  ),
   quotedAtMs: z.number().int().nonnegative(),
   staleAtMs: z.number().int().nonnegative(),
 });
 export const quotePreviewSchema = z.object({
   network: z.literal('ton-mainnet'),
   readOnly: z.literal(true),
-  source: z.literal('omniston'),
+  source: providerIdSchema,
   request: quoteInputSchema,
   quoteId: z.string().min(1).max(128),
   expectedOutputUnits: unitsSchema,

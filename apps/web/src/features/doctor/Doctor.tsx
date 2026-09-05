@@ -19,6 +19,10 @@ const explanations: Partial<Record<LifecycleEvent['kind'], string>> = {
     'The simulated transaction was located. Its result still needs matching evidence.',
   status_unknown:
     'The result is not confirmed. Keep the attempt paused and do not send again.',
+  partial_verified:
+    'Only part of the sample outcome matched. The remaining queue stays paused.',
+  abort_verified:
+    'A full refund was simulated and matched. The remaining queue stays paused.',
   receipt_verified:
     'A matching receipt was simulated. This is not a real on-chain result.',
 };
@@ -28,7 +32,7 @@ export function Doctor({
   source = 'cleanup',
 }: {
   events: LifecycleEvent[];
-  source?: 'cleanup' | 'safety';
+  source?: 'cleanup' | 'safety' | 'recovery';
 }) {
   const report = makeShareableReport(events);
   const json = JSON.stringify(report, null, 2);
@@ -40,7 +44,12 @@ export function Doctor({
         title="Every step, explained."
       >
         See what happened in your latest{' '}
-        {source === 'safety' ? 'safety lab' : 'cleanup'} simulation.
+        {source === 'safety'
+          ? 'safety lab'
+          : source === 'recovery'
+            ? 'saved cleanup'
+            : 'cleanup'}{' '}
+        simulation.
       </SectionHeading>
       <div className="simulation-note">
         <strong>
@@ -113,7 +122,13 @@ export function Doctor({
             <p>Run a simulation to see its lifecycle here.</p>
             <Link
               className="primary"
-              to={source === 'safety' ? '/safety' : '/demo'}
+              to={
+                source === 'safety'
+                  ? '/safety'
+                  : source === 'recovery'
+                    ? '/safety/cleanup'
+                    : '/demo'
+              }
             >
               {source === 'safety'
                 ? 'Try the safety lab'

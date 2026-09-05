@@ -111,7 +111,8 @@ test('USDT quote shows its gas valuation and withdraws it when the reference exp
         expectedOutputUnits: '5000000',
         minimumOutputUnits: '4950000',
         gasValuation: {
-          source: 'omniston-reverse-quote',
+          source: 'reverse-quote',
+          provider: 'omniston',
           referenceQuoteId: 'fixture-reference',
           inputUsdtUnits: '5000000',
           minimumTonUnits: '2000000000',

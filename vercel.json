@@ -12,6 +12,8 @@
     { "source": "/docs/:path*", "destination": "/index.html" },
     { "source": "/safety", "destination": "/index.html" },
     { "source": "/safety/doctor", "destination": "/index.html" },
+    { "source": "/safety/cleanup", "destination": "/index.html" },
+    { "source": "/safety/cleanup/doctor", "destination": "/index.html" },
     { "source": "/app", "destination": "/index.html" },
     { "source": "/demo", "destination": "/index.html" },
     { "source": "/doctor", "destination": "/index.html" },

@@ -3,3 +3,8 @@ export * from './policy';
 export * from './lifecycle';
 export * from './report';
 export * from './testnet-safety';
+export * from './preview-cost';
+export * from './planner';
+export * from './settlement';
+export * from './cleanup-session';
+export * from './asset-registry';
