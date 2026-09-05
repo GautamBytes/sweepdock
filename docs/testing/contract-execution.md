@@ -19,17 +19,20 @@ Node and pnpm versions follow the repository's existing setup.
 
 ```sh
 pnpm test:preflight
-pnpm check:testnet
-pnpm capture:contracts
+pnpm verify:contracts # fresh public capture, pinned-code verification, then offline execution
+# Or recheck a saved capture without network access:
+pnpm verify:capture
 pnpm test:contracts
 ```
 
 - `test:preflight` runs five deterministic offline dependency/hash tests and is included in `pnpm check` and CI.
 - `check:testnet` performs public reads and writes `output/contracts/preflight.json`. Exit 2 means missing libraries or failed getters; exit 1 means the check could not finish; exit 0 means these dependency/getter checks passed, **not** that a swap route or signer is approved. It never falls back to mainnet.
 - `capture:contracts` explicitly downloads public testnet account state and any missing, hash-matched library **code** from mainnet for the local emulator. Exit 0 confirms a complete local capture; the report separately preserves the failed public preflight and `publicExecutionEnabled: false`. It writes `output/contracts/snapshot.json` and never signs, broadcasts, provisions liquidity or deploys anything on a network.
-- `test:contracts` runs seven real TVM integration tests using the saved snapshot and makes no network calls. Run capture once first. The snapshot remains in ignored local output, so this suite is separate from network-independent CI. A new upstream deployment or repaired library set can change the diagnosis and requires reviewing/updating the pinned reproduction expectations.
+- `test:contracts` runs eight real TVM integration tests using a verified saved snapshot and makes no network calls. `verify:capture` compares code and library hashes against the committed `tests/contracts/capture-policy.json`, checks data against the capture report, and records the exact snapshot SHA-256. This detects substituted code even if an attacker changes the embedded report too. Data is observed public state, not authenticated against a single historical block.
+- `verify:contracts` is the one-command fresh-clone path and the command used by the manually dispatched **Public-state contract verification** GitHub workflow. It needs public Toncenter/TonAPI connectivity; provider failures fail the workflow rather than silently skipping tests. Per-PR CI remains network-independent apart from package installation, and now also runs the official wallet fixture and standalone package consumer.
+- The downloaded bytecode stays in ignored output/on the ephemeral CI runner and is not uploaded as an artifact. The upstream DEX source is GPL-3.0; this project does not claim to relicense its bytecode as MIT. Only hash/provenance summaries are shared. A new upstream deployment or repaired library set can change the diagnosis and requires reviewing/updating the pinned expectations.
 
-## What the seven contract tests establish
+## What the eight contract tests establish
 
 1. Captured public testnet dependencies reproduce the missing router/pool library error; exact matching code restores getters and pool identities locally.
 2. Tampered library code is rejected before emulation.
@@ -38,8 +41,9 @@ pnpm test:contracts
 5. An expired router deadline refunds the input tokens.
 6. An invalid signature is rejected without advancing the wallet sequence number.
 7. After restoring executed chain state, replay of the exact signed external message is rejected and cannot produce a second swap.
+8. Substituted account code is rejected against the separate committed policy even when its embedded report was rewritten to match.
 
-The wallet uses a public dummy test key, an unusual wallet ID and a synthetic balance only inside `@ton/sandbox`. No user key or network funds are involved. The seven contract tests passed locally on 5 September 2026 using the recorded capture.
+The wallet uses a public dummy test key, an unusual wallet ID and a synthetic balance only inside `@ton/sandbox`. No user key or network funds are involved. The eight contract tests passed locally on 5 September 2026 using the recorded capture.
 
 ## Practical limits and next public-network step
 

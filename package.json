@@ -22,7 +22,11 @@
     "test:preflight": "node --test tests/contracts/preflight.test.mjs",
     "test:contracts": "node --test tests/contracts/execution.test.mjs",
     "check:testnet": "node scripts/check-testnet.mjs",
-    "capture:contracts": "node scripts/check-testnet.mjs --capture"
+    "capture:contracts": "node scripts/check-testnet.mjs --capture",
+    "verify:contracts": "pnpm capture:contracts && pnpm verify:capture && pnpm test:contracts",
+    "verify:capture": "node scripts/verify-contract-capture.mjs",
+    "pack:core": "node scripts/pack-core.mjs",
+    "example:core": "pnpm pack:core && node scripts/check-core-consumer.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

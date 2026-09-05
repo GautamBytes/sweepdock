@@ -1,7 +1,6 @@
 // Test-only harness. No network provider, real wallet, or public broadcast method.
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
-import { readFile } from 'node:fs/promises';
 import { Address, beginCell, Cell, Dictionary, toNano } from '@ton/core';
 import { keyPairFromSeed } from '@ton/crypto';
 import { WalletContractV4 } from '@ton/ton';
@@ -10,17 +9,17 @@ import { DEX, pTON } from '@ston-fi/sdk';
 import { addresses } from '../../scripts/contracts/config.mjs';
 import { verifiedLibraries } from '../../scripts/contracts/libraries.mjs';
 
-export const snapshot = JSON.parse(
-  await readFile('output/contracts/snapshot.json', 'utf8').catch(() => {
-    throw new Error(
-      'Run pnpm capture:contracts once before the offline contract suite',
-    );
-  }),
-);
+import {
+  loadVerifiedCapture,
+  verifyCapture,
+} from '../../scripts/contracts/capture-policy.mjs';
+
+export const { snapshot } = await loadVerifiedCapture();
 export const contractAddresses = Object.fromEntries(
   Object.entries(addresses).map(([n, a]) => [n, Address.parse(a)]),
 );
 export async function createLocalChain(restore = true, source = snapshot) {
+  verifyCapture(source);
   assert.equal(source.environment, 'local-tvm-restored-libraries');
   assert.equal(source.publicExecutionEnabled, false);
   const libs = verifiedLibraries([

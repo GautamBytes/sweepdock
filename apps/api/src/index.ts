@@ -5,7 +5,7 @@ import {
 } from '@sweepdock/core/providers';
 import { Hono } from 'hono';
 import { z } from 'zod';
-import { boundedText } from './bounded-json';
+import { readRequestJson } from './request-body';
 import { readQuotePreview } from './quote-preview';
 import {
   normalizeMainnetAddress,
@@ -69,20 +69,7 @@ export function createReadApi(options: ReadProviders & { now?: () => number }) {
     requests++;
     inFlight++;
     try {
-      if (
-        !c.req
-          .header('content-type')
-          ?.toLowerCase()
-          .startsWith('application/json')
-      )
-        throw new ReadError('INVALID_REQUEST');
-      const text = await boundedText(new Response(c.req.raw.body), 2048);
-      let body: unknown;
-      try {
-        body = JSON.parse(text);
-      } catch {
-        throw new ReadError('INVALID_REQUEST');
-      }
+      const body = await readRequestJson(c.req.raw);
       if (operation === 'balances') {
         const parsed = z
           .object({ address: z.string().max(70) })
@@ -123,13 +110,15 @@ export function createReadApi(options: ReadProviders & { now?: () => number }) {
     const status =
       code === 'INVALID_REQUEST'
         ? 400
-        : code === 'REQUEST_TOO_LARGE'
-          ? 413
-          : code === 'RATE_LIMITED'
-            ? 429
-            : code === 'NO_QUOTE' || code === 'STALE_QUOTE'
-              ? 422
-              : 503;
+        : code === 'REQUEST_TIMEOUT'
+          ? 408
+          : code === 'REQUEST_TOO_LARGE'
+            ? 413
+            : code === 'RATE_LIMITED'
+              ? 429
+              : code === 'NO_QUOTE' || code === 'STALE_QUOTE'
+                ? 422
+                : 503;
     return c.json({ error: code }, status);
   });
   app.notFound((c) => c.json({ error: 'NOT_FOUND' }, 404));

@@ -41,7 +41,7 @@ The official OpenAPI specifies native balance as int64 JSON number and jetton ba
 
 A maximum of three 100-row pages is read. A full final page or duplicate identities marks the response incomplete; incomplete reads cannot clear affordability or enable balance selection. Short pages terminate pagination. Each response body is bounded to 2 MB; provider reads share a 12-second timeout. Redirects are rejected. There is no automatic retry or hidden fallback to sample balances.
 
-Only approved response fields are projected to the browser. Provider images/URLs and raw payloads are excluded. The local API applies no-store, no-referrer and nosniff headers, same-origin checks, a 2 KB request limit, at most two in-flight operations and 30 reads/minute. The rate budget is process-global for this single-user local server and does not trust forwarded IP headers. It is not a distributed public-deployment rate limiter.
+Only approved response fields are projected to the browser. Provider images/URLs and raw payloads are excluded. The local API applies no-store, no-referrer and nosniff headers, same-origin checks, a 2 KB request limit, at most two in-flight operations and 30 reads/minute. The rate budget is process-global for this single-user local server and does not trust forwarded IP headers. It is not a distributed public-deployment rate limiter. The hosted project also has a Vercel WAF rule limiting POST `/api/` reads to 60/minute per IP within each region; see the security review. Incoming bodies have a five-second deadline.
 
 Source: https://raw.githubusercontent.com/tonkeeper/opentonapi/master/api/openapi.json
 

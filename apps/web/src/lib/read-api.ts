@@ -20,6 +20,9 @@ async function post(
     cache: 'no-store',
     referrerPolicy: 'no-referrer',
   });
+  // The edge may return HTML; status is authoritative for throttling/timeouts.
+  if (response.status === 429) throw new ReadError('RATE_LIMITED');
+  if (response.status === 408) throw new ReadError('REQUEST_TIMEOUT');
   let result: unknown;
   try {
     result = await response.json();
@@ -65,6 +68,8 @@ export function errorCopy(error: unknown): string {
       'The provider returned data we could not safely use. No quote is approved.',
     RATE_LIMITED:
       'The request limit was reached. Wait a minute before checking again.',
+    REQUEST_TIMEOUT:
+      'The request took too long. Check your connection and try again.',
     REQUEST_TOO_LARGE:
       'The response or request is too large to process safely.',
     NO_QUOTE: 'No quote is available for this pair and amount right now.',

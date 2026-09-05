@@ -2,6 +2,9 @@
 import { expect, it } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { copyFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import handler from '../src/handler';
 import deployment from '../../../vercel.json';
 
@@ -54,20 +57,29 @@ it('uploads website Docs while excluding repository docs and secrets', () => {
     'docs/operations/vercel.md',
     '.env.local',
   ];
-  const result = spawnSync(
-    'git',
-    [
-      '-c',
-      'core.excludesFile=.vercelignore',
-      'check-ignore',
-      '--no-index',
-      '--stdin',
-    ],
-    { cwd: root, input: paths.join('\n'), encoding: 'utf8' },
-  );
-  expect(result.status).toBe(0);
-  expect(result.stdout.trim().split('\n')).toEqual([
-    'docs/operations/vercel.md',
-    '.env.local',
-  ]);
+  const directory = mkdtempSync(join(tmpdir(), 'sweepdock-ignore-'));
+  try {
+    copyFileSync(join(root, '.vercelignore'), join(directory, '.vercelignore'));
+    expect(
+      spawnSync('git', ['init', '--quiet'], { cwd: directory }).status,
+    ).toBe(0);
+    const result = spawnSync(
+      'git',
+      [
+        '-c',
+        'core.excludesFile=.vercelignore',
+        'check-ignore',
+        '--no-index',
+        '--stdin',
+      ],
+      { cwd: directory, input: paths.join('\n'), encoding: 'utf8' },
+    );
+    expect(result.status).toBe(0);
+    expect(result.stdout.trim().split('\n')).toEqual([
+      'docs/operations/vercel.md',
+      '.env.local',
+    ]);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
